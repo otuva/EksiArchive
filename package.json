@@ -8,5 +8,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^9.1.2",
+    "sinon": "^11.1.2",
+    "sqlite3": "^5.0.2"
+  }
 }
