@@ -1,6 +1,8 @@
 const https = require('https');
+const formatOps = require('./formatOps');
 
-const getEntry = entryID => {
+// send http request for entry
+const requestEntry = entryID => {
     return new Promise((resolve, reject) => {
         const options = {
             hostname: 'eksisozluk.com',
@@ -42,4 +44,16 @@ const getEntry = entryID => {
     });
 };
 
+// const updateEntry = entryObj => {
+//
+// };
+
+
+// get requested entry format and return
+const getEntry = async (id) => {
+    const entryHttp = await requestEntry(id);
+    return formatOps.html2entry(entryHttp);
+}
+
 module.exports.getEntry = getEntry;
+module.exports.requestEntry = requestEntry;
