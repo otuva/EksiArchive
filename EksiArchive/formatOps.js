@@ -34,10 +34,21 @@ const dateTimeFormatter = (string) => {
     }
 };
 
+// write tests for this func
+const contentFormatter = (string) => {
+    string = string.trim()
+    string = string.replace(/'/g, "''");
+    return string;
+};
+
 // const sample = '<ul id="list"><li>Hello World</li></ul>';
 const html2entry = (rawHtml) => {
     if (typeof rawHtml === 'string' && rawHtml.length !== 0) {
         try {
+            // get title
+            const matchTitle = /(?<=data-title=").*?(?="\s)/;
+            const title = rawHtml.match(matchTitle)[0];
+
             // get only user entry not (if exists) pinned message
             const matchEntrySection = /id="entry-item-list"/;
             const index = rawHtml.match(matchEntrySection).index;
@@ -57,7 +68,7 @@ const html2entry = (rawHtml) => {
             //variables
             const id = html.match(matchEntryID)[0];
             const author = html.match(matchAuthor)[0];
-            const content = html.match(matchContent)[0].trim();
+            const content = contentFormatter(html.match(matchContent)[0]);
             const inEksiSeyler = (() => {
                 // regex match. if not found return false
                 const match = html.match(matchEksiSeyler);
@@ -69,6 +80,7 @@ const html2entry = (rawHtml) => {
             // return entry object
             return {
                 id,
+                title,
                 author,
                 content,
                 inEksiSeyler,
@@ -82,7 +94,6 @@ const html2entry = (rawHtml) => {
         catch (e) {
             console.error(e);
         }
-
     }
     else {
         throw new Error("html can't be empty");
@@ -90,3 +101,5 @@ const html2entry = (rawHtml) => {
 };
 
 module.exports.html2entry = html2entry;
+module.exports.contentFormatter = contentFormatter;
+module.exports.dateTimeFormatter = dateTimeFormatter;

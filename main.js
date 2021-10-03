@@ -1,13 +1,25 @@
 const userOps = require("./EksiArchive/userOps");
 const formatOps = require("./EksiArchive/formatOps");
+const dbOps = require("./EksiArchive/dbOps");
 
 // https://eksisozluk.com/entry/128646280
 
+const archiveEntry = async (entryID) => {
+    console.time(`entry '${entryID}'`);
+    const entry = await userOps.getEntry(entryID);
+    dbOps.addEntry(entry);
+    console.timeEnd(`entry '${entryID}'`);
+    // console.log(entry);
+};
+
+archiveEntry("128685687").then();
+// dbOps.init();
 
 
-userOps.getEntry("22016689").then(value => {
-    console.log(value);
-});
+
+// userOps.getEntry("22016689").then(value => {
+//     console.log(value);
+// });
 
 
 

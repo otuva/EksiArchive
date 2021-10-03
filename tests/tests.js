@@ -1,5 +1,5 @@
-const sinon = require('sinon');
-const http = require('http');
+// const sinon = require('sinon');
+// const http = require('http');
 // const MockReq = require('mock-req');
 // const MockRes = require('mock-res');
 const assert = require('assert');
@@ -11,13 +11,13 @@ const formatOps = require("../EksiArchive/formatOps");
 const htmlStrings = require("./utils/htmlStrings");
 
 describe('Web Requests' , () => {
-    beforeEach(function() {
-        this.request = sinon.stub(http, 'request');
-    });
-
-    afterEach(() => {
-        http.request.restore();
-    });
+    // beforeEach(function() {
+    //     this.request = sinon.stub(http, 'request');
+    // });
+    //
+    // afterEach(() => {
+    //     http.request.restore();
+    // });
 
     it('tests for empty entry id', ()=> {
         const emptyID = '';
@@ -37,15 +37,15 @@ describe('Web Requests' , () => {
         assert.deepStrictEqual(nonExistentReq, rejected);
     });
 
-    it('tests for a normal entry', async () => {
-        const normalID = '1';
-        const typeOfResolved = 'string';
-
-        const normalIDReq = await userOps.requestEntry(normalID);
-        const typeOfNormal = typeof normalIDReq;
-
-        assert.deepStrictEqual(typeOfNormal, typeOfResolved);
-    });
+    // it('tests for a normal entry', async () => {
+    //     const normalID = '1';
+    //     const typeOfResolved = 'string';
+    //
+    //     const normalIDReq = await userOps.requestEntry(normalID);
+    //     const typeOfNormal = typeof normalIDReq;
+    //
+    //     assert.deepStrictEqual(typeOfNormal, typeOfResolved);
+    // });
 });
 
 describe('SQL Operations', () => {
@@ -62,7 +62,9 @@ describe('SQL Operations', () => {
         });
     });
 
+    it('checks the schema', ()=> {
 
+    });
 });
 
 describe('Entry Operations', () => {
@@ -79,6 +81,7 @@ describe('Entry Operations', () => {
           const html = htmlStrings.notModified;
           const expectedObj = {
               id: '22016689',
+              title: 'yaran facebook durum güncellemeleri',
               author: 'meganeura monyi',
               content: '"gelenin gideni aratmadığı tek yer victoria secret defilesidir"',
               inEksiSeyler: false,
@@ -89,7 +92,8 @@ describe('Entry Operations', () => {
               timeModified: null
           }
 
-          const actualObj = formatOps.html2entry(html);
+
+           const actualObj = formatOps.html2entry(html);
 
           assert.deepStrictEqual(actualObj, expectedObj);
        });
@@ -98,6 +102,7 @@ describe('Entry Operations', () => {
            const html = htmlStrings.timeModified;
            const expectedObj = {
                id: '21689654',
+               title: 'eski sevgiliye söylemek istenen şeyler',
                author: 'ralves',
                content: '-iyiydik lan!<br/><br/>(bkz: <a class="b" href="/?q=umut+sar%c4%b1kaya">umut sarıkaya</a>)',
                inEksiSeyler: false,
@@ -106,7 +111,7 @@ describe('Entry Operations', () => {
                timeCreated: '22:03',
                dateModified: null,
                timeModified: '22:04'
-           };
+           }
 
            const actualObj = formatOps.html2entry(html);
 
@@ -117,6 +122,7 @@ describe('Entry Operations', () => {
            const html = htmlStrings.dateTimeModified;
            const expectedObj = {
                id: '48398119',
+               title: 'andromeda galaksisinin 1.5 milyar piksellik fotosu',
                author: 'hayri ozben',
                content: 'nasa tarafından, hubble uzay teleskobu kullanılarak çekilen fotoğraftır. galaksinin başlığı altında verilmiş olsa da, çok güzel olduğu için başlık açmak istedim. <br/><br/>dünyadan bir kaç dakika uzaklaşmak isteyenler <a rel="nofollow noopener" class="url" target="_blank" href="http://www.spacetelescope.org/images/heic1502a/zoomable/" title="http://www.spacetelescope.org/images/heic1502a/zoomable/">için</a> ...<br/><br/>edit: bu konulara ilgi duyanların katılabileceği bir coursera çevrimiçi <a rel="nofollow noopener" class="url" target="_blank" href="https://www.coursera.org/course/cosmo?action=enroll&amp;sessionId=974479" title="https://www.coursera.org/course/cosmo?action=enroll&amp;sessionId=974479">kursu</a>',
                inEksiSeyler: false,
@@ -139,6 +145,52 @@ describe('Entry Operations', () => {
            const actualObj = formatOps.html2entry(html);
 
            assert.deepStrictEqual(actualObj.inEksiSeyler, expectedSeyler);
+       });
+
+       it('tests for an entry that has apostrophe character in it\'s content', () => {
+           const html = htmlStrings.aposEntry;
+
+       });
+   });
+
+   describe('Date Time Formatting', ()=> {
+       it('tries only creation date time', ()=> {
+           const dateTime = '12.09.2016 10:32';
+           const expectedArr = ['12.09.2016', '10:32', null, null];
+
+           const actualArr = formatOps.dateTimeFormatter(dateTime);
+
+           assert.deepStrictEqual(actualArr, expectedArr);
+       });
+
+       it('tests creation date & time with modification time', ()=> {
+           const dateTime = '13.10.2011 14:16 ~ 14:20';
+           const expectedArr = ['13.10.2011', '14:16', null, '14:20'];
+
+           const actualArr = formatOps.dateTimeFormatter(dateTime);
+
+           assert.deepStrictEqual(actualArr, expectedArr);
+       });
+
+       it('tests for creation & modification date time', ()=> {
+           const dateTime = '17.10.2016 12:44 ~ 21.12.2018 08:37';
+           const expectedArr = ['17.10.2016', '12:44', '21.12.2018', '08:37'];
+
+           const actualArr = formatOps.dateTimeFormatter(dateTime);
+
+           assert.deepStrictEqual(actualArr, expectedArr);
+       });
+
+   });
+
+   describe('Entry Content Formatting', ()=> {
+       it('tests for escaping apostrophes (for sql insertion)', ()=> {
+           const string = "he doesn't work for me";
+           const expectedString = "he doesn''t work for me";
+
+           const actualString = formatOps.contentFormatter(string);
+
+           assert.deepStrictEqual(actualString, expectedString);
        });
    });
 });
