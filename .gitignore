@@ -1,3 +1,6 @@
+# don't check db after example db
+database.db
+
 # Logs
 logs
 *.log
