@@ -3,6 +3,7 @@ const argv = require('minimist')(process.argv.slice(2));
 const userOps = require("./EksiArchive/userOps");
 const formatOps = require("./EksiArchive/formatOps");
 const dbOps = require("./EksiArchive/dbOps");
+const utils = require("./EksiArchive/utils/inputValidate");
 
 // help diyince ayri bos calistirinca ayri text yazdir
 
@@ -17,7 +18,7 @@ else {
     // if first flagless argument exists
     if (argv._[0]) {
         if (Object.keys(argv).length !==1) {
-            console.log("You can't use other flags with first flags. Disregarding other flags.")
+            console.error('\x1b[31m%s\x1b[0m', "You can't use other flags with first flags. Disregarding other flags.")
         }
         if (argv._[0] === 'init') {
             console.log("Database has been initialized.")
@@ -26,7 +27,7 @@ else {
             console.log("yardim mod");
         }
         else {
-            console.log("Yanlis kullanim. Dogrusu:"+firstFlags);
+            console.error("Yanlis kullanim. Dogrusu:"+firstFlags);
         }
     }
     else {
@@ -34,7 +35,11 @@ else {
         // console.table(argv)
         if (Object.keys(argv).length === 2) {
             if (argv.e) {
-                console.log(`arsivlenecek entry: ${argv.e}`);
+                const id = utils.isInputEntryLink(argv.e.toString());
+                // console.log(id);
+                // console.log(typeof id);
+                console.log(`arsivlenecek entry: ${id}`);
+                userOps.archiveEntry(id).then();
             }
             else if (argv.u) {
                 console.log(`arsivlenecek kullanici: ${argv.u}`);
@@ -52,13 +57,7 @@ else {
 // console.table(argv);
 
 // https://eksisozluk.com/entry/128646280
-// const archiveEntry = async (entryID) => {
-//     console.time(`entry '${entryID}'`);
-//     const entry = await userOps.getEntry(entryID);
-//     dbOps.addEntry(entry);
-//     console.timeEnd(`entry '${entryID}'`);
-//     // console.log(entry);
-// };
+
 //
 // archiveEntry("128685687").then();
 // // dbOps.init();

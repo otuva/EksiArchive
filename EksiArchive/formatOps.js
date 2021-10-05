@@ -34,10 +34,13 @@ const dateTimeFormatter = (string) => {
     }
 };
 
+const apostropheEscape = (string) => {
+    return string.replace(/'/g, "''");
+};
 // write tests for this func
 const contentFormatter = (string) => {
     string = string.trim()
-    string = string.replace(/'/g, "''");
+    string = apostropheEscape(string);
     return string;
 };
 
@@ -47,7 +50,7 @@ const html2entry = (rawHtml) => {
         try {
             // get title
             const matchTitle = /(?<=data-title=").*?(?="\s)/;
-            const title = rawHtml.match(matchTitle)[0];
+            const title = apostropheEscape(rawHtml.match(matchTitle)[0]);
 
             // get only user entry not (if exists) pinned message
             const matchEntrySection = /id="entry-item-list"/;

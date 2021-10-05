@@ -9,6 +9,7 @@ const userOps = require("../EksiArchive/userOps");
 const dbOps = require("../EksiArchive/dbOps");
 const formatOps = require("../EksiArchive/formatOps");
 const htmlStrings = require("./utils/htmlStrings");
+const utils = require("../EksiArchive/utils/inputValidate");
 
 describe('Web Requests' , () => {
     // beforeEach(function() {
@@ -193,4 +194,24 @@ describe('Entry Operations', () => {
            assert.deepStrictEqual(actualString, expectedString);
        });
    });
+});
+
+describe('Utils', ()=>{
+    it('tests entry input link', ()=>{
+        const link = 'https://eksisozluk.com/entry/128511324';
+        const expected = '128511324';
+
+        const actual = utils.isInputEntryLink(link);
+
+        assert.deepStrictEqual(actual, expected);
+    });
+
+    it('tests for entry id string', ()=>{
+        const id = '128511324';
+        const expected = '128511324';
+
+        const actual = utils.isInputEntryLink(id);
+
+        assert.deepStrictEqual(actual, expected);
+    });
 });
