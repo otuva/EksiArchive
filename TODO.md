@@ -7,6 +7,7 @@
 - entrydeki gorselleri kaydet?
 - belki db'e eklenme tarihi koy?
 - readme ekle
+- cli argument hatalarini yaz. multi lang olsun diye stringleri utilse koy.
 
 ---
 
