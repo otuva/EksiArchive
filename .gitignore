@@ -1,6 +1,11 @@
 # don't check db after example db
 database.db
 
+# test files
+test.js 
+EksiArchive/testDatabase.db
+testDatabase.db
+
 # Logs
 logs
 *.log

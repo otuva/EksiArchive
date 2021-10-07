@@ -35,11 +35,16 @@ else {
         // console.table(argv)
         if (Object.keys(argv).length === 2) {
             if (argv.e) {
-                const id = utils.isInputEntryLink(argv.e.toString());
-                // console.log(id);
-                // console.log(typeof id);
-                console.log(`arsivlenecek entry: ${id}`);
-                userOps.archiveEntry(id).then();
+                if (typeof argv.e === 'string' || typeof argv.e === 'number') {
+                    const id = utils.isInputEntryLink(argv.e.toString());
+                    // console.log(id);
+                    // console.log(typeof id);
+                    console.log(`arsivlenecek entry: ${id}`);
+                    userOps.archiveEntry(id).then();
+                }
+                else {
+                    console.error('entry kismi bos olamaz.');
+                }
             }
             else if (argv.u) {
                 console.log(`arsivlenecek kullanici: ${argv.u}`);

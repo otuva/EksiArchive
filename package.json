@@ -12,6 +12,7 @@
   "dependencies": {
     "minimist": "^1.2.5",
     "mocha": "^9.1.2",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "underscore": "^1.13.1"
   }
 }
