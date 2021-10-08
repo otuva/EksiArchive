@@ -46,6 +46,11 @@ else {
                     console.error('entry kismi bos olamaz.');
                 }
             }
+            else if (argv.p) {
+                console.log(`arsivlenecek sayfa: ${argv.p}`);
+                const values = argv.p.split(",");
+                userOps.archiveEntriesInAPage(values[0], values[1]);
+            }
             else if (argv.u) {
                 console.log(`arsivlenecek kullanici: ${argv.u}`);
             }

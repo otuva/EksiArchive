@@ -50,9 +50,6 @@ const requestEntry = (entryID) => {
     });
 };
 
-// const updateEntry = entryObj => {
-//
-// };
 const returnEntryIDsFromHTML = html => {
     const matchEntryList = /class="topic-list"/;
     const matchFooter = /id="site-footer"/;
@@ -73,37 +70,41 @@ const returnEntryIDsFromHTML = html => {
 // get requested entry format and return
 const getEntry = async (id) => {
     return new Promise(async (resolve, reject)=> {
-        console.time(`entry '${id}'`);
+        console.time(`entry '${id}' suresi`);
         const matchError = /<h1 title="web5">büyük başarısızlıklar sözkonusu<\/h1>/;
-        // const entryHttp = requestEntry(id);
 
-        // await utils.sleep(timeWait);
+        const state = await dbOps.entryIdExists(id);
 
-        requestEntry(id).then((val)=>{
-            if (val.match(matchError)) {
-                console.timeEnd(`entry '${id}'`);
-                return reject(new Error('eksi sozluk hata dondurdu'));
-            }
-            else {
-                console.timeEnd(`entry '${id}'`);
-                resolve(formatOps.html2entry(val));
-            }
-        }, (err)=>{
-            console.error(`hata: ${err}`);
-            console.timeEnd(`entry '${id}'`);
-            return reject(new Error('eksi sozluk hata dondurdu'));
-        });
+        if (state) {
+            // console.log('entry zaten arsivde. atlandi');
+            reject('entry zaten arsivde');
+        }
+        else {
+            requestEntry(id).then((html)=>{
+                if (html.match(matchError)) {
+                    // console.timeEnd(`entry '${id}' suresi`);
+                    return reject(new Error('eksi sozluk hata dondurdu'));
+                }
+                else {
+                    console.timeEnd(`entry '${id}' suresi`);
+                    resolve(formatOps.html2entry(html));
+                }
+            }, (err)=>{
+                // console.timeEnd(`entry '${id}' suresi`);
+                return reject(new Error(`eksi sozluk hata dondurdu ${err}`));
+            });
+        }
+        // console.timeEnd(`entry '${id}' suresi`);
     });
 }
 
 const archiveEntriesInAPage = async (user, page) => {
-    await getEntriesInAPage(user, page).then(entries => {
-        dbOps.addMultipleEntries(entries);
+    getEntriesInAPage(user, page).then(async entries => {
+        await dbOps.addMultipleEntries(entries);
         console.log('ok. sayfadaki tum entryler arsivlendi');
     }, err => {
         console.error(err);
     });
-
 };
 
 const getEntriesInAPage = (user, page) => {
@@ -135,20 +136,21 @@ const getEntriesInAPage = (user, page) => {
                     const entryArray = [];
 
                     for (const key of Object.keys(batchEntryIds)) {
-                        console.log(key, batchEntryIds[key]);
-                        const batchEntry = await Promise.all(batchEntryIds[key].map(async entryID => {
-                            return await getEntry(entryID);
+                        // console.log(key, batchEntryIds[key]);
+                        const batchEntry = await Promise.all(batchEntryIds[key].map(entryID => {
+                            return getEntry(entryID).then(entry => {
+                                return entry;
+                            }, rej => {
+                                console.error(`'${entryID}' - ${rej}`);
+                            });
                         }));
-                        console.log(batchEntry);
-                        entryArray.push(...batchEntry);
+
+                        // console.log(batchEntry);
+                        if (batchEntry.some(elem => elem!==undefined)) {
+                            const filteredBatchEntry = batchEntry.filter(element => element !== undefined);
+                            entryArray.push(...filteredBatchEntry);
+                        }
                     }
-
-                    // await Promise.all()
-
-                    // const entryArray = await Promise.all(entryIdArray.map(async entryID => {
-                    //     // await utils.sleep(3000);
-                    //     return await getEntry(entryID);
-                    // }));
 
                     console.timeEnd(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
                     resolve(entryArray);
@@ -170,7 +172,7 @@ const getEntriesInAPage = (user, page) => {
 };
 
 const archiveEntry = async (entryID) => {
-    await getEntry(entryID).then((val)=>{
+    getEntry(entryID).then((val)=>{
         dbOps.addEntry(val);
         // console.table(val);
         // console.log();
@@ -180,9 +182,6 @@ const archiveEntry = async (entryID) => {
     });
 
 };
-
-//midyelerin-efendisi
-// archiveEntriesInAPage('divit', '1').then();
 
 module.exports.getEntry = getEntry;
 module.exports.requestEntry = requestEntry;
