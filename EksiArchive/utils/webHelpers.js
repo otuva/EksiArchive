@@ -1,5 +1,5 @@
 const https = require("https");
-const htmlStrings = require("../../tests/utils/htmlStrings");
+// const htmlStrings = require("../../tests/utils/htmlStrings");
 
 const getTotalEntryPagesOfAnUser = user => {
     return new Promise((resolve, reject) => {
@@ -52,6 +52,7 @@ const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
+module.exports.getTotalEntryPagesOfAnUser = getTotalEntryPagesOfAnUser;
 module.exports.sleep = sleep;
 
 // const returnEntriesFromHtml = html => {

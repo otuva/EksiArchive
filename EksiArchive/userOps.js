@@ -60,7 +60,12 @@ const returnEntryIDsFromHTML = html => {
 
     if (listBegin !== null && listEnd !== null) {
         const entryListHTML = html.slice(listBegin.index, listEnd.index);
-        return entryListHTML.match(matchEntryID);
+        if (entryListHTML.match(matchEntryID) !== null) {
+            return entryListHTML.match(matchEntryID);
+        }
+        else {
+            throw new Error('verilen html\'den entry listesi bulunamadi');
+        }
     }
     else {
         throw new Error('verilen html\'den entry listesi bulunamadi');
@@ -70,7 +75,7 @@ const returnEntryIDsFromHTML = html => {
 // get requested entry format and return
 const getEntry = async (id) => {
     return new Promise(async (resolve, reject)=> {
-        console.time(`entry '${id}' suresi`);
+        console.time(`entry '${id}'`);
         const matchError = /<h1 title="web5">büyük başarısızlıklar sözkonusu<\/h1>/;
 
         const state = await dbOps.entryIdExists(id);
@@ -86,7 +91,7 @@ const getEntry = async (id) => {
                     return reject(new Error('eksi sozluk hata dondurdu'));
                 }
                 else {
-                    console.timeEnd(`entry '${id}' suresi`);
+                    console.timeEnd(`entry '${id}'`);
                     resolve(formatOps.html2entry(html));
                 }
             }, (err)=>{
@@ -156,7 +161,7 @@ const getEntriesInAPage = (user, page) => {
                     resolve(entryArray);
                 }
                 catch (e) {
-                    console.timeEnd(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
+                    // console.timeEnd(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
                     return reject(new Error(`hata olustu: ${e}`));
                 }
             });
@@ -164,7 +169,7 @@ const getEntriesInAPage = (user, page) => {
 
         req.on('error', (err) => {
             // This is not a "Second reject", just a different sort of failure
-            console.timeEnd(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
+            // console.timeEnd(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
             reject(err);
         });
         req.end();

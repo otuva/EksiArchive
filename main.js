@@ -1,8 +1,8 @@
 const argv = require('minimist')(process.argv.slice(2));
 
 const userOps = require("./EksiArchive/userOps");
-const formatOps = require("./EksiArchive/formatOps");
-const dbOps = require("./EksiArchive/dbOps");
+// const formatOps = require("./EksiArchive/formatOps");
+// const dbOps = require("./EksiArchive/dbOps");
 const utils = require("./EksiArchive/utils/inputValidate");
 
 // help diyince ayri bos calistirinca ayri text yazdir
@@ -47,9 +47,17 @@ else {
                 }
             }
             else if (argv.p) {
-                console.log(`arsivlenecek sayfa: ${argv.p}`);
-                const values = argv.p.split(",");
-                userOps.archiveEntriesInAPage(values[0], values[1]);
+                if (utils.isPageArgumentValid(argv.p)) {
+                    console.log(`arsivlenecek sayfa: ${argv.p}`);
+                    const values = argv.p.split(",");
+                    const user = values[0].replace(/ /g, '-');
+                    userOps.archiveEntriesInAPage(user, values[1]);
+                }
+                else {
+                    throw Error('kullanici ya da sayfa gecerli degil.' +
+                        'insert hata here');
+                }
+                //
             }
             else if (argv.u) {
                 console.log(`arsivlenecek kullanici: ${argv.u}`);

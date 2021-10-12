@@ -9,7 +9,7 @@ const userOps = require("../EksiArchive/userOps");
 const dbOps = require("../EksiArchive/dbOps");
 const formatOps = require("../EksiArchive/formatOps");
 const htmlStrings = require("./utils/htmlStrings");
-const utils = require("../EksiArchive/utils/inputValidate");
+const inputValidate = require("../EksiArchive/utils/inputValidate");
 
 describe('Web Requests' , () => {
     // beforeEach(function() {
@@ -196,22 +196,80 @@ describe('Entry Operations', () => {
    });
 });
 
-describe('Utils', ()=>{
-    it('tests entry input link', ()=>{
-        const link = 'https://eksisozluk.com/entry/128511324';
-        const expected = '128511324';
+describe('Input Validate', ()=>{
+    describe('entry flag', ()=> {
+        it('tests entry input link', ()=>{
+            const link = 'https://eksisozluk.com/entry/128511324';
+            const expected = '128511324';
 
-        const actual = utils.isInputEntryLink(link);
+            const actual = inputValidate.isInputEntryLink(link);
 
-        assert.deepStrictEqual(actual, expected);
+            assert.deepStrictEqual(actual, expected);
+        });
+
+        it('tests for entry id string', ()=>{
+            const id = '128511324';
+            const expected = '128511324';
+
+            const actual = inputValidate.isInputEntryLink(id);
+
+            assert.deepStrictEqual(actual, expected);
+        });
     });
 
-    it('tests for entry id string', ()=>{
-        const id = '128511324';
-        const expected = '128511324';
+    describe('page flag', ()=> {
+        it('tests for valid separator',()=> {
+            const flagStr = 'user,12';
+            const expected = true;
 
-        const actual = utils.isInputEntryLink(id);
+            const actual = inputValidate.isPageArgumentValid(flagStr);
 
-        assert.deepStrictEqual(actual, expected);
+            assert.deepStrictEqual(actual, expected);
+        });
+
+        it('tests for invalid separator',()=> {
+            const flagStr = 'user/12';
+            const expected = false;
+
+            const actual = inputValidate.isPageArgumentValid(flagStr);
+
+            assert.deepStrictEqual(actual, expected);
+        });
+
+        it('tests for invalid username',()=> {
+            const flagStr = 'user%$2,12';
+            const expected = false;
+
+            const actual = inputValidate.isPageArgumentValid(flagStr);
+
+            assert.deepStrictEqual(actual, expected);
+        });
+
+        it('tests for invalid page number',()=> {
+            const flagStr = 'user,12fsa';
+            const expected = false;
+
+            const actual = inputValidate.isPageArgumentValid(flagStr);
+
+            assert.deepStrictEqual(actual, expected);
+        });
+
+        it('tests for space separated username',()=> {
+            const flagStr = 'player one,12';
+            const expected = true;
+
+            const actual = inputValidate.isPageArgumentValid(flagStr);
+
+            assert.deepStrictEqual(actual, expected);
+        });
+
+        it('tests for hyphen separated username',()=> {
+            const flagStr = 'player-one,12';
+            const expected = true;
+
+            const actual = inputValidate.isPageArgumentValid(flagStr);
+
+            assert.deepStrictEqual(actual, expected);
+        });
     });
 });
