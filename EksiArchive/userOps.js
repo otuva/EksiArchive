@@ -1,8 +1,9 @@
 const https = require('https');
-const _ = require('underscore');
+// const _ = require('underscore');
 
 const formatOps = require('./formatOps');
 const dbOps = require("./dbOps");
+const utils = require("./utils/generalHelpers");
 // const utils = require("./utils/webHelpers");
 
 
@@ -136,7 +137,9 @@ const getEntriesInAPage = (user, page) => {
                 try {
                     const entryIdArray = returnEntryIDsFromHTML(resBody);
 
-                    const batchEntryIds = _.groupBy(entryIdArray, (_v, i) => Math.floor(i / 5));
+                    // const batchEntryIds = _.groupBy(entryIdArray, (_v, i) => Math.floor(i / 5));
+
+                    const batchEntryIds = utils.groupBy(entryIdArray, 5);
 
                     const entryArray = [];
 

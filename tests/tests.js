@@ -6,10 +6,11 @@ const assert = require('assert');
 const fs = require('fs');
 
 const userOps = require("../EksiArchive/userOps");
-const dbOps = require("../EksiArchive/dbOps");
+// const dbOps = require("../EksiArchive/dbOps");
 const formatOps = require("../EksiArchive/formatOps");
 const htmlStrings = require("./utils/htmlStrings");
 const inputValidate = require("../EksiArchive/utils/inputValidate");
+const groupBy = require("../EksiArchive/utils/generalHelpers").groupBy;
 
 describe('Web Requests' , () => {
     // beforeEach(function() {
@@ -147,11 +148,6 @@ describe('Entry Operations', () => {
 
            assert.deepStrictEqual(actualObj.inEksiSeyler, expectedSeyler);
        });
-
-       it('tests for an entry that has apostrophe character in it\'s content', () => {
-           const html = htmlStrings.aposEntry;
-
-       });
    });
 
    describe('Date Time Formatting', ()=> {
@@ -271,5 +267,145 @@ describe('Input Validate', ()=>{
 
             assert.deepStrictEqual(actual, expected);
         });
+    });
+});
+
+describe('groupBy', ()=>{
+    it('tests N=7',()=>{
+        const testArray = ['a','b','c','d','e','g','h','a','b','c','d','e','g','h'];
+        const expected = {
+            0: ['a','b','c','d','e','g','h'],
+            1: ['a','b','c','d','e','g','h']
+        };
+
+        const actual = groupBy(testArray, 7);
+
+        assert.deepStrictEqual(actual, expected);
+    });
+
+    it('tests N=5',()=>{
+        const testArray = ['a','b','c','d','e','g','h','a','b','c','d','e','g','h'];
+        const expected = {
+            0: ['a','b','c','d','e'],
+            1: ['g','h','a','b','c'],
+            2: ['d','e','g','h']
+        };
+
+        const actual = groupBy(testArray, 5);
+
+        assert.deepStrictEqual(actual, expected);
+    });
+
+    it('tests N=9',()=>{
+        const testArray = ['a','b','c','c','d','e','g','d','e','g','h','a','b','h'];
+        const expected = {
+            0: ['a','b','c','c','d','e','g','d','e'],
+            1: ['g','h','a','b','h']
+        };
+
+        const actual = groupBy(testArray, 9);
+
+        assert.deepStrictEqual(actual, expected);
+    });
+
+    it('tests N=2',()=>{
+        const testArray = ['a','b','c','c'];
+        const expected = {
+            0: ['a','b'],
+            1: ['c','c']
+        };
+
+        const actual = groupBy(testArray, 2);
+
+        assert.deepStrictEqual(actual, expected);
+    });
+
+    it('tests for fifty element array with N=5', ()=> {
+        const testArray = [
+            '129055258', '129044078', '129042284', '129021120', '129017068',
+            '128999161', '128993875', '128984642', '128984306', '128976144',
+            '128951623', '128949030', '128938365', '128937039', '128922172',
+            '128888711', '128888014', '128886017', '128859973', '128858300',
+            '128852779', '128820609', '128818522', '128817116', '128814436',
+            '128814165', '128797374', '128795725', '128784867', '128779419',
+            '128761212', '128757198', '128752131', '128720381', '128717576',
+            '128691596', '128685687', '128680972', '128680360', '128667811',
+            '128638375', '128592579', '128583021', '128559206', '128552326',
+            '128549225', '128548171', '128513996', '128511272', '128510448'
+        ]
+
+        const expected = {
+            '0': [ '129055258', '129044078', '129042284', '129021120', '129017068' ],
+            '1': [ '128999161', '128993875', '128984642', '128984306', '128976144' ],
+            '2': [ '128951623', '128949030', '128938365', '128937039', '128922172' ],
+            '3': [ '128888711', '128888014', '128886017', '128859973', '128858300' ],
+            '4': [ '128852779', '128820609', '128818522', '128817116', '128814436' ],
+            '5': [ '128814165', '128797374', '128795725', '128784867', '128779419' ],
+            '6': [ '128761212', '128757198', '128752131', '128720381', '128717576' ],
+            '7': [ '128691596', '128685687', '128680972', '128680360', '128667811' ],
+            '8': [ '128638375', '128592579', '128583021', '128559206', '128552326' ],
+            '9': [ '128549225', '128548171', '128513996', '128511272', '128510448' ]
+        }
+
+        const actual = groupBy(testArray, 5);
+
+        assert.deepStrictEqual(actual, expected);
+    });
+
+    it('tests for a hundred element array with N=5', ()=> {
+        const testArray = [69,23,56,21,17,23,13,55,30,27,81,1,76,54,31,19,53,5,95,94,39,68,41,76,72,63,81,63,4,81,35,50,27,42,52,34,84,94,66,39,3,18,76,94,67,87,79,20,10,8,32,77,92,88,11,22,91,81,80,37,35,94,1,74,31,3,70,7,2,88,25,75,21,94,88,52,86,46,28,15,21,8,44,99,92,64,13,27,30,97,36,26,13,74,18,23,59,88,70,98]
+        const expected = {
+            0: [69,23,56,21,17],
+            1: [23,13,55,30,27],
+            2: [81,1,76,54,31],
+            3: [19,53,5,95,94],
+            4: [39,68,41,76,72],
+            5: [63,81,63,4,81],
+            6: [35,50,27,42,52],
+            7: [34,84,94,66,39],
+            8: [3,18,76,94,67],
+            9: [87,79,20,10,8],
+            10: [32,77,92,88,11],
+            11: [22,91,81,80,37],
+            12: [35,94,1,74,31],
+            13: [3,70,7,2,88],
+            14: [25,75,21,94,88],
+            15: [52,86,46,28,15],
+            16: [21,8,44,99,92],
+            17: [64,13,27,30,97],
+            18:[36,26,13,74,18],
+            19: [23,59,88,70,98]
+        }
+
+        const actual = groupBy(testArray, 5);
+
+        assert.deepStrictEqual(actual,expected);
+    });
+
+    it('tests for N=3 with number array', ()=>{
+        const testArray = [
+            941,1760,5146,
+            2324,1390,380,
+            2067,1351,170,
+            3308,3280,3469,
+            49,2655,2137,
+            1262,4873,398,
+            2541,1473,2009,
+            4823,612
+        ]
+        const expected = {
+            0: [941,1760,5146],
+            1: [2324,1390,380],
+            2: [2067,1351,170],
+            3: [3308,3280,3469],
+            4: [49,2655,2137],
+            5: [1262,4873,398],
+            6: [2541,1473,2009],
+            7: [4823,612]
+        }
+
+        const actual = groupBy(testArray, 3);
+
+        assert.deepStrictEqual(actual, expected);
     });
 });
