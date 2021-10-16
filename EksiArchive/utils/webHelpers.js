@@ -27,7 +27,7 @@ const getTotalEntryPagesOfAnUser = user => {
                             resolve(1);
                         }
                         else {
-                            resolve(pages);
+                            resolve(parseInt(pages[0],10));
                         }
                     }
                     catch (e) {
@@ -54,66 +54,3 @@ const sleep = (milliseconds) => {
 
 module.exports.getTotalEntryPagesOfAnUser = getTotalEntryPagesOfAnUser;
 module.exports.sleep = sleep;
-
-// const returnEntriesFromHtml = html => {
-//     const matchEntryList = /class="topic-list"/;
-//     const matchFooter = /id="site-footer"/;
-//     const matchEntryID = /(?<=\/entry\/)\d+/g;
-//
-//     const listBegin = html.match(matchEntryList);
-//     const listEnd = html.match(matchFooter);
-//
-//     if (listBegin !== null && listEnd !== null) {
-//         const entryListHTML = html.slice(listBegin.index, listEnd.index);
-//         return entryListHTML.match(matchEntryID);
-//     }
-//     else {
-//         throw new Error('verilen html\'den entry listesi bulunamadi');
-//     }
-// };
-
-// getTotalEntryPagesOfAnUser('summer-son').then(value => {
-//     console.log(`simdi value: '${value}'`)
-// }, err => {
-//     console.error(`hata oldu ${err}`)
-// })
-// const myArray = ['12354', '4215', '5326', '64367', '64267'];
-//
-// const returnPromise = (entry) => {
-//     return new Promise((resolve,reject)=> {
-//         const randSecond = Math.random()*500
-//         console.log(`entry: '${entry}' basladi`);
-//         console.time(entry);
-//         setTimeout(()=> {
-//             console.timeEnd(entry);
-//             resolve('ok');
-//             // console.log('\n')
-//             // return 'ok';
-//         },randSecond);
-//     });
-// };
-//
-// myArray.forEach(async (val) => {
-//     returnPromise(val).then();
-// });
-
-// const myFunc = async () => {
-//     const entryArray = returnEntriesFromHtml(htmlStrings.entryList)
-//     Promise.all()
-// }
-// const entryIdArray = ['12354', '4215', '5326', '64367', '64267'];
-// const myfunc = async () => {
-//     const entryArray = await Promise.all(entryIdArray.map(async (val)=> {
-//         return await returnPromise(val);
-//     }));
-//
-//     console.log(entryArray)
-// };
-//
-// myfunc();
-// let user='onur'
-// let page=2;
-// console.time();
-// console.timeEnd(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`);
-// module.exports.getTotalEntryPagesOfAnUser = getTotalEntryPagesOfAnUser;
-//const matchPageNum

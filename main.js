@@ -33,7 +33,14 @@ else {
     else {
         // console.log();
         // console.table(argv)
-        if (Object.keys(argv).length === 2) {
+        // if (Object.keys(argv).length === 2) {
+        //
+        // }
+        // else {
+        //     console.log(`too many arguments. try with one flag only`+arguments);
+        // }
+        try {
+            // console.log(argv);
             if (argv.e) {
                 if (typeof argv.e === 'string' || typeof argv.e === 'number') {
                     const id = utils.isInputEntryLink(argv.e.toString());
@@ -47,27 +54,48 @@ else {
                 }
             }
             else if (argv.p) {
-                if (utils.isPageArgumentValid(argv.p)) {
-                    console.log(`arsivlenecek sayfa: ${argv.p}`);
-                    const values = argv.p.split(",");
-                    const user = values[0].replace(/ /g, '-');
-                    userOps.archiveEntriesInAPage(user, values[1]);
+                if (typeof argv.p === 'string') {
+                    if (utils.isPageArgumentValid(argv.p)) {
+                        console.log(`arsivlenecek sayfa: ${argv.p}`);
+                        const values = argv.p.split(",");
+                        const user = values[0].replace(/ /g, '-');
+                        userOps.archiveEntriesInAPage(user, values[1]);
+                    }
+                    else {
+                        console.error('kullanici ya da sayfa gecerli degil.' + 'insert hata here');
+                    }
                 }
                 else {
-                    throw Error('kullanici ya da sayfa gecerli degil.' +
-                        'insert hata here');
+                    console.error('sayfa kismi bos olamaz');
                 }
-                //
+
             }
             else if (argv.u) {
-                console.log(`arsivlenecek kullanici: ${argv.u}`);
+                if (typeof argv.u === 'string') {
+                    if (utils.isUserValid(argv.u)) {
+                        const user = argv.u.replace(/ /g, '-');
+                        console.log(`arsivlenecek kullanici: ${user}`)
+                        if (typeof argv.sleep === 'number') {
+                            userOps.archiveUser(user, argv.sleep);
+                        }
+                        else {
+                            userOps.archiveUser(user);
+                        }
+                    }
+                    else {
+                        console.error('kullanici gecerli degil')
+                    }
+                }
+                else {
+                    console.error('kullanici bos olamaz');
+                }
             }
             else {
                 console.log(`bilinmeyen flag. dogru kullanim:`+arguments);
             }
         }
-        else {
-            console.log(`too many arguments. try with one flag only`+arguments);
+        catch (e) {
+            console.error(`bir seyler kirildi. ${e}`);
         }
     }
 }

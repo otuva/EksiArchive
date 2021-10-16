@@ -34,6 +34,19 @@ const isPageArgumentValid = (string) => {
     }
 };
 
+const isUserValid = (rawUser) => {
+    const matchUser = /[\w -]+/;
+    const userMatch = rawUser.match(matchUser);
+
+    if (userMatch) {
+        return userMatch[0]===rawUser;
+    }
+    else {
+        return false;
+    }
+};
+
 module.exports.isInputEntryLink = isInputEntryLink;
 module.exports.isPageArgumentValid = isPageArgumentValid;
+module.exports.isUserValid = isUserValid;
 

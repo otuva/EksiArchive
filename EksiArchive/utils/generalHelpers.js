@@ -1,13 +1,13 @@
 const groupBy = (array, N) => {
     const arrLen = array.length;
     const maxObjectKeys = Math.ceil(arrLen/N)-1;
-    N -= 1;
+    // N -= 1;
     let object = {};
     let objectKey=0;
     let batchArray = [];
     let allTime=0;
 
-    let current=0;
+    let current=1;
 
     array.forEach(val => {
         // console.log(val);
@@ -19,7 +19,7 @@ const groupBy = (array, N) => {
             object[objectKey] = batchArray;
             batchArray = [];
             objectKey++;
-            current=-1;
+            current=0;
         }
         allTime++;
         current++;

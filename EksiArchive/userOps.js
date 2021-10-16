@@ -4,9 +4,9 @@ const https = require('https');
 const formatOps = require('./formatOps');
 const dbOps = require("./dbOps");
 const utils = require("./utils/generalHelpers");
-// const utils = require("./utils/webHelpers");
+const webHelpers = require("./utils/webHelpers");
 
-
+let throttle = 2;
 // send http request for entry
 // resolve html string of the response
 const requestEntry = (entryID) => {
@@ -18,9 +18,16 @@ const requestEntry = (entryID) => {
             method: 'GET'
         }
 
-        const req = https.request(options, res => {
+        const req = https.request(options, async res => {
             // reject bad status
             if (res.statusCode < 200 || res.statusCode >= 300) {
+                // console.log(res.headers);
+                if (res.statusCode === 429) {
+                    console.error('istekler eksisozluk limitine takildi.');
+                    console.error(`islem ${throttle*10} saniye sonra devam edecek`);
+                    await webHelpers.sleep(throttle*10000);
+                    throttle++;
+                }
                 return reject(new Error(`statusCode=${res.statusCode}`));
             }
 
@@ -74,46 +81,55 @@ const returnEntryIDsFromHTML = html => {
 };
 
 // get requested entry format and return
-const getEntry = async (id) => {
+const getEntry = async (id, sleepTime=0) => {
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
+
+    const timeStr = `[${today.toUTCString()}]`;
+
     return new Promise(async (resolve, reject)=> {
-        console.time(`entry '${id}'`);
+        console.time(`${timeStr} - entry '${id}'`);
         const matchError = /<h1 title="web5">büyük başarısızlıklar sözkonusu<\/h1>/;
-
-        const state = await dbOps.entryIdExists(id);
-
-        if (state) {
-            // console.log('entry zaten arsivde. atlandi');
-            reject('entry zaten arsivde');
-        }
-        else {
-            requestEntry(id).then((html)=>{
-                if (html.match(matchError)) {
-                    // console.timeEnd(`entry '${id}' suresi`);
-                    return reject(new Error('eksi sozluk hata dondurdu'));
-                }
-                else {
-                    console.timeEnd(`entry '${id}'`);
-                    resolve(formatOps.html2entry(html));
-                }
-            }, (err)=>{
-                // console.timeEnd(`entry '${id}' suresi`);
-                return reject(new Error(`eksi sozluk hata dondurdu ${err}`));
-            });
-        }
-        // console.timeEnd(`entry '${id}' suresi`);
+        // const state = await dbOps.entryIdExists(id);
+        dbOps.entryIdExists(id).then(state=>{
+            if (state) {
+                reject('entry zaten arsivde');
+            }
+            else {
+                setTimeout( ()=>{
+                    requestEntry(id).then((html)=>{
+                        if (html.match(matchError)) {
+                            // console.timeEnd(`entry '${id}' suresi`);
+                            return reject(new Error('eksi sozluk hata dondurdu'));
+                        }
+                        else {
+                            console.timeEnd(`${timeStr} - entry '${id}'`);
+                            resolve(formatOps.html2entry(html));
+                        }
+                    }, (err)=>{
+                        return reject(new Error(`eksi sozluk hata dondurdu ${err}`));
+                    });
+                }, sleepTime);
+            }
+        }, err=>{
+            console.error(`database hatasi ${err}`);
+        });
     });
 }
 
-const archiveEntriesInAPage = async (user, page) => {
-    getEntriesInAPage(user, page).then(async entries => {
-        await dbOps.addMultipleEntries(entries);
-        console.log('ok. sayfadaki tum entryler arsivlendi');
-    }, err => {
-        console.error(err);
-    });
+const archiveEntriesInAPage = async (user, page, sleepTime=0) => {
+    return new Promise(((resolve, reject) => {
+        getEntriesInAPage(user, page, sleepTime).then(async entries => {
+            await dbOps.addMultipleEntries(entries);
+            return resolve('ok. sayfadaki tum entryler arsivlendi');
+        }, err => {
+            console.error(err);
+            reject(err);
+        });
+    }));
 };
 
-const getEntriesInAPage = (user, page) => {
+const getEntriesInAPage = (user, page, sleepTime=0) => {
     return new Promise( (resolve, reject) => {
         console.time(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
         const options = {
@@ -126,7 +142,7 @@ const getEntriesInAPage = (user, page) => {
         const req = https.request(options, res => {
             // reject bad status
             if (res.statusCode < 200 || res.statusCode >= 300) {
-                console.timeEnd(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
+                // console.timeEnd(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
                 return reject(new Error(`statusCode=${res.statusCode}`));
             }
             let resBody = '';
@@ -146,7 +162,7 @@ const getEntriesInAPage = (user, page) => {
                     for (const key of Object.keys(batchEntryIds)) {
                         // console.log(key, batchEntryIds[key]);
                         const batchEntry = await Promise.all(batchEntryIds[key].map(entryID => {
-                            return getEntry(entryID).then(entry => {
+                            return getEntry(entryID, sleepTime).then(entry => {
                                 return entry;
                             }, rej => {
                                 console.error(`'${entryID}' - ${rej}`);
@@ -191,8 +207,49 @@ const archiveEntry = async (entryID) => {
 
 };
 
+// multiple page
+// const archiveUser = (user, maxPage=3) => {
+//     getTotalEntryPagesOfAnUser(user).then(async (pageNum) =>  {
+//         console.time(`kullanici '${user}'`);
+//         const pageNumberArray = [...Array(pageNum+1).keys()];
+//         pageNumberArray.shift();
+//         const batchPageNumbers = utils.groupBy(pageNumberArray, maxPage);
+//
+//         for (const key of Object.keys(batchPageNumbers)) {
+//             await Promise.all(batchPageNumbers[key].map(page => {
+//                 return archiveEntriesInAPage(user, page);
+//             }));
+//         }
+//
+//         console.timeEnd(`kullanici '${user}'`);
+//     });
+// };
+
+//singlepage
+const archiveUser = (user, sleepTime=0) => {
+    webHelpers.getTotalEntryPagesOfAnUser(user).then(async (pageNum) =>  {
+        console.time(`kullanici '${user}'`);
+        const pageNumberArray = [...Array(pageNum+1).keys()];
+        pageNumberArray.shift();
+
+        // await pageNumberArray.reduce(async (memo, page) => {
+        //     await memo;
+        //     // await webHelpers.sleep(100);
+        //     await archiveEntriesInAPage(user, page);
+        // }, undefined);
+
+        for (const page of pageNumberArray) {
+            await archiveEntriesInAPage(user, page, sleepTime);
+        }
+
+        console.timeEnd(`kullanici '${user}'`);
+    });
+};
+
+
 module.exports.getEntry = getEntry;
 module.exports.requestEntry = requestEntry;
 module.exports.archiveEntry = archiveEntry;
 module.exports.getEntriesInAPage = getEntriesInAPage;
 module.exports.archiveEntriesInAPage = archiveEntriesInAPage;
+module.exports.archiveUser = archiveUser;
