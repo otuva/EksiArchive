@@ -1,5 +1,6 @@
 ---
 
+- ayar dosyasi koy, user agent kismini oradan ayarla. random user agent secenegi olsun
 - rate limiting icin belki proxy kullan. 5 port arasinda degisimli istekler at?
 - entrynin icerik hashini al. aynisi varsa direkt ekleme kullanici onayi iste. -> oncelikli
 - hash almak yerine idyi kontrol et varsa kullanicidan arsivlemek icin --forcelamasini iste 

@@ -4,6 +4,8 @@
 
 Eksi sozluk entrylerinin local kopyasini alin.
 
+Kullanici entry sayfasi, kullanici veya entry arsivleyebilir. 
+
 
 #### Example Output - Ornek Cikti
 
