@@ -7,6 +7,8 @@ const utils = require("./utils/generalHelpers");
 const webHelpers = require("./utils/webHelpers");
 const config = require("../config");
 
+
+const sleepTime = config.entry.sleep;
 let throttle = 2;
 // send http request for entry
 // resolve html string of the response
@@ -26,9 +28,9 @@ const requestEntry = (entryID) => {
                 // console.log(res.headers);
                 if (res.statusCode === 429) {
                     console.error('istekler eksisozluk limitine takildi. eger bu hatayi sik aliyorsaniz "--sleep <ms>" secenegi ile arsivlemeyi deneyin');
-                    console.error(`islem ${throttle*30} saniye sonra devam edecek`);
+                    console.error(`islem ${throttle*30/60} dakika sonra devam edecek`);
                     await webHelpers.sleep(throttle*30000);
-                    throttle++;
+                    throttle>=10 ? throttle=10 : throttle++;
                 }
                 return reject(new Error(`statusCode=${res.statusCode}`));
             }
@@ -83,7 +85,7 @@ const returnEntryIDsFromHTML = html => {
 };
 
 // get requested entry and return entry object
-const getEntry = async (id, sleepTime=0) => {
+const getEntry = async (id) => {
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);
 
@@ -120,9 +122,9 @@ const getEntry = async (id, sleepTime=0) => {
 }
 
 // call getEntriesInAPage then add all to database
-const archiveEntriesInAPage = async (user, page, sleepTime=0) => {
+const archiveEntriesInAPage = async (user, page) => {
     return new Promise(((resolve, reject) => {
-        getEntriesInAPage(user, page, sleepTime).then(async entries => {
+        getEntriesInAPage(user, page).then(async entries => {
             await dbOps.addMultipleEntries(entries);
             return resolve('ok. sayfadaki tum entryler arsivlendi');
         }, err => {
@@ -134,7 +136,7 @@ const archiveEntriesInAPage = async (user, page, sleepTime=0) => {
 
 // get entries batches of 5 then add resolved entry objects to an array.
 // then return array
-const getEntriesInAPage = (user, page, sleepTime=0) => {
+const getEntriesInAPage = (user, page) => {
     return new Promise( (resolve, reject) => {
         console.time(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
         const options = {
@@ -167,7 +169,7 @@ const getEntriesInAPage = (user, page, sleepTime=0) => {
 
                     for (const key of Object.keys(batchEntryIds)) {
                         const batchEntry = await Promise.all(batchEntryIds[key].map(entryID => {
-                            return getEntry(entryID, sleepTime).then(entry => {
+                            return getEntry(entryID).then(entry => {
                                 return entry;
                             }, rej => {
                                 console.error(`'${entryID}' - ${rej}`);
