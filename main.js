@@ -1,6 +1,6 @@
 const argv = require('minimist')(process.argv.slice(2));
 
-// const userOps = require("./EksiArchive/userOps");
+const userOps = require("./EksiArchive/userOps");
 const inputValidate = require("./EksiArchive/utils/inputValidate");
 const manage = require("./EksiArchive/manage");
 const config = require("./config");
