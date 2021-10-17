@@ -1,9 +1,8 @@
 const argv = require('minimist')(process.argv.slice(2));
 
 const userOps = require("./EksiArchive/userOps");
-// const formatOps = require("./EksiArchive/formatOps");
-// const dbOps = require("./EksiArchive/dbOps");
-const utils = require("./EksiArchive/utils/inputValidate");
+const inputValidate = require("./EksiArchive/utils/inputValidate");
+const manage = require("./EksiArchive/manage");
 
 // help diyince ayri bos calistirinca ayri text yazdir
 
@@ -21,29 +20,23 @@ else {
             console.error('\x1b[31m%s\x1b[0m', "You can't use other flags with first flags. Disregarding other flags.")
         }
         if (argv._[0] === 'init') {
-            console.log("Database has been initialized.")
+            manage.init();
         }
         else if (argv._[0] === 'help') {
             console.log("yardim mod");
+        }
+        else if (argv._[0] === 'version') {
+            console.log("v0.1");
         }
         else {
             console.error("Yanlis kullanim. Dogrusu:"+firstFlags);
         }
     }
     else {
-        // console.log();
-        // console.table(argv)
-        // if (Object.keys(argv).length === 2) {
-        //
-        // }
-        // else {
-        //     console.log(`too many arguments. try with one flag only`+arguments);
-        // }
         try {
-            // console.log(argv);
             if (argv.e) {
                 if (typeof argv.e === 'string' || typeof argv.e === 'number') {
-                    const id = utils.isInputEntryLink(argv.e.toString());
+                    const id = inputValidate.isInputEntryLink(argv.e.toString());
                     // console.log(id);
                     // console.log(typeof id);
                     console.log(`arsivlenecek entry: ${id}`);
@@ -55,11 +48,16 @@ else {
             }
             else if (argv.p) {
                 if (typeof argv.p === 'string') {
-                    if (utils.isPageArgumentValid(argv.p)) {
+                    if (inputValidate.isPageArgumentValid(argv.p)) {
                         console.log(`arsivlenecek sayfa: ${argv.p}`);
                         const values = argv.p.split(",");
                         const user = values[0].replace(/ /g, '-');
-                        userOps.archiveEntriesInAPage(user, values[1]);
+                        if (typeof argv.sleep === 'number') {
+                            userOps.archiveEntriesInAPage(user, values[1], argv.sleep);
+                        }
+                        else {
+                            userOps.archiveEntriesInAPage(user, values[1]);
+                        }
                     }
                     else {
                         console.error('kullanici ya da sayfa gecerli degil.' + 'insert hata here');
@@ -72,7 +70,7 @@ else {
             }
             else if (argv.u) {
                 if (typeof argv.u === 'string') {
-                    if (utils.isUserValid(argv.u)) {
+                    if (inputValidate.isUserValid(argv.u)) {
                         const user = argv.u.replace(/ /g, '-');
                         console.log(`arsivlenecek kullanici: ${user}`)
                         if (typeof argv.sleep === 'number') {
