@@ -1,5 +1,6 @@
 ---
 
+- hata donduren entryleri atla ama not al. diger tum entryler bitince onlari tekrar dene
 - ayar dosyasi koy, user agent kismini oradan ayarla. random user agent secenegi olsun
 - rate limiting icin belki proxy kullan. 5 port arasinda degisimli istekler at?
 - entrynin icerik hashini al. aynisi varsa direkt ekleme kullanici onayi iste. -> oncelikli
@@ -23,7 +24,6 @@
 - [ ] entry icindeki html elementleri nolacak?
 - [ ] favorileyen kullanicilari ve caylaklari ayri al??
 - [ ] fav kullanicilari db ekle??
-- [ ] entry savelemeden once var mi diye kontrol et
 - [ ] varolan bir entryi verip entry guncelleyebilsin.
 - [ ] auth sistemi kur??????
 
