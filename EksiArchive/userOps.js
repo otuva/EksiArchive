@@ -5,6 +5,7 @@ const formatOps = require('./formatOps');
 const dbOps = require("./dbOps");
 const utils = require("./utils/generalHelpers");
 const webHelpers = require("./utils/webHelpers");
+const config = require("../config");
 
 let throttle = 2;
 // send http request for entry
@@ -15,7 +16,8 @@ const requestEntry = (entryID) => {
             hostname: 'eksisozluk.com',
             port: 443,
             path: `/entry/${entryID}`,
-            method: 'GET'
+            method: 'GET',
+            headers: config.requestHeaders
         }
 
         const req = https.request(options, async res => {
@@ -23,9 +25,9 @@ const requestEntry = (entryID) => {
             if (res.statusCode < 200 || res.statusCode >= 300) {
                 // console.log(res.headers);
                 if (res.statusCode === 429) {
-                    console.error('istekler eksisozluk limitine takildi.');
-                    console.error(`islem ${throttle*10} saniye sonra devam edecek`);
-                    await webHelpers.sleep(throttle*10000);
+                    console.error('istekler eksisozluk limitine takildi. eger bu hatayi sik aliyorsaniz "--sleep <ms>" secenegi ile arsivlemeyi deneyin');
+                    console.error(`islem ${throttle*30} saniye sonra devam edecek`);
+                    await webHelpers.sleep(throttle*30000);
                     throttle++;
                 }
                 return reject(new Error(`statusCode=${res.statusCode}`));
@@ -80,7 +82,7 @@ const returnEntryIDsFromHTML = html => {
     }
 };
 
-// get requested entry format and return
+// get requested entry and return entry object
 const getEntry = async (id, sleepTime=0) => {
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);
@@ -117,6 +119,7 @@ const getEntry = async (id, sleepTime=0) => {
     });
 }
 
+// call getEntriesInAPage then add all to database
 const archiveEntriesInAPage = async (user, page, sleepTime=0) => {
     return new Promise(((resolve, reject) => {
         getEntriesInAPage(user, page, sleepTime).then(async entries => {
@@ -129,6 +132,8 @@ const archiveEntriesInAPage = async (user, page, sleepTime=0) => {
     }));
 };
 
+// get entries batches of 5 then add resolved entry objects to an array.
+// then return array
 const getEntriesInAPage = (user, page, sleepTime=0) => {
     return new Promise( (resolve, reject) => {
         console.time(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
@@ -136,7 +141,8 @@ const getEntriesInAPage = (user, page, sleepTime=0) => {
             hostname: 'eksisozluk.com',
             port: 443,
             path: `/basliklar/istatistik/${user}/son-entryleri?p=${page}`,
-            method: 'GET'
+            method: 'GET',
+            headers: config.requestHeaders
         }
 
         const req = https.request(options, res => {
@@ -160,7 +166,6 @@ const getEntriesInAPage = (user, page, sleepTime=0) => {
                     const entryArray = [];
 
                     for (const key of Object.keys(batchEntryIds)) {
-                        // console.log(key, batchEntryIds[key]);
                         const batchEntry = await Promise.all(batchEntryIds[key].map(entryID => {
                             return getEntry(entryID, sleepTime).then(entry => {
                                 return entry;
@@ -169,7 +174,6 @@ const getEntriesInAPage = (user, page, sleepTime=0) => {
                             });
                         }));
 
-                        // console.log(batchEntry);
                         if (batchEntry.some(elem => elem!==undefined)) {
                             const filteredBatchEntry = batchEntry.filter(element => element !== undefined);
                             entryArray.push(...filteredBatchEntry);
@@ -180,7 +184,6 @@ const getEntriesInAPage = (user, page, sleepTime=0) => {
                     resolve(entryArray);
                 }
                 catch (e) {
-                    // console.timeEnd(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
                     return reject(new Error(`hata olustu: ${e}`));
                 }
             });
@@ -195,6 +198,7 @@ const getEntriesInAPage = (user, page, sleepTime=0) => {
     });
 };
 
+// get single entry then add resolved entry object to database
 const archiveEntry = async (entryID) => {
     getEntry(entryID).then((val)=>{
         dbOps.addEntry(val);
@@ -207,7 +211,7 @@ const archiveEntry = async (entryID) => {
 
 };
 
-// multiple page
+// multiple pages
 // const archiveUser = (user, maxPage=3) => {
 //     getTotalEntryPagesOfAnUser(user).then(async (pageNum) =>  {
 //         console.time(`kullanici '${user}'`);
