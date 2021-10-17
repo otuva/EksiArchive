@@ -1,5 +1,6 @@
 ---
 
+- sleepi fonksiyon parametresi olarak cagirmaktansa confige ekle. flag gelirse configtekini guncelle
 - hata donduren entryleri atla ama not al. diger tum entryler bitince onlari tekrar dene
 - ayar dosyasi koy, user agent kismini oradan ayarla. random user agent secenegi olsun
 - rate limiting icin belki proxy kullan. 5 port arasinda degisimli istekler at?
@@ -9,6 +10,8 @@
 - entrydeki gorselleri kaydet?
 - belki db'e eklenme tarihi koy?
 - readme ekle
+- get random entry to read 
+- get random entry to read user specific 
 - cli argument hatalarini yaz. multi lang olsun diye stringleri utilse koy.
 
 ---
