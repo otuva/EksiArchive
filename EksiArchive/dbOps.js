@@ -1,16 +1,12 @@
 const sqlite3 = require("sqlite3").verbose();
+const config = require("../config");
 
 // testing purposes.
 // if this is main double dot
 // otherwise it's from main.js. so single dot
 // change this to const dbFile
 let dbFile;
-if (require.main === module) {
-    dbFile = '../testDatabase.db';
-}
-else {
-    dbFile = './testDatabase.db';
-}
+dbFile = config.databaseFilePath;
 
 const init = () => {
     const db = new sqlite3.Database(dbFile, (err) => {
