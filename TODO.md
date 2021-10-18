@@ -1,7 +1,12 @@
 ---
 
+- debeyi oncelikli flag olarak ekle. debedeki tum entryleri arsivlesin
+- kullanici favorilerini al
+- baslik arsivleme (tamami ya da sayfa sayfa)
+- entry icinde linklenen diger entryleri de al (ayar olarak ekle)
 - var olan entry --forcelanirsa guncel halini de al
 - hata donduren entryleri atla ama not al. diger tum entryler bitince onlari tekrar dene
+- ayarlara max try ve maxtry flagi ekle. default 3
 - random user agent secenegi olsun
 - rate limiting icin belki proxy kullan. 5 port arasinda degisimli istekler at?
 - entrynin icerik hashini al. aynisi varsa direkt ekleme kullanici onayi iste. -> oncelikli
@@ -16,6 +21,7 @@
 - get random entry to read 
 - get random entry to read user specific 
 - cli argument hatalarini yaz. multi lang olsun diye stringleri utilse koy.
+- varolan bir entryi verip entry guncelleyebilsin.
 
 ---
 
@@ -25,11 +31,19 @@
 
 ---
 
+### server
+
+- entry eksisozlukte canli duruyor mu kontrol et
+- gorselleri entrye ekle base64 olarak serv et 
+
+---
+
+### gereksiz seyler
+
 - [ ] verbose seviyeleri icin sistem ekle
 - [ ] outputlari renkli yap
 - [ ] favorileyen kullanicilari ve caylaklari ayri al??
 - [ ] fav kullanicilari db ekle??
-- [ ] varolan bir entryi verip entry guncelleyebilsin.
 - [ ] auth sistemi kur??????
 
 --- 
