@@ -8,7 +8,6 @@ const webHelpers = require("./utils/webHelpers");
 const config = require("../config");
 
 
-const sleepTime = config.entry.sleep;
 let throttle = 2;
 // send http request for entry
 // resolve html string of the response
@@ -84,6 +83,7 @@ const returnEntryIDsFromHTML = html => {
     }
 };
 
+// sleep time is used here
 // get requested entry and return entry object
 const getEntry = async (id) => {
     const timeElapsed = Date.now();
@@ -113,7 +113,7 @@ const getEntry = async (id) => {
                     }, (err)=>{
                         return reject(new Error(`eksi sozluk hata dondurdu ${err}`));
                     });
-                }, sleepTime);
+                }, config.entry.sleep);
             }
         }, err=>{
             console.error(`database hatasi ${err}`);
