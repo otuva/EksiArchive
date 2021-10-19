@@ -1,6 +1,3 @@
-// import { parse } from 'node-html-parser';
-// const parse = require('node-html-parser').parse;
-
 const dateTimeFormatter = (string) => {
     const dateTime = string.split(' ~ ')
     const dateRegex = /\d\d\.\d\d\.\d\d\d\d/;
@@ -45,7 +42,6 @@ const contentFormatter = (string) => {
     return string;
 };
 
-// const sample = '<ul id="list"><li>Hello World</li></ul>';
 const html2entry = (rawHtml) => {
     if (typeof rawHtml === 'string' && rawHtml.length !== 0) {
         try {
