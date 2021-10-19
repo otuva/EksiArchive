@@ -28,6 +28,9 @@ else {
         else if (argv._[0] === 'version') {
             console.log("v0.1");
         }
+        else if (argv._[0] === 'debe') {
+            userOps.archiveEntriesInAPage('/debe');
+        }
         else {
             console.error("Yanlis kullanim. Dogrusu:"+firstFlags);
         }
