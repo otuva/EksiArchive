@@ -62,7 +62,7 @@ const requestEntry = (entryID) => {
 };
 
 const returnEntryIDsFromHTML = html => {
-    const matchEntryList = /class="topic-list"/;
+    const matchEntryList = /class="(?:topic-list|topic-list partial)"/;
     const matchFooter = /id="site-footer"/;
     const matchEntryID = /(?<=\/entry\/)\d+/g;
 
