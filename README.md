@@ -112,4 +112,69 @@ kullanici: 'dandik-tavsan', sayfa: '1': 427.811ms
 ok. sayfadaki tum entryler arsivlendi
 ```
 
+force
+
+```
+tfp@mint:~/Programming/node/EksiArchive$ node main.js --force -e https://eksisozluk.com/entry/129197723
+arsivlenecek entry: 129197723
+entry zaten arsivde ama "--force" secenegi kullanildi
+[Tue, 19 Oct 2021 06:27:56 GMT] - entry '129197723': 556.462ms
+ok. entry arsivlendi
+```
+
+debe
+
+
+```
+tfp@mint:~/Programming/node/EksiArchive$ node main.js debe
+[Tue, 19 Oct 2021 06:38:28 GMT] - entry '129191337': 393.517ms
+[Tue, 19 Oct 2021 06:38:28 GMT] - entry '129174033': 452.927ms
+[Tue, 19 Oct 2021 06:38:28 GMT] - entry '129179649': 461.026ms
+[Tue, 19 Oct 2021 06:38:28 GMT] - entry '129189529': 482.283ms
+[Tue, 19 Oct 2021 06:38:28 GMT] - entry '129180581': 484.936ms
+[Tue, 19 Oct 2021 06:38:29 GMT] - entry '129200450': 421.462ms
+[Tue, 19 Oct 2021 06:38:29 GMT] - entry '129180769': 427.666ms
+[Tue, 19 Oct 2021 06:38:29 GMT] - entry '129203709': 486.857ms
+[Tue, 19 Oct 2021 06:38:29 GMT] - entry '129179989': 529.228ms
+[Tue, 19 Oct 2021 06:38:29 GMT] - entry '129178534': 542.361ms
+[Tue, 19 Oct 2021 06:38:29 GMT] - entry '129195725': 421.65ms
+[Tue, 19 Oct 2021 06:38:29 GMT] - entry '129190573': 458.791ms
+[Tue, 19 Oct 2021 06:38:29 GMT] - entry '129173753': 475.581ms
+[Tue, 19 Oct 2021 06:38:29 GMT] - entry '129174426': 479.021ms
+[Tue, 19 Oct 2021 06:38:29 GMT] - entry '129195435': 479.583ms
+[Tue, 19 Oct 2021 06:38:29 GMT] - entry '129197743': 429.423ms
+[Tue, 19 Oct 2021 06:38:30 GMT] - entry '129179610': 401.376ms
+[Tue, 19 Oct 2021 06:38:30 GMT] - entry '129183635': 433.705ms
+[Tue, 19 Oct 2021 06:38:30 GMT] - entry '129179477': 437.044ms
+[Tue, 19 Oct 2021 06:38:30 GMT] - entry '129180339': 427.31ms
+[Tue, 19 Oct 2021 06:38:30 GMT] - entry '129200095': 399.411ms
+[Tue, 19 Oct 2021 06:38:30 GMT] - entry '129201876': 409.159ms
+[Tue, 19 Oct 2021 06:38:30 GMT] - entry '129181201': 470.406ms
+[Tue, 19 Oct 2021 06:38:30 GMT] - entry '129190781': 472.747ms
+[Tue, 19 Oct 2021 06:38:30 GMT] - entry '129181340': 577.091ms
+[Tue, 19 Oct 2021 06:38:31 GMT] - entry '129190673': 460.169ms
+[Tue, 19 Oct 2021 06:38:31 GMT] - entry '129173711': 462.477ms
+[Tue, 19 Oct 2021 06:38:31 GMT] - entry '129188223': 469.583ms
+[Tue, 19 Oct 2021 06:38:31 GMT] - entry '129179172': 479.141ms
+[Tue, 19 Oct 2021 06:38:31 GMT] - entry '129189933': 552.604ms
+[Tue, 19 Oct 2021 06:38:31 GMT] - entry '129201312': 443.169ms
+[Tue, 19 Oct 2021 06:38:31 GMT] - entry '129187968': 449.41ms
+[Tue, 19 Oct 2021 06:38:31 GMT] - entry '129191260': 490.153ms
+[Tue, 19 Oct 2021 06:38:31 GMT] - entry '129204768': 494.202ms
+[Tue, 19 Oct 2021 06:38:31 GMT] - entry '129200973': 502.019ms
+[Tue, 19 Oct 2021 06:38:32 GMT] - entry '129175557': 427.35ms
+[Tue, 19 Oct 2021 06:38:32 GMT] - entry '129202710': 446.452ms
+[Tue, 19 Oct 2021 06:38:32 GMT] - entry '129200037': 473.432ms
+[Tue, 19 Oct 2021 06:38:32 GMT] - entry '129184664': 480.234ms
+[Tue, 19 Oct 2021 06:38:32 GMT] - entry '129202876': 537.625ms
+[Tue, 19 Oct 2021 06:38:32 GMT] - entry '129179633': 452.197ms
+[Tue, 19 Oct 2021 06:38:32 GMT] - entry '129181487': 474.263ms
+[Tue, 19 Oct 2021 06:38:32 GMT] - entry '129188578': 491.497ms
+[Tue, 19 Oct 2021 06:38:32 GMT] - entry '129184361': 494.781ms
+[Tue, 19 Oct 2021 06:38:32 GMT] - entry '129182220': 530.248ms
+[Tue, 19 Oct 2021 06:38:33 GMT] - entry '129205939': 415.732ms
+[Tue, 19 Oct 2021 06:38:33 GMT] - entry '129184484': 455.15ms
+/debe: 5.539s
+```
+
 ---
