@@ -1,19 +1,15 @@
 ---
 
-- debeyi oncelikli flag olarak ekle. debedeki tum entryleri arsivlesin
 - kullanici favorilerini al
 - baslik arsivleme (tamami ya da sayfa sayfa)
 - entry icinde linklenen diger entryleri de al (ayar olarak ekle)
-- var olan entry --forcelanirsa guncel halini de al
 - hata donduren entryleri atla ama not al. diger tum entryler bitince onlari tekrar dene
 - ayarlara max try ve maxtry flagi ekle. default 3
 - random user agent secenegi olsun
 - rate limiting icin belki proxy kullan. 5 port arasinda degisimli istekler at?
-- entrynin icerik hashini al. aynisi varsa direkt ekleme kullanici onayi iste. -> oncelikli
-- hash almak yerine idyi kontrol et varsa kullanicidan arsivlemek icin --forcelamasini iste 
 - loglari arttir ve renkli yap. (belki tum loglari tek fonksiyona bagla ve oradan renk ver)
+- console.log olanlari info vs. degistir
 - entrydeki gorselleri kaydet?
-- entrynin icinde linklenen entryleri de arsivle?
 - belki db'e eklenme tarihi koy?
 - readme ekle
 - entryleri sunmak icin local server?
@@ -21,7 +17,6 @@
 - get random entry to read 
 - get random entry to read user specific 
 - cli argument hatalarini yaz. multi lang olsun diye stringleri utilse koy.
-- varolan bir entryi verip entry guncelleyebilsin.
 
 ---
 
@@ -64,3 +59,8 @@
 - [X] sleepi fonksiyon parametresi olarak cagirmaktansa confige ekle. flag gelirse configtekini guncelle
 - [X] ayar dosyasi koy, user agent kismini oradan ayarla. 
 - [X] entry icindeki html elementleri nolacak? (oldugu gibi kalacak)
+- [X] debeyi oncelikli flag olarak ekle. debedeki tum entryleri arsivlesin
+- [X] var olan entry --forcelanirsa guncel halini de al
+- [X] hash almak yerine idyi kontrol et varsa kullanicidan arsivlemek icin --forcelamasini iste 
+- [X] entrynin icerik hashini al. aynisi varsa direkt ekleme kullanici onayi iste. (hash yerine id ve argument ustu gittim.)
+- [X] varolan bir entryi verip entry guncelleyebilsin. (--force. guncellemek yerine duplicate aliyor)
