@@ -61,9 +61,10 @@ const requestEntry = (entryID) => {
     });
 };
 
-// sleep time is used here
-// get requested entry and return entry object
+// sleep time & force are used here
+// db query gets made here
 const getEntry = async (id) => {
+    // get requested entry and return an entry object
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);
 
@@ -74,10 +75,11 @@ const getEntry = async (id) => {
         const matchError = /<h1 title="web5">büyük başarısızlıklar sözkonusu<\/h1>/;
         // const state = await dbOps.entryIdExists(id);
         dbOps.entryIdExists(id).then(state=>{
-            if (state) {
-                reject('entry zaten arsivde');
-            }
-            else {
+            // entry does NOT exist or force option is used
+            if (!state || config.entry.force) {
+                if (state) {
+                    console.log('entry zaten arsivde ama "--force" secenegi kullanildi');
+                }
                 setTimeout( ()=>{
                     requestEntry(id).then((html)=>{
                         if (html.match(matchError)) {
@@ -92,6 +94,9 @@ const getEntry = async (id) => {
                         return reject(new Error(`eksi sozluk hata dondurdu ${err}`));
                     });
                 }, config.entry.sleep);
+            }
+            else {
+                reject('entry zaten arsivde');
             }
         }, err=>{
             console.error(`database hatasi ${err}`);

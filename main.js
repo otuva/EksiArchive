@@ -34,13 +34,13 @@ else {
     }
     else {
         try {
-            console.log(argv);
+            // console.log(argv);
             if (typeof argv.sleep === 'number') {
                 config.entry.sleep = argv.sleep;
             }
-            // if (typeof argv.force === 'boolean') {
-            //     config.entry.force = argv.force;
-            // }
+            if (typeof argv.force === 'boolean') {
+                config.entry.force = argv.force;
+            }
 
             if (argv.e) {
                 if (typeof argv.e === 'string' || typeof argv.e === 'number') {
@@ -60,7 +60,7 @@ else {
                         console.log(`arsivlenecek sayfa: ${argv.p}`);
                         const values = argv.p.split(",");
                         const user = values[0].replace(/ /g, '-');
-                        userOps.archiveEntriesInAPage(user, values[1]);
+                        userOps.archiveEntriesInAPage(`/basliklar/istatistik/${user}/son-entryleri?p=${values[1]}`);
                     }
                     else {
                         console.error('kullanici ya da sayfa gecerli degil.' + 'insert hata here');

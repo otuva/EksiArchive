@@ -10,7 +10,7 @@ requestHeaders = {
 // default options for flags
 entry = {
     sleep: 0, // delay between requests ms
-    // force: false
+    force: false
 }
 
 module.exports.databaseFilePath = databaseFilePath;
