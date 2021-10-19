@@ -100,9 +100,9 @@ const getEntry = async (id) => {
 }
 
 // call getEntriesInAPage then add all to database
-const archiveEntriesInAPage = async (user, page) => {
+const archiveEntriesInAPage = async (pagePath) => {
     return new Promise(((resolve, reject) => {
-        getEntriesInAPage(user, page).then(async entries => {
+        getEntriesInAPage(pagePath).then(async entries => {
             await dbOps.addMultipleEntries(entries);
             return resolve('ok. sayfadaki tum entryler arsivlendi');
         }, err => {
@@ -114,13 +114,13 @@ const archiveEntriesInAPage = async (user, page) => {
 
 // get entries batches of 5 then add resolved entry objects to an array.
 // then return array
-const getEntriesInAPage = (user, page) => {
+const getEntriesInAPage = (pagePath) => {
     return new Promise( (resolve, reject) => {
-        console.time(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
+        console.time(pagePath)
         const options = {
             hostname: 'eksisozluk.com',
             port: 443,
-            path: `/basliklar/istatistik/${user}/son-entryleri?p=${page}`,
+            path: pagePath,
             method: 'GET',
             headers: config.requestHeaders
         }
@@ -128,7 +128,6 @@ const getEntriesInAPage = (user, page) => {
         const req = https.request(options, res => {
             // reject bad status
             if (res.statusCode < 200 || res.statusCode >= 300) {
-                // console.timeEnd(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
                 return reject(new Error(`statusCode=${res.statusCode}`));
             }
             let resBody = '';
@@ -160,7 +159,7 @@ const getEntriesInAPage = (user, page) => {
                         }
                     }
 
-                    console.timeEnd(`\x1b[36mkullanici: '${user}', sayfa: '${page}'\x1b[0m`)
+                    console.timeEnd(pagePath);
                     resolve(entryArray);
                 }
                 catch (e) {
@@ -210,7 +209,7 @@ const archiveEntry = async (entryID) => {
 // };
 
 //singlepage
-const archiveUser = (user, sleepTime=0) => {
+const archiveUser = (user) => {
     webHelpers.getTotalEntryPagesOfAnUser(user).then(async (pageNum) =>  {
         console.time(`kullanici '${user}'`);
         const pageNumberArray = [...Array(pageNum+1).keys()];
@@ -223,7 +222,7 @@ const archiveUser = (user, sleepTime=0) => {
         // }, undefined);
 
         for (const page of pageNumberArray) {
-            await archiveEntriesInAPage(user, page, sleepTime);
+            await archiveEntriesInAPage(`/basliklar/istatistik/${user}/son-entryleri?p=${page}`);
         }
 
         console.timeEnd(`kullanici '${user}'`);
