@@ -37,6 +37,7 @@ const dateTimeFormatter = (string) => {
 const apostropheEscape = (string) => {
     return string.replace(/'/g, "''");
 };
+
 // write tests for this func
 const contentFormatter = (string) => {
     string = string.trim()
@@ -103,6 +104,29 @@ const html2entry = (rawHtml) => {
     }
 };
 
+const returnEntryIDsFromHTML = html => {
+    const matchEntryList = /class="(?:topic-list|topic-list partial)"/;
+    const matchFooter = /id="site-footer"/;
+    const matchEntryID = /(?<=\/entry\/)\d+/g;
+
+    const listBegin = html.match(matchEntryList);
+    const listEnd = html.match(matchFooter);
+
+    if (listBegin !== null && listEnd !== null) {
+        const entryListHTML = html.slice(listBegin.index, listEnd.index);
+        if (entryListHTML.match(matchEntryID) !== null) {
+            return entryListHTML.match(matchEntryID);
+        }
+        else {
+            throw new Error('verilen html\'den entry listesi bulunamadi');
+        }
+    }
+    else {
+        throw new Error('verilen html\'den entry listesi bulunamadi');
+    }
+};
+
 module.exports.html2entry = html2entry;
 module.exports.contentFormatter = contentFormatter;
 module.exports.dateTimeFormatter = dateTimeFormatter;
+module.exports.returnEntryIDsFromHTML = returnEntryIDsFromHTML;

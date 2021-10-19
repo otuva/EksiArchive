@@ -61,28 +61,6 @@ const requestEntry = (entryID) => {
     });
 };
 
-const returnEntryIDsFromHTML = html => {
-    const matchEntryList = /class="(?:topic-list|topic-list partial)"/;
-    const matchFooter = /id="site-footer"/;
-    const matchEntryID = /(?<=\/entry\/)\d+/g;
-
-    const listBegin = html.match(matchEntryList);
-    const listEnd = html.match(matchFooter);
-
-    if (listBegin !== null && listEnd !== null) {
-        const entryListHTML = html.slice(listBegin.index, listEnd.index);
-        if (entryListHTML.match(matchEntryID) !== null) {
-            return entryListHTML.match(matchEntryID);
-        }
-        else {
-            throw new Error('verilen html\'den entry listesi bulunamadi');
-        }
-    }
-    else {
-        throw new Error('verilen html\'den entry listesi bulunamadi');
-    }
-};
-
 // sleep time is used here
 // get requested entry and return entry object
 const getEntry = async (id) => {
@@ -159,7 +137,7 @@ const getEntriesInAPage = (user, page) => {
             });
             res.on('end',async () => {
                 try {
-                    const entryIdArray = returnEntryIDsFromHTML(resBody);
+                    const entryIdArray = formatOps.returnEntryIDsFromHTML(resBody);
 
                     // const batchEntryIds = _.groupBy(entryIdArray, (_v, i) => Math.floor(i / 5));
 
