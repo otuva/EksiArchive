@@ -68,6 +68,8 @@ const addMultipleEntries = (arr) => {
         db.get(query);
     });
 
+    console.log(`toplam ${arr.length} entry arsive eklendi`);
+
     db.close()
 };
 
