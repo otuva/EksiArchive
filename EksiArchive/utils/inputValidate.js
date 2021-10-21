@@ -1,5 +1,4 @@
 const isInputEntryLink = (string) => {
-    // https://eksisozluk.com/entry/128511324
     const matchLink = /(?<=https:\/\/eksisozluk.com\/entry\/)\d+/;
     const entryId = string.match(matchLink);
 
@@ -8,29 +7,6 @@ const isInputEntryLink = (string) => {
     }
     else {
         return entryId[0];
-    }
-};
-
-const isPageArgumentValid = (string) => {
-    const values = string.split(',');
-    const matchUser = /[\w -]+/;
-    const matchPageNum = /\d+/;
-    if (values.length === 2) {
-        const user = values[0].match(matchUser);
-        const page = values[1].match(matchPageNum);
-        // console.log(`verilen user '${user}'`);
-        // console.log(user);
-        // console.log(!!user);
-        if (user && page) {
-            // console.log(user[0]===values[0] && page[0]===values[1]);
-            return user[0]===values[0] && page[0]===values[1];
-        }
-        else {
-            return false;
-        }
-    }
-    else {
-        return false;
     }
 };
 
@@ -46,7 +22,36 @@ const isUserValid = (rawUser) => {
     }
 };
 
+//  || ) {
+//         const user = isUserValid(values[0]);
+//         const page = !isNaN(values[1]);
+//         // console.log(`verilen user '${user}'`);
+//         // console.log(user);
+//         // console.log(!!user);
+//         return user && page;
+
+const isUserPageValid = (string) => {
+    const values = string.split(',');
+    // const matchPageNum = /\d+/;
+    const notEmptyValues = values.every(val => val !== '');
+    if (values.length === 1 && notEmptyValues) {
+        return isUserValid(values[0]);
+    }
+    else if (values.length === 2 && notEmptyValues) {
+        const user = isUserValid(values[0]);
+        const page = !isNaN(values[1]);
+
+        return user && page;
+    }
+    else {
+        return false;
+    }
+};
+
+// console.log(isUserPageValid('divit,asd'));
+
+
 module.exports.isInputEntryLink = isInputEntryLink;
-module.exports.isPageArgumentValid = isPageArgumentValid;
+module.exports.isUserPageValid = isUserPageValid;
 module.exports.isUserValid = isUserValid;
 
