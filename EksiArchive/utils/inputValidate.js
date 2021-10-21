@@ -22,14 +22,6 @@ const isUserValid = (rawUser) => {
     }
 };
 
-//  || ) {
-//         const user = isUserValid(values[0]);
-//         const page = !isNaN(values[1]);
-//         // console.log(`verilen user '${user}'`);
-//         // console.log(user);
-//         // console.log(!!user);
-//         return user && page;
-
 const isUserPageValid = (string) => {
     const values = string.split(',');
     // const matchPageNum = /\d+/;
@@ -48,10 +40,6 @@ const isUserPageValid = (string) => {
     }
 };
 
-// console.log(isUserPageValid('divit,asd'));
-
-
 module.exports.isInputEntryLink = isInputEntryLink;
 module.exports.isUserPageValid = isUserPageValid;
 module.exports.isUserValid = isUserValid;
-
