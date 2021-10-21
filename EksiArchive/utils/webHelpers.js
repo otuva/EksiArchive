@@ -1,14 +1,14 @@
 const https = require("https");
 // const htmlStrings = require("../../tests/utils/htmlStrings");
 
-const getTotalEntryPagesOfAnUser = user => {
+const getTotalPagesOfPath = path => {
     return new Promise((resolve, reject) => {
         const matchPageNum = /(?<=data-pagecount=")\d+(?=")/;
-        if (typeof user === 'string' || typeof user === 'number') {
+        if (typeof path === 'string') {
             const options = {
                 hostname: 'eksisozluk.com',
                 port: 443,
-                path: `/basliklar/istatistik/${user}/son-entryleri?p=2`,
+                path: `${path}?p=2`,
                 method: 'GET'
             }
 
@@ -52,5 +52,5 @@ const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
-module.exports.getTotalEntryPagesOfAnUser = getTotalEntryPagesOfAnUser;
+module.exports.getTotalPagesOfPath = getTotalPagesOfPath;
 module.exports.sleep = sleep;
