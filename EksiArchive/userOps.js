@@ -83,7 +83,6 @@ const getEntry = async (id) => {
                 setTimeout( ()=>{
                     requestEntry(id).then((html)=>{
                         if (html.match(matchError)) {
-                            // console.timeEnd(`entry '${id}' suresi`);
                             return reject(new Error('eksi sozluk hata dondurdu'));
                         }
                         else {
@@ -214,9 +213,9 @@ const archiveEntry = async (entryID) => {
 // };
 
 //singlepage
-const archiveUser = (user) => {
-    webHelpers.getTotalEntryPagesOfAnUser(user).then(async (pageNum) =>  {
-        console.time(`kullanici '${user}'`);
+const archiveConsecutivePages = (path) => {
+    webHelpers.getTotalPagesOfPath(path).then(async (pageNum) =>  {
+        console.time(path);
         const pageNumberArray = [...Array(pageNum+1).keys()];
         pageNumberArray.shift();
 
@@ -227,10 +226,10 @@ const archiveUser = (user) => {
         // }, undefined);
 
         for (const page of pageNumberArray) {
-            await archiveEntriesInAPage(`/basliklar/istatistik/${user}/son-entryleri?p=${page}`);
+            await archiveEntriesInAPage(`${path}?p=${page}`);
         }
 
-        console.timeEnd(`kullanici '${user}'`);
+        console.timeEnd(path);
     });
 };
 
@@ -240,4 +239,4 @@ module.exports.requestEntry = requestEntry;
 module.exports.archiveEntry = archiveEntry;
 module.exports.getEntriesInAPage = getEntriesInAPage;
 module.exports.archiveEntriesInAPage = archiveEntriesInAPage;
-module.exports.archiveUser = archiveUser;
+module.exports.archiveConsecutivePages = archiveConsecutivePages;
