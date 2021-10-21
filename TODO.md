@@ -1,6 +1,5 @@
 ---
 
-- kullanici favorilerini al
 - baslik arsivleme (tamami ya da sayfa sayfa)
 - entry icinde linklenen diger entryleri de al (ayar olarak ekle)
 - hata donduren entryleri atla ama not al. diger tum entryler bitince onlari tekrar dene
@@ -64,3 +63,4 @@
 - [X] hash almak yerine idyi kontrol et varsa kullanicidan arsivlemek icin --forcelamasini iste 
 - [X] entrynin icerik hashini al. aynisi varsa direkt ekleme kullanici onayi iste. (hash yerine id ve argument ustu gittim.)
 - [X] varolan bir entryi verip entry guncelleyebilsin. (--force. guncellemek yerine duplicate aliyor)
+- [X] kullanici favorilerini al
