@@ -177,4 +177,13 @@ tfp@mint:~/Programming/node/EksiArchive$ node main.js debe
 /debe: 5.539s
 ```
 
+sleep
+
+```
+tfp@mint:~/Programming/node/EksiArchive$ node main.js -e https://eksisozluk.com/entry/129214458 --sleep 5000
+arsivlenecek entry: 129214458
+[Tue, 19 Oct 2021 06:55:40 GMT] - entry '129214458': 5.657s
+ok. entry arsivlendi
+```
+
 ---
