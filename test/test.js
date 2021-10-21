@@ -213,59 +213,108 @@ describe('Input Validate', ()=>{
         });
     });
 
-    describe('page flag', ()=> {
-        it('tests for valid separator',()=> {
-            const flagStr = 'user,12';
-            const expected = true;
+    describe('user page flag', ()=> {
+        describe('single value - user', ()=> {
+            it('validates eligible input', ()=>{
+                const testValue = 'ssg';
+                const expected = true;
 
-            const actual = inputValidate.isPageArgumentValid(flagStr);
+                const actual = inputValidate.isUserPageValid(testValue);
 
-            assert.deepStrictEqual(actual, expected);
+                assert.deepStrictEqual(actual, expected);
+            });
+
+            it('tries empty string', ()=>{
+                const testValue = '';
+                const expected = false;
+
+                const actual = inputValidate.isUserPageValid(testValue);
+
+                assert.deepStrictEqual(actual, expected);
+            });
+
+            it('validates not suitable input', ()=>{
+                const testValue = 'ssg%#@';
+                const expected = false;
+
+                const actual = inputValidate.isUserPageValid(testValue);
+
+                assert.deepStrictEqual(actual, expected);
+            });
         });
 
-        it('tests for invalid separator',()=> {
-            const flagStr = 'user/12';
-            const expected = false;
+        describe('comma seperated values - user & page', ()=>{
+            it('tests for valid separator',()=> {
+                const flagStr = 'user,12';
+                const expected = true;
 
-            const actual = inputValidate.isPageArgumentValid(flagStr);
+                const actual = inputValidate.isUserPageValid(flagStr);
 
-            assert.deepStrictEqual(actual, expected);
-        });
+                assert.deepStrictEqual(actual, expected);
+            });
 
-        it('tests for invalid username',()=> {
-            const flagStr = 'user%$2,12';
-            const expected = false;
+            it('tests for invalid separator',()=> {
+                const flagStr = 'user/12';
+                const expected = false;
 
-            const actual = inputValidate.isPageArgumentValid(flagStr);
+                const actual = inputValidate.isUserPageValid(flagStr);
 
-            assert.deepStrictEqual(actual, expected);
-        });
+                assert.deepStrictEqual(actual, expected);
+            });
 
-        it('tests for invalid page number',()=> {
-            const flagStr = 'user,12fsa';
-            const expected = false;
+            it('tests for invalid username',()=> {
+                const flagStr = 'user%$2,12';
+                const expected = false;
 
-            const actual = inputValidate.isPageArgumentValid(flagStr);
+                const actual = inputValidate.isUserPageValid(flagStr);
 
-            assert.deepStrictEqual(actual, expected);
-        });
+                assert.deepStrictEqual(actual, expected);
+            });
 
-        it('tests for space separated username',()=> {
-            const flagStr = 'player one,12';
-            const expected = true;
+            it('tests for invalid page number',()=> {
+                const flagStr = 'user,12fsa';
+                const expected = false;
 
-            const actual = inputValidate.isPageArgumentValid(flagStr);
+                const actual = inputValidate.isUserPageValid(flagStr);
 
-            assert.deepStrictEqual(actual, expected);
-        });
+                assert.deepStrictEqual(actual, expected);
+            });
 
-        it('tests for hyphen separated username',()=> {
-            const flagStr = 'player-one,12';
-            const expected = true;
+            it('tests for space separated username',()=> {
+                const flagStr = 'player one,12';
+                const expected = true;
 
-            const actual = inputValidate.isPageArgumentValid(flagStr);
+                const actual = inputValidate.isUserPageValid(flagStr);
 
-            assert.deepStrictEqual(actual, expected);
+                assert.deepStrictEqual(actual, expected);
+            });
+
+            it('tests for hyphen separated username',()=> {
+                const flagStr = 'player-one,12';
+                const expected = true;
+
+                const actual = inputValidate.isUserPageValid(flagStr);
+
+                assert.deepStrictEqual(actual, expected);
+            });
+
+            it('validates comma seperated empty page', ()=>{
+                const testValue = 'ssg,';
+                const expected = false;
+
+                const actual = inputValidate.isUserPageValid(testValue);
+
+                assert.deepStrictEqual(actual, expected);
+            });
+
+            it('validates comma seperated empty user', ()=>{
+                const testValue = ',53';
+                const expected = false;
+
+                const actual = inputValidate.isUserPageValid(testValue);
+
+                assert.deepStrictEqual(actual, expected);
+            });
         });
     });
 });
