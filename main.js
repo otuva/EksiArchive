@@ -98,33 +98,33 @@ else {
                     console.error('kullanici bos olamaz');
                 }
             }
-            // else if ((argv.f || argv.favorite) && !(argv.f && argv.favorite)) {
-            //     if (argv.favorite) argv.f = argv.favorite;
-            //
-            //     if (typeof argv.f === 'string') {
-            //         if (inputValidate.isUserPageValid(argv.f)) {
-            //
-            //             const values = argv.f.split(",");
-            //             const user = values[0].replace(/ /g, '-');
-            //
-            //             if (values.length === 1) {
-            //                 console.log(`favorileri arsivlenecek kullanici: ${user}`)
-            //                 userOps.archiveConsecutivePages(`/basliklar/istatistik/${user}/favori-entryleri`);
-            //             }
-            //             else {
-            //                 console.log(`kullanici: ${user} - arsivlenecek favori sayfa: ${values[1]}`);
-            //                 userOps.archiveEntriesInAPage(`/basliklar/istatistik/${user}/favori-entryleri?p=${values[1]}`);
-            //             }
-            //
-            //         }
-            //         else {
-            //             console.error('kullanici veya sayfa gecerli degil')
-            //         }
-            //     }
-            //     else {
-            //         console.log('insert favori hatasi here');
-            //     }
-            // }
+            else if ((argv.f || argv.favorite) && !(argv.f && argv.favorite)) {
+                if (argv.favorite) argv.f = argv.favorite;
+
+                if (typeof argv.f === 'string') {
+                    if (inputValidate.isUserPageValid(argv.f)) {
+
+                        const values = argv.f.split(",");
+                        const user = values[0].replace(/ /g, '-');
+
+                        if (values.length === 1) {
+                            console.log(`favorileri arsivlenecek kullanici: ${user}`)
+                            userOps.archiveConsecutivePages(`/basliklar/istatistik/${user}/favori-entryleri`);
+                        }
+                        else {
+                            console.log(`kullanici: ${user} - arsivlenecek favori sayfa: ${values[1]}`);
+                            userOps.archiveEntriesInAPage(`/basliklar/istatistik/${user}/favori-entryleri?p=${values[1]}`);
+                        }
+
+                    }
+                    else {
+                        console.error('kullanici veya sayfa gecerli degil')
+                    }
+                }
+                else {
+                    console.log('insert favori hatasi here');
+                }
+            }
             else {
                 console.log(`bilinmeyen veya hatali flag kullanimi. dogru kullanim:`+arguments);
             }
