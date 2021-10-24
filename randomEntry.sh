@@ -3,28 +3,42 @@
 db=$1
 author=$2
 
+# create_link() {
+# 	url=$1
+# 	text=$2
+
+# 	echo -e '\e]8;;'${url}'\a'${text}'\e]8;;\a'
+# 	# printf '\e]8;;'${url}'\e\\'${text}'\e]8;;\e\\\n'
+# }
+
+
 format_output() {
 	string=$1
 
-	title=$(echo ${string} | cut -d'|' -f1)
+	entry_id=$(echo ${string} | cut -d'|' -f1)
+	title=$(echo ${string} | cut -d'|' -f2)
 
-	content=$(echo ${string} | cut -d'|' -f2)
-
+	content=$(echo ${string} | cut -d'|' -f3)
 	content=$(echo "${content}" | html2text)
 
-	echo -e "-----\n${title}\n-----\n\n${content}\n-----"
+	favorite_count=$(echo ${string} | cut -d'|' -f4)
+	author=$(echo ${string} | cut -d'|' -f5)
+	date_created=$(echo ${string} | cut -d'|' -f6)
+
+	echo -e "==========\n${title}\n-----\n\n${content}\n\n-----\n\e[42m${favorite_count}\e[0m\t-\t${author}\t-\t${date_created}\n=========="
 }
 
 main() {
 	entry=$(sqlite3 ${db} <<- EOF
-		SELECT title,content FROM data WHERE author='${author}' ORDER BY RANDOM() LIMIT 1;
+		SELECT entry_id,title,content,favorite_count,author,date_created FROM data WHERE author='${author}' ORDER BY RANDOM() LIMIT 1;
 		.exit
 		EOF
 	)
 
-	formatted_output=$(format_output "${entry}")
+	format_output "${entry}"
+	#formatted_output=$(format_output "${entry}")
 
-	echo "${formatted_output}"
+	#echo -e "${formatted_output}"
 }
 
 if [[ -z ${db} || -z ${author} ]]; then
