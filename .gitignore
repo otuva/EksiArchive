@@ -1,8 +1,9 @@
 # don't check db after example db
 database.db
 
-# test files
+# feature testing files
 testingShiet.js 
+featureTest.sh
 EksiArchive/testDatabase.db
 testDatabase.db
 
