@@ -93,7 +93,11 @@ const entryIdExists = (rawEntryID) => {
 
         const entryID = parseInt(rawEntryID, 10);
 
-        if (typeof entryID === 'number' && !isNaN(entryID)) {
+        // redundant conditional. possible fixes '>'
+        // typeof entryID === 'number' && !isNaN(entryID)
+        // > typeof rawEntryID === 'number' && !isNaN(entryID)  
+        // > !isNaN(entryID)
+        if (!isNaN(entryID)) {
             const db = new sqlite3.Database(dbFile, (err) => {
                 if (err) {
                     reject(err.message);
