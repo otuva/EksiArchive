@@ -1,5 +1,10 @@
 ---
 
+- requestleri fixle. eksisozluk kirik, son-entrylerden crawl etmek yerine entry veya favori sayfasindan crawl et
+- html parser. parse edilmis entryleri belki regexle formatla
+- random entry scripti yaz
+- scriptte parse edip formatla. hyperlinke donustur -> zor olabilir
+- scriptte '…' karakterini uc nokta ile degistir html2textten sonra tekrar karaktere donustur
 - baslik arsivleme (tamami ya da sayfa sayfa)
 - entry icinde linklenen diger entryleri de al (ayar olarak ekle)
 - hata donduren entryleri atla ama not al. diger tum entryler bitince onlari tekrar dene
