@@ -1,5 +1,5 @@
 const sqlite3 = require("sqlite3").verbose();
-const config = require("../config");
+const config = require("../../config");
 
 // testing purposes.
 // if this is main double dot
