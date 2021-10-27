@@ -1,3 +1,5 @@
+const cheerio = require("cheerio");
+
 const dateTimeFormatter = (string) => {
     const dateTime = string.split(' ~ ')
     const dateRegex = /\d\d\.\d\d\.\d\d\d\d/;
@@ -35,13 +37,13 @@ const apostropheEscape = (string) => {
     return string.replace(/'/g, "''");
 };
 
-// write tests for this func
 const contentFormatter = (string) => {
     string = string.trim()
     string = apostropheEscape(string);
     return string;
 };
 
+// update this
 const html2entry = (rawHtml) => {
     if (typeof rawHtml === 'string' && rawHtml.length !== 0) {
         try {
@@ -100,6 +102,7 @@ const html2entry = (rawHtml) => {
     }
 };
 
+// update this too
 const returnEntryIDsFromHTML = html => {
     const matchEntryList = /class="(?:topic-list|topic-list partial)"/;
     const matchFooter = /id="site-footer"/;
@@ -122,7 +125,61 @@ const returnEntryIDsFromHTML = html => {
     }
 };
 
+// newest to use
+const formatEntry = (title, info, content, date) => {
+    title = apostropheEscape(title);
+
+    const id = info['data-id'];
+    const author = info['data-author'];
+
+    let inEksiSeyler;
+    info['data-seyler-slug'] ? inEksiSeyler=true : inEksiSeyler=false;
+
+    const favCount = info['data-favorite-count'];
+
+    const dateTime = dateTimeFormatter(date);
+
+    content = apostropheEscape(content);
+
+    // console.log(info);
+
+    return {
+        id,
+        title,
+        author,
+        content,
+        inEksiSeyler,
+        favCount,
+        dateCreated: dateTime[0],
+        timeCreated: dateTime[1],
+        dateModified: dateTime[2],
+        timeModified: dateTime[3]
+    };
+}
+
+// for page crawl
+const returnEntryObjectArray = (html) => {
+    const entryArray = [];
+    const $ = cheerio.load(html);
+    const entries = $('div[class="topic-item"]');
+    entries.each((num, tag)=> {
+        const entry = $(tag);
+
+        const title = entry.find('h1').text().trim();
+        const attributes = entry.find('li').attr();
+        const content = entry.find('div').html().trim();
+        const date = entry.find('a[class="entry-date permalink"]').text();
+
+        const entryObject = format.formatEntry(title, attributes, content, date);
+        entryArray.push(entryObject);
+    });
+
+    return entryArray;
+}
+
 module.exports.html2entry = html2entry;
 module.exports.contentFormatter = contentFormatter;
 module.exports.dateTimeFormatter = dateTimeFormatter;
 module.exports.returnEntryIDsFromHTML = returnEntryIDsFromHTML;
+module.exports.formatEntry = formatEntry;
+module.exports.returnEntryObjectArray = returnEntryObjectArray;
