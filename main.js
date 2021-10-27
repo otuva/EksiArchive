@@ -1,6 +1,7 @@
 const argv = require('minimist')(process.argv.slice(2));
 
-const userOps = require("./EksiArchive/userOps");
+// const userOps = require("./EksiArchive/userOps");
+const entry = require("./EksiArchive/requests/entry");
 const inputValidate = require("./EksiArchive/utils/inputValidate");
 const manage = require("./EksiArchive/manage");
 const config = require("./config");
@@ -29,7 +30,8 @@ else {
             console.log("v0.1");
         }
         else if (argv._[0] === 'debe') {
-            userOps.archiveEntriesInAPage('/debe');
+            // userOps.archiveEntriesInAPage('/debe');
+            console.log('debe sonra implemente edilecek');
         }
         else {
             console.error("Yanlis kullanim. Dogrusu:"+firstFlags);
@@ -45,32 +47,13 @@ else {
                 if (argv.entry) argv.e = argv.entry;
                 if (typeof argv.e === 'string' || typeof argv.e === 'number') {
                     const id = inputValidate.isInputEntryLink(argv.e.toString());
-                    // console.log(id);
-                    // console.log(typeof id);
                     console.log(`arsivlenecek entry: ${id}`);
-                    userOps.archiveEntry(id).then();
+                    entry.archiveEntry(id).then();
                 }
                 else {
                     console.error('entry kismi bos olamaz.');
                 }
             }
-            // else if (argv.p) {
-            //     if (typeof argv.p === 'string') {
-            //         if (inputValidate.isPageArgumentValid(argv.p)) {
-            //
-            //             const values = argv.p.split(",");
-            //             const user = values[0].replace(/ /g, '-');
-            //             userOps.archiveEntriesInAPage(`/basliklar/istatistik/${user}/son-entryleri?p=${values[1]}`);
-            //         }
-            //         else {
-            //             console.error('kullanici ya da sayfa gecerli degil.' + 'insert hata here');
-            //         }
-            //     }
-            //     else {
-            //         console.error('sayfa kismi bos olamaz');
-            //     }
-            //
-            // }
             else if ((argv.u || argv.user) && !(argv.u && argv.user)) {
                 if (argv.user) argv.u = argv.user;
 
@@ -82,11 +65,11 @@ else {
 
                         if (values.length === 1) {
                             console.log(`arsivlenecek kullanici: ${user}`)
-                            userOps.archiveConsecutivePages(`/basliklar/istatistik/${user}/son-entryleri`);
+                            // userOps.archiveConsecutivePages(`/basliklar/istatistik/${user}/son-entryleri`);
                         }
                         else {
                             console.log(`kullanici: ${user} - arsivlenecek sayfa: ${values[1]}`);
-                            userOps.archiveEntriesInAPage(`/basliklar/istatistik/${user}/son-entryleri?p=${values[1]}`);
+                            // userOps.archiveEntriesInAPage(`/basliklar/istatistik/${user}/son-entryleri?p=${values[1]}`);
                         }
 
                     }
@@ -109,11 +92,11 @@ else {
 
                         if (values.length === 1) {
                             console.log(`favorileri arsivlenecek kullanici: ${user}`)
-                            userOps.archiveConsecutivePages(`/basliklar/istatistik/${user}/favori-entryleri`);
+                            // userOps.archiveConsecutivePages(`/basliklar/istatistik/${user}/favori-entryleri`);
                         }
                         else {
                             console.log(`kullanici: ${user} - arsivlenecek favori sayfa: ${values[1]}`);
-                            userOps.archiveEntriesInAPage(`/basliklar/istatistik/${user}/favori-entryleri?p=${values[1]}`);
+                            // userOps.archiveEntriesInAPage(`/basliklar/istatistik/${user}/favori-entryleri?p=${values[1]}`);
                         }
 
                     }
