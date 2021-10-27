@@ -21,6 +21,7 @@ format_output() {
 	entry_id=$(create_link "https://eksisozluk.com/entry/${entry_id}" "Entry Link")
 
 	title=$(echo ${string} | cut -d'|' -f2)
+	title=$(echo "${title}" | html2text -ascii)
 
 	content=$(echo ${string} | cut -d'|' -f3)
 	content=$(echo "${content}" | html2text -ascii)
