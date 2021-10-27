@@ -1,4 +1,4 @@
-const dbOps = require("./dbOps");
+const dbOps = require("./db/db");
 
 const init = () => {
     dbOps.init();
