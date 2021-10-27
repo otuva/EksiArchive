@@ -6121,9 +6121,335 @@ var google_remarketing_only = true;
 </body>
 </html>`;
 
+let userEntryCrawl;
+userEntryCrawl = `    <div id="topic">
+          <div class="topic-item">
+
+<h1 id="title" data-title="9.sınıf öğrencisinin kadına şiddet temalı resmi" data-id="7064456"
+    data-slug="9-sinif-ogrencisinin-kadina-siddet-temali-resmi"
+    data-vote-url="/entry/vote"
+    data-unvote-url="/entry/removevote"
+    data-comment-vote-url="/yorum/vote"
+    data-comment-unvote-url="/yorum/removevote"
+    data-add-relation-url="/userrelation/addrelation"
+    data-preserved="">
+  <a href="/9-sinif-ogrencisinin-kadina-siddet-temali-resmi--7064456" itemprop="url"><span
+    itemprop="name">9.sınıf öğrencisinin kadına şiddet temalı resmi</span></a>
+</h1>
+
+            <ul id="entry-item-list" class="home-page-entry-list" style="margin-bottom:50px;">
+              <li data-id="129352248" data-author="divit" data-author-id="48956" data-flags="share msg report vote entrymodlog favorite" data-isfavorite="false" data-ispinned="false" data-favorite-count="10" data-seyler-slug="" data-comment-count="0">
+  <div class="content">
+    sabah uyanip internete bakiyorum.<br/>cinsimden dolayi yine katil olmusum.<br/><br/>cocugu medyayla nasil zehirledilerse butun erkekleri katil ilan etmis.
+  </div>
+  <footer>
+    <div class="feedback"></div>
+    <div class="info">
+            <a class="entry-date permalink" href="/entry/129352248">23.10.2021 14:04</a>
+
+      <a class="entry-author" href="/biri/divit">divit</a>
+    </div>
+  </footer>
+
+</li>
+
+            </ul>
+          </div>
+          <div class="topic-item">
+
+<h1 id="title" data-title="turk.net" data-id="912228"
+    data-slug="turk-net"
+    data-vote-url="/entry/vote"
+    data-unvote-url="/entry/removevote"
+    data-comment-vote-url="/yorum/vote"
+    data-comment-unvote-url="/yorum/removevote"
+    data-add-relation-url="/userrelation/addrelation"
+    data-preserved="">
+  <a href="/turk-net--912228" itemprop="url"><span
+    itemprop="name">turk.net</span></a>
+</h1>
+
+            <ul id="entry-item-list" class="home-page-entry-list" style="margin-bottom:50px;">
+              <li data-id="129253634" data-author="divit" data-author-id="48956" data-flags="share msg report vote entrymodlog favorite" data-isfavorite="false" data-ispinned="false" data-favorite-count="4" data-seyler-slug="" data-comment-count="0">
+  <div class="content">
+    uyari: oncelikle davet kodu paylasip sonra hizmet cok iyi diyenlere inanmayin.<br/>onlarin butun amaci beles internet kapmak.<br/>davet kodunu google&#x27;a yazsaniz zaten cikiyor. kimseye muhtac degilsiniz.<br/>ben kod falan paylasmiyorum 100 liralarini alsin baslarina calsinlar. 36 ay beles verseler bile umrunda degil.<br/><br/>cagri merkezi yok, sadece abone olurken telefonu hemen aciyorlar.<br/>sonra telefon falan yok her sey yaziyla yuruyor.<br/>sen ariza aciyorsun karsisi kapatiyor.<br/><br/>kuruluma gelen personel 3. seviyeden taseronun taseronu bir sirket.<br/>cocuk omrunde ilk kez kablo goruyor, pense tutmayi bilmiyor, 2 tane pini kepkeple cakamiyor, modem ayarlarini bilmiyor. apartman kutusuna zarar verip kaciyor.<br/><br/>sorun varsa telekom yuzunden diyorlar, telekom yuzunden sorun varsa ara cagir dimi.<br/>ben mi hizmet aliyorum telekomdan?<br/>sen ondan hizmet aliyorsan sen cagiracaksin. sonucta telekoma para veren sensin.<br/><br/>telekoma bok atamazsa, kabloya bok atiyorlar. kablon duzgunse modemin kotu diyor.<br/>bunlara inanip kablolari ve modemi degistirmeyin 100 yerine 50 aliyorsan sebebi kablo olabilir ama hic hizmet alamiyorsan sorun bunlarin kendisinden kaynaklaniyor.<br/><br/>apartmanda baska kullanan yoksa o sirkete bulasmayin.<br/>apartmanda cogunluk ne kullaniyorsa siz de onu alin.<br/>gecmiste de ayni boku yapip fiber almistim 2 yil bosuna para odedim turkcell&#x27;e.<br/><br/>bir de iptal etmek icin herhangi bir firmayla ugrasmayin. e-devlet icinde artik direkt iptal etme linki var.<br/>baglanti sorunu yasadiginizda da btk&#x27;ya sikayet kaydi acin, o gunlerin parasini odemek istemediginizi soyleyin.<br/><br/>btk bu sirketleri gelir kaynagi olarak kullanip cezayi yapistiriyor.<br/>acayip tirsiyorlar.<br/>tirsmayan da var tabi, turksat hic sallamiyor devamli devlet isi aldigi icin hep hakli cikiyor.
+  </div>
+  <footer>
+    <div class="feedback"></div>
+    <div class="info">
+            <a class="entry-date permalink" href="/entry/129253634">20.10.2021 13:29 ~ 16:34</a>
+
+      <a class="entry-author" href="/biri/divit">divit</a>
+    </div>
+  </footer>
+
+</li>
+
+            </ul>
+          </div>
+          <div class="topic-item">
+
+<h1 id="title" data-title="doktorun meslektaşını pompalıyla öldürmesi" data-id="7061965"
+    data-slug="doktorun-meslektasini-pompaliyla-oldurmesi"
+    data-vote-url="/entry/vote"
+    data-unvote-url="/entry/removevote"
+    data-comment-vote-url="/yorum/vote"
+    data-comment-unvote-url="/yorum/removevote"
+    data-add-relation-url="/userrelation/addrelation"
+    data-preserved="">
+  <a href="/doktorun-meslektasini-pompaliyla-oldurmesi--7061965" itemprop="url"><span
+    itemprop="name">doktorun meslektaşını pompalıyla öldürmesi</span></a>
+</h1>
+
+            <ul id="entry-item-list" class="home-page-entry-list" style="margin-bottom:50px;">
+              <li data-id="129252741" data-author="divit" data-author-id="48956" data-flags="share msg report vote entrymodlog favorite" data-isfavorite="false" data-ispinned="false" data-favorite-count="4" data-seyler-slug="" data-comment-count="0">
+  <div class="content">
+    doktorlar simdi bunu da doktora siddet mi saysak diye dusunuyorlar, bu yuzden basliga gelip henuz bir sey yazamiyorlar.
+  </div>
+  <footer>
+    <div class="feedback"></div>
+    <div class="info">
+            <a class="entry-date permalink" href="/entry/129252741">20.10.2021 12:51</a>
+
+      <a class="entry-author" href="/biri/divit">divit</a>
+    </div>
+  </footer>
+
+</li>
+
+            </ul>
+          </div>
+          <div class="topic-item">
+
+<h1 id="title" data-title="abd&#x27;nin batı trakya&#x27;ya yığınak yapma sebebi" data-id="7061393"
+    data-slug="abdnin-bati-trakyaya-yiginak-yapma-sebebi"
+    data-vote-url="/entry/vote"
+    data-unvote-url="/entry/removevote"
+    data-comment-vote-url="/yorum/vote"
+    data-comment-unvote-url="/yorum/removevote"
+    data-add-relation-url="/userrelation/addrelation"
+    data-preserved="">
+  <a href="/abdnin-bati-trakyaya-yiginak-yapma-sebebi--7061393" itemprop="url"><span
+    itemprop="name">abd&#x27;nin batı trakya&#x27;ya yığınak yapma sebebi</span></a>
+</h1>
+
+            <ul id="entry-item-list" class="home-page-entry-list" style="margin-bottom:50px;">
+              <li data-id="129229650" data-author="divit" data-author-id="48956" data-flags="share msg report vote entrymodlog favorite" data-isfavorite="false" data-ispinned="false" data-favorite-count="8" data-seyler-slug="" data-comment-count="0">
+  <div class="content">
+    bahtsiz bir turk genci olarak su hayatta gormedigim bir seferberlik bir de 3. dunya savasi kaldi.<br/>ona da cagirin da tam olsun amk.
+  </div>
+  <footer>
+    <div class="feedback"></div>
+    <div class="info">
+            <a class="entry-date permalink" href="/entry/129229650">19.10.2021 18:48</a>
+
+      <a class="entry-author" href="/biri/divit">divit</a>
+    </div>
+  </footer>
+
+</li>
+
+            </ul>
+          </div>
+          <div class="topic-item">
+
+<h1 id="title" data-title="the red pill" data-id="2283485"
+    data-slug="the-red-pill"
+    data-vote-url="/entry/vote"
+    data-unvote-url="/entry/removevote"
+    data-comment-vote-url="/yorum/vote"
+    data-comment-unvote-url="/yorum/removevote"
+    data-add-relation-url="/userrelation/addrelation"
+    data-preserved="">
+  <a href="/the-red-pill--2283485" itemprop="url"><span
+    itemprop="name">the red pill</span></a>
+</h1>
+
+            <ul id="entry-item-list" class="home-page-entry-list" style="margin-bottom:50px;">
+              <li data-id="129223559" data-author="divit" data-author-id="48956" data-flags="share msg report vote entrymodlog favorite" data-isfavorite="false" data-ispinned="false" data-favorite-count="21" data-seyler-slug="" data-comment-count="0">
+  <div class="content">
+    baslik gundeme girince baktim yine bir redpill&#x27;ci mericlerin ve feminazilerin gotunu yakmis.<br/>bir tane feminazi gediklisi hemen kosmus zaten, simdi ekibi cagirip onu debe yaparlar.<br/>feministler erkegi de savunuyormus haha en cok da buna guldum.<br/><br/>feministlere kalsa y kromozomunu dunyadan silerler dunyadaki tum erkekleri asit kuyularinda eritirler.<br/><br/>kardesim adam 9 sayfa boyunca arguman dizmis sana.<br/>hadi 8 sayfasi goygoy olsun 1 sayfasi duzgundur.<br/><br/>tartisma nasil yapilir?<br/>x argumana karsilik sen de y dersin devam edersin.<br/>yok eli sikinde yok kadinla kafayi bozmus dersen zaten adam hakli oluyor.<br/>telefonunu cikar diyen dayi gibi entry yaziyorsunuz.<br/><br/>herif datalari onune koymus curutmen de imkansiz.<br/>hatta bak intihar vakalarini koymamis.<br/>erkekler kadinlardan 3 kat fazla intihar ediyor.<br/>eskiden oldugu gibi tuik yayinlarsa sayilari gorursun<br/><br/>hadi curutebiliyorsan curut bu argumani.<br/>ya da ac bak calisma kanununu oku, agir islerde calismasi yasak cins kimmis.<br/>neden kadinlar daha uzun yasadigi halde erken emekli oluyor.<br/>boyle adaletsizlik mi olur.<br/><br/>varsa bunlara cevabiniz 9 sayfa da siz yazin okuyalim.
+  </div>
+  <footer>
+    <div class="feedback"></div>
+    <div class="info">
+            <a class="entry-date permalink" href="/entry/129223559">19.10.2021 15:09 ~ 15:11</a>
+
+      <a class="entry-author" href="/biri/divit">divit</a>
+    </div>
+  </footer>
+
+</li>
+
+            </ul>
+          </div>
+          <div class="topic-item">
+
+<h1 id="title" data-title="25 kedisiyle sokağa atılacak olan ümmü teyze" data-id="7061100"
+    data-slug="25-kedisiyle-sokaga-atilacak-olan-ummu-teyze"
+    data-vote-url="/entry/vote"
+    data-unvote-url="/entry/removevote"
+    data-comment-vote-url="/yorum/vote"
+    data-comment-unvote-url="/yorum/removevote"
+    data-add-relation-url="/userrelation/addrelation"
+    data-preserved="">
+  <a href="/25-kedisiyle-sokaga-atilacak-olan-ummu-teyze--7061100" itemprop="url"><span
+    itemprop="name">25 kedisiyle sokağa atılacak olan ümmü teyze</span></a>
+</h1>
+
+            <ul id="entry-item-list" class="home-page-entry-list" style="margin-bottom:50px;">
+              <li data-id="129220619" data-author="divit" data-author-id="48956" data-flags="share msg report vote entrymodlog favorite" data-isfavorite="false" data-ispinned="false" data-favorite-count="1" data-seyler-slug="" data-comment-count="0">
+  <div class="content">
+    teyzeye bak akrabanin evine bedavadan cokmus ustune bu eve 25 kedi doldurmus.<br/>bir de yardim istiyor.
+  </div>
+  <footer>
+    <div class="feedback"></div>
+    <div class="info">
+            <a class="entry-date permalink" href="/entry/129220619">19.10.2021 13:21</a>
+
+      <a class="entry-author" href="/biri/divit">divit</a>
+    </div>
+  </footer>
+
+</li>
+
+            </ul>
+          </div>
+          <div class="topic-item">
+
+<h1 id="title" data-title="macbook pro" data-id="1520498"
+    data-slug="macbook-pro"
+    data-vote-url="/entry/vote"
+    data-unvote-url="/entry/removevote"
+    data-comment-vote-url="/yorum/vote"
+    data-comment-unvote-url="/yorum/removevote"
+    data-add-relation-url="/userrelation/addrelation"
+    data-preserved="">
+  <a href="/macbook-pro--1520498" itemprop="url"><span
+    itemprop="name">macbook pro</span></a>
+</h1>
+
+            <ul id="entry-item-list" class="home-page-entry-list" style="margin-bottom:50px;">
+              <li data-id="129209600" data-author="divit" data-author-id="48956" data-flags="share msg report vote entrymodlog favorite" data-isfavorite="false" data-ispinned="false" data-favorite-count="5" data-seyler-slug="" data-comment-count="0">
+  <div class="content">
+    hdmi sart bu port olmayan bilgisayardan bir sik olmaz dedik, ibne fanboylar gelip 1 sayfa cevap yaziyordu.<br/><br/>gotunuze girsin hdmi adaptoru.<br/>bak nasil sike sike geri getirdiler portu.<br/>sonuna pro yaziyorsan profesyonellerin ihtiyacini karsilamak zorundasin.<br/><br/>yalniz sd kart girisi beni de guldurdu.<br/>tv anteni vga girisi falan da koysaydiniz, noldu lan satislar mi dustu.
+  </div>
+  <footer>
+    <div class="feedback"></div>
+    <div class="info">
+            <a class="entry-date permalink" href="/entry/129209600">19.10.2021 01:12 ~ 01:15</a>
+
+      <a class="entry-author" href="/biri/divit">divit</a>
+    </div>
+  </footer>
+
+</li>
+
+            </ul>
+          </div>
+          <div class="topic-item">
+
+<h1 id="title" data-title="19 ekim 2021 taksi plakası sahibinin şoför olması" data-id="7060733"
+    data-slug="19-ekim-2021-taksi-plakasi-sahibinin-sofor-olmasi"
+    data-vote-url="/entry/vote"
+    data-unvote-url="/entry/removevote"
+    data-comment-vote-url="/yorum/vote"
+    data-comment-unvote-url="/yorum/removevote"
+    data-add-relation-url="/userrelation/addrelation"
+    data-preserved="">
+  <a href="/19-ekim-2021-taksi-plakasi-sahibinin-sofor-olmasi--7060733" itemprop="url"><span
+    itemprop="name">19 ekim 2021 taksi plakası sahibinin şoför olması</span></a>
+</h1>
+
+            <ul id="entry-item-list" class="home-page-entry-list" style="margin-bottom:50px;">
+              <li data-id="129209045" data-author="divit" data-author-id="48956" data-flags="share msg report vote entrymodlog favorite" data-isfavorite="false" data-ispinned="false" data-favorite-count="8" data-seyler-slug="" data-comment-count="0">
+  <div class="content">
+    taksiler 24 saat calismak zorunda degil su an plaka sahiplerini doyurmak icin 24 saat calisiyorlar.<br/><br/>cook eskiden plaka sahipleri kullanirdi.<br/>tabi onlar gercek sofordu, para yetistirme derdi olmadigi icin insan gibi kullaniyorlardi.<br/><br/>durakta rahat rahat cayini iciyordu adamlar.<br/><br/>sonra bu plakalar partilerin eline gecti.<br/>fiyatlari roketledi<br/>su an tum siyasi partilerin elinde plaka var.<br/><br/>bu yuzden bu sorun cozulmeyecek sadece oy kapisi olarak kullaniyor 2 taraf.<br/>inanmayan gursel tekin taksi yazsin baksin.
+  </div>
+  <footer>
+    <div class="feedback"></div>
+    <div class="info">
+            <a class="entry-date permalink" href="/entry/129209045">19.10.2021 00:53</a>
+
+      <a class="entry-author" href="/biri/divit">divit</a>
+    </div>
+  </footer>
+
+</li>
+
+            </ul>
+          </div>
+          <div class="topic-item">
+
+<h1 id="title" data-title="benzinin 8 tl oluşunun kimseyi çıldırtmaması" data-id="6924963"
+    data-slug="benzinin-8-tl-olusunun-kimseyi-cildirtmamasi"
+    data-vote-url="/entry/vote"
+    data-unvote-url="/entry/removevote"
+    data-comment-vote-url="/yorum/vote"
+    data-comment-unvote-url="/yorum/removevote"
+    data-add-relation-url="/userrelation/addrelation"
+    data-preserved="">
+  <a href="/benzinin-8-tl-olusunun-kimseyi-cildirtmamasi--6924963" itemprop="url"><span
+    itemprop="name">benzinin 8 tl oluşunun kimseyi çıldırtmaması</span></a>
+</h1>
+
+            <ul id="entry-item-list" class="home-page-entry-list" style="margin-bottom:50px;">
+              <li data-id="129183321" data-author="divit" data-author-id="48956" data-flags="share msg report vote entrymodlog favorite" data-isfavorite="false" data-ispinned="false" data-favorite-count="0" data-seyler-slug="" data-comment-count="0">
+  <div class="content">
+    benzin su an olmasi gereken fiyata bile gelmedi. <br/>vergileri koyarlarsa 15 tl falan olmasi lazim muhtemelen sene icinde buralara gelir.<br/><br/>avrupa&#x27;da 1,40 euro carp 10&#x27;la hoop 14 tl zaten.<br/><br/>yukarda yazmislar 2013&#x27;te 5 liraydi diye, ayni sene sifir arabayi 30-40bine aliyordun.<br/>oranlarsan o zamanlar 50 liraya benzin aliyormusuz ama kimse ses etmiyormus.<br/><br/>arabasi olan biri olarak en siklemedigim sey yakit fiyatlari.<br/><br/>kasko &#x2B; trafik = 3000<br/>vergi = 2000<br/>rutin bakim = 2000<br/><br/>zaten yattigi yerde 7bin tl yiyor, benzin 2 katina ciksa sikimde olmaz. arabanin en dusuk gider kalemi yakit zaten.<br/>ıspark olmus 20 tl, abonelik de almiyor burasi. sadece arabayi belediye degnekcisine birakmak 600 tl.<br/>otoparkli eve ciksam ayda 2bin fark vermem lazim.<br/><br/>2013 golf fiyatlari<br/><br/>(bkz: <a class="b" href="/entry/39147867">#39147867</a>)
+  </div>
+  <footer>
+    <div class="feedback"></div>
+    <div class="info">
+            <a class="entry-date permalink" href="/entry/129183321">18.10.2021 10:47 ~ 10:59</a>
+
+      <a class="entry-author" href="/biri/divit">divit</a>
+    </div>
+  </footer>
+
+</li>
+
+            </ul>
+          </div>
+          <div class="topic-item">
+
+<h1 id="title" data-title="netflix türkiye" data-id="4635752"
+    data-slug="netflix-turkiye"
+    data-vote-url="/entry/vote"
+    data-unvote-url="/entry/removevote"
+    data-comment-vote-url="/yorum/vote"
+    data-comment-unvote-url="/yorum/removevote"
+    data-add-relation-url="/userrelation/addrelation"
+    data-preserved="">
+  <a href="/netflix-turkiye--4635752" itemprop="url"><span
+    itemprop="name">netflix türkiye</span></a>
+</h1>
+
+            <ul id="entry-item-list" class="home-page-entry-list" style="margin-bottom:50px;">
+              <li data-id="129181879" data-author="divit" data-author-id="48956" data-flags="share msg report vote entrymodlog favorite" data-isfavorite="false" data-ispinned="false" data-favorite-count="0" data-seyler-slug="" data-comment-count="0">
+  <div class="content">
+    kufur cevirileri sikintili.<br/>dublajda kulak tirmaliyor, bunun sansurle alakasi yok.<br/>ben kufur eden kufur seven bir insanim ama izledigin eserden kopariyor bazi dublajlar.<br/><br/>pussy olma dediginde.<br/>amciklik yapma diye cevirirsen kulak tirmalar.<br/>bunu korkaklik yapma diye cevirirsin, ki zaten netflix genelde boyle ceviriyor.<br/>breaking bad sahnelerinde korkak tavuk olma diyor.<br/><br/>ama bazen evin icinde ayni cumle icinde orospu cocugu anani sikeyim sik kirigi falan sesleri yankilaniyor.<br/><br/>filmde onu diyor olabilir ama mafya argosu bizde o kadar kufurlu degildir.<br/>ceviri yaparken hafiften o dile uydurursun.<br/><br/>yillarca sinemada duydugumuz, &quot;lanet olsun lanet kere lanet&quot; cevirisi nasil yanlissa tamamen kelimesi kelimesine ceviri de yanlis.<br/><br/>gerci netflix turkiye ne ki dublaji ne olsun.<br/>tr yoneticisi hollanda&#x27;ya tasinmisti en son. bkm sponsoru gereksiz bir platform, 2 yildir pandemi var evdeyiz. daha ilk aylarda icerikleri bitirdik yenisi de gelmiyor.<br/>sirf aliskanliktan acip 30 senelik camur goruntulu seinfeld falan izliyoruz.
+  </div>
+  <footer>
+    <div class="feedback"></div>
+    <div class="info">
+            <a class="entry-date permalink" href="/entry/129181879">18.10.2021 09:47 ~ 10:34</a>
+
+      <a class="entry-author" href="/biri/divit">divit</a>
+    </div>
+  </footer>
+
+</li>
+
+            </ul>
+          </div>
+    </div>
+`
+
 module.exports.notModified = notModified;
 module.exports.timeModified = timeModified;
 module.exports.dateTimeModified = dateTimeModified;
 module.exports.eksiSeylerEntry = eksiSeylerEntry;
 module.exports.aposEntry = aposEntry;
 module.exports.entryList = entryList;
+module.exports.userEntryCrawl = userEntryCrawl;
