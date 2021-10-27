@@ -5,9 +5,9 @@
 const assert = require('assert');
 const fs = require('fs');
 
-const userOps = require("../EksiArchive/userOps");
+const userOps = require("../EksiArchive/requests/user");
 // const dbOps = require("../EksiArchive/dbOps");
-const formatOps = require("../EksiArchive/formatOps");
+const formatOps = require("../EksiArchive/format/format");
 const htmlStrings = require("./utils/htmlStrings");
 const inputValidate = require("../EksiArchive/utils/inputValidate");
 const groupBy = require("../EksiArchive/utils/generalHelpers").groupBy;
