@@ -1,31 +1,35 @@
 #!/bin/bash
 
+clear -x
+
 db=$1
 author=$2
 
-# create_link() {
-# 	url=$1
-# 	text=$2
+create_link() {
+	url=$1
+	text=$2
 
-# 	echo -e '\e]8;;'${url}'\a'${text}'\e]8;;\a'
-# 	# printf '\e]8;;'${url}'\e\\'${text}'\e]8;;\e\\\n'
-# }
+	echo -e '\e]8;;'${url}'\a'${text}'\e]8;;\a'
+	# printf '\e]8;;'${url}'\e\\'${text}'\e]8;;\e\\\n'
+}
 
 
 format_output() {
 	string=$1
 
 	entry_id=$(echo ${string} | cut -d'|' -f1)
+	entry_id=$(create_link "https://eksisozluk.com/entry/${entry_id}" "Entry Link")
+
 	title=$(echo ${string} | cut -d'|' -f2)
 
 	content=$(echo ${string} | cut -d'|' -f3)
-	content=$(echo "${content}" | html2text)
+	content=$(echo "${content}" | html2text -ascii)
 
 	favorite_count=$(echo ${string} | cut -d'|' -f4)
 	author=$(echo ${string} | cut -d'|' -f5)
 	date_created=$(echo ${string} | cut -d'|' -f6)
 
-	echo -e "==========\n${title}\n-----\n\n${content}\n\n-----\n\e[42m${favorite_count}\e[0m\t-\t${author}\t-\t${date_created}\n=========="
+	echo -e "${entry_id}\n==========\n${title}\n-----\n\n${content}\n\n-----\n\e[42m${favorite_count}\e[0m\t-\t${author}\t-\t${date_created}\n=========="
 }
 
 main() {
