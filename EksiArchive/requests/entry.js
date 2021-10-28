@@ -1,16 +1,13 @@
 const https = require("https");
 
 const config = require("../../config");
-// const webHelpers = require("../utils/webHelpers");
 const database = require("../db/db");
 const format = require("../format/format");
 
 
-// let throttle = 2;
-
-// send http request for entry
-// resolve html string of the response
 const requestEntry = (entryID) => {
+    // send http request for entry
+    // resolve html string of the response
     return new Promise((resolve, reject) => {
         const options = {
             hostname: 'eksisozluk.com',
@@ -21,15 +18,8 @@ const requestEntry = (entryID) => {
         }
 
         const req = https.request(options, async res => {
-            // reject bad status
             if (res.statusCode < 200 || res.statusCode >= 300) {
-                // console.log(res.headers);
-                if (res.statusCode === 429) {
-                    console.error('istekler eksisozluk limitine takildi. eger bu hatayi sik aliyorsaniz "--sleep <ms>" secenegi ile arsivlemeyi deneyin');
-                    // console.error(`islem ${throttle*30/60} dakika sonra devam edecek`);
-                    // await webHelpers.sleep(throttle*30000);
-                    // throttle>=10 ? throttle=10 : throttle++;
-                }
+                if (res.statusCode === 429) console.error('istekler eksisozluk limitine takildi. eger bu hatayi sik aliyorsaniz "--sleep <ms>" secenegi ile arsivlemeyi deneyin');
                 return reject(new Error(`statusCode=${res.statusCode}`));
             }
 
@@ -42,11 +32,6 @@ const requestEntry = (entryID) => {
 
             // resolve on end
             res.on('end', () => {
-                // try {
-                //     resBody += '\n';
-                // } catch(e) {
-                //     reject(e);
-                // }
                 resolve(resBody);
             });
         });
@@ -60,11 +45,10 @@ const requestEntry = (entryID) => {
     });
 };
 
-// sleep time & force are used here
-// db query gets made here
-// call requestEntry, return entry object
 const getEntry = (entryID) => {
-    // get requested entry and return an entry object
+    // sleep time & force are used here
+    // db query gets made here
+    // call requestEntry, return entry object
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);
 
@@ -73,13 +57,10 @@ const getEntry = (entryID) => {
     return new Promise(async (resolve, reject)=> {
         console.time(`${timeStr} - entry '${entryID}'`);
         const matchError = /<h1 title="web5">büyük başarısızlıklar sözkonusu<\/h1>/;
-        // const state = await dbOps.entryIdExists(id);
         database.checkSingleEntryID(entryID).then(state=>{
             // entry does NOT exist or force option is used
             if (!state || config.entry.force) {
-                if (state) {
-                    console.log('entry zaten arsivde ama "--force" secenegi kullanildi');
-                }
+                if (state) console.log('entry zaten arsivde ama "--force" secenegi kullanildi');
                 setTimeout( ()=>{
                     requestEntry(entryID).then((html)=>{
                         if (html.match(matchError)) {
@@ -103,8 +84,8 @@ const getEntry = (entryID) => {
     });
 }
 
-// call getEntry then add resolved entry object to database
 const archiveEntry = (entryID) => {
+    // call getEntry then add resolved entry object to database
     getEntry(entryID).then((val)=>{
         database.addEntry(val).then(value => {
             console.log(value);
