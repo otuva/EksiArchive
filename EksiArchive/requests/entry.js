@@ -1,12 +1,12 @@
 const https = require("https");
 
 const config = require("../../config");
-const webHelpers = require("../utils/webHelpers");
-const dbOps = require("../db/db");
-const formatOps = require("../format/format");
+// const webHelpers = require("../utils/webHelpers");
+const database = require("../db/db");
+const format = require("../format/format");
 
 
-let throttle = 2;
+// let throttle = 2;
 
 // send http request for entry
 // resolve html string of the response
@@ -26,9 +26,9 @@ const requestEntry = (entryID) => {
                 // console.log(res.headers);
                 if (res.statusCode === 429) {
                     console.error('istekler eksisozluk limitine takildi. eger bu hatayi sik aliyorsaniz "--sleep <ms>" secenegi ile arsivlemeyi deneyin');
-                    console.error(`islem ${throttle*30/60} dakika sonra devam edecek`);
-                    await webHelpers.sleep(throttle*30000);
-                    throttle>=10 ? throttle=10 : throttle++;
+                    // console.error(`islem ${throttle*30/60} dakika sonra devam edecek`);
+                    // await webHelpers.sleep(throttle*30000);
+                    // throttle>=10 ? throttle=10 : throttle++;
                 }
                 return reject(new Error(`statusCode=${res.statusCode}`));
             }
@@ -62,7 +62,8 @@ const requestEntry = (entryID) => {
 
 // sleep time & force are used here
 // db query gets made here
-const getEntry = async (id) => {
+// call requestEntry, return entry object
+const getEntry = (entryID) => {
     // get requested entry and return an entry object
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);
@@ -70,23 +71,23 @@ const getEntry = async (id) => {
     const timeStr = `[${today.toUTCString()}]`;
 
     return new Promise(async (resolve, reject)=> {
-        console.time(`${timeStr} - entry '${id}'`);
+        console.time(`${timeStr} - entry '${entryID}'`);
         const matchError = /<h1 title="web5">büyük başarısızlıklar sözkonusu<\/h1>/;
         // const state = await dbOps.entryIdExists(id);
-        dbOps.entryIdExists(id).then(state=>{
+        database.entryIdExists(entryID).then(state=>{
             // entry does NOT exist or force option is used
             if (!state || config.entry.force) {
                 if (state) {
                     console.log('entry zaten arsivde ama "--force" secenegi kullanildi');
                 }
                 setTimeout( ()=>{
-                    requestEntry(id).then((html)=>{
+                    requestEntry(entryID).then((html)=>{
                         if (html.match(matchError)) {
                             return reject(new Error('eksi sozluk hata dondurdu'));
                         }
                         else {
-                            console.timeEnd(`${timeStr} - entry '${id}'`);
-                            resolve(formatOps.html2entry(html));
+                            console.timeEnd(`${timeStr} - entry '${entryID}'`);
+                            resolve(format.html2entry(html));
                         }
                     }, (err)=>{
                         return reject(new Error(`eksi sozluk hata dondurdu ${err}`));
@@ -103,16 +104,15 @@ const getEntry = async (id) => {
 }
 
 // get single entry then add resolved entry object to database
-const archiveEntry = async (entryID) => {
+const archiveEntry = (entryID) => {
     getEntry(entryID).then((val)=>{
-        dbOps.addEntry(val);
+        database.addEntry(val);
         // console.table(val);
         // console.log();
         console.log('ok. entry arsivlendi');
     }, (err)=> {
         console.error(err);
     });
-
 };
 
 module.exports.getEntry = getEntry;
