@@ -2,6 +2,7 @@
 
 - requestleri fixle. eksisozluk kirik, son-entrylerden crawl etmek yerine entry veya favori sayfasindan crawl et
 - html parser. parse edilmis entryleri belki regexle formatla
+- entry var mi diye kontrol etmesini db dosyasinda yap. forceu orada kullan. oteki turlu sacma
 - random entry scripti yaz
 - scriptte parse edip formatla. hyperlinke donustur -> zor olabilir
 - scriptte '…' karakterini uc nokta ile degistir html2textten sonra tekrar karaktere donustur
