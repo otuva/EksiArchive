@@ -126,6 +126,11 @@ const checkMultipleEntryIDs = (idArray, db) => {
 // --------------------------------------------------
 const addMultipleEntries = (arr) => {
     return new Promise((resolve, reject) => {
+        const timeElapsed = Date.now();
+        const today = new Date(timeElapsed);
+
+        const timeStr = `[${today.toUTCString()}]`;
+
         const db = new sqlite3.Database(dbFile, (err) => {
             if (err) {
                 reject(err.message);
@@ -140,6 +145,7 @@ const addMultipleEntries = (arr) => {
                 if (entryIDsWillBeAdded.includes(entry.id)) {
                     const query = returnAppropriateQueryString(entry);
                     db.get(query);
+                    console.log(`${timeStr} - '${entry.id}' arsive eklendi.`);
                 }
                 else console.log(`'${entry.id}' zaten arsivde.`);
             });
