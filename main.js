@@ -78,7 +78,6 @@ else {
                         }
                         else {
                             console.log(`kullanici: ${user} - arsivlenecek sayfa: ${values[1]}`);
-                            // userOps.archiveEntriesInAPage(`/basliklar/istatistik/${user}/son-entryleri?p=${values[1]}`);
                             userPage.archiveEntryPage(`/son-entryleri?nick=${user}&p=${values[1]}`).then(val => {
                                 console.log(val);
                             }, err => {
@@ -110,8 +109,12 @@ else {
                         else {
                             console.log(`kullanici: ${user} - arsivlenecek favori sayfa: ${values[1]}`);
                             // userOps.archiveEntriesInAPage(`/basliklar/istatistik/${user}/favori-entryleri?p=${values[1]}`);
+                            userPage.archiveEntryPage(`/favori-entryleri?nick=${user}&p=${values[1]}`).then(val => {
+                                console.log(val);
+                            }, err => {
+                                console.error(err);
+                            });
                         }
-
                     }
                     else {
                         console.error('kullanici veya sayfa gecerli degil')
