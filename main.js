@@ -2,6 +2,7 @@ const argv = require('minimist')(process.argv.slice(2));
 
 // const userOps = require("./EksiArchive/userOps");
 const entry = require("./EksiArchive/requests/entry");
+const userPage = require("./EksiArchive/requests/_user");
 const inputValidate = require("./EksiArchive/utils/inputValidate");
 const manage = require("./EksiArchive/manage");
 const config = require("./config");
@@ -48,7 +49,7 @@ else {
                 if (typeof argv.e === 'string' || typeof argv.e === 'number') {
                     const id = inputValidate.isInputEntryLink(argv.e.toString());
                     console.log(`arsivlenecek entry: ${id}`);
-                    entry.archiveEntry(id).then();
+                    entry.archiveEntry(id);
                 }
                 else {
                     console.error('entry kismi bos olamaz.');
@@ -66,12 +67,24 @@ else {
                         if (values.length === 1) {
                             console.log(`arsivlenecek kullanici: ${user}`)
                             // userOps.archiveConsecutivePages(`/basliklar/istatistik/${user}/son-entryleri`);
+
+                            console.log('coklu sayfa sonra implemente edilecek');
+                            // user.archiveEntryPage('/son-entryleri?nick=grimmhax&p=2').then(val => {
+                            //     console.log(val);
+                            // }, err => {
+                            //     console.error(err);
+                            // });
+
                         }
                         else {
                             console.log(`kullanici: ${user} - arsivlenecek sayfa: ${values[1]}`);
                             // userOps.archiveEntriesInAPage(`/basliklar/istatistik/${user}/son-entryleri?p=${values[1]}`);
+                            userPage.archiveEntryPage(`/son-entryleri?nick=${user}&p=${values[1]}`).then(val => {
+                                console.log(val);
+                            }, err => {
+                                console.error(err);
+                            });
                         }
-
                     }
                     else {
                         console.error('kullanici veya sayfa gecerli degil')
