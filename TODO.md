@@ -1,11 +1,9 @@
 ---
 
 - requestleri fixle. eksisozluk kirik, son-entrylerden crawl etmek yerine entry veya favori sayfasindan crawl et
+- sleepi user.js'de implemente et
 - html parser. parse edilmis entryleri belki regexle formatla
-- entry var mi diye kontrol etmesini db dosyasinda yap. forceu orada kullan. oteki turlu sacma
-- random entry scripti yaz
 - scriptte parse edip formatla. hyperlinke donustur -> zor olabilir
-- scriptte '…' karakterini uc nokta ile degistir html2textten sonra tekrar karaktere donustur
 - baslik arsivleme (tamami ya da sayfa sayfa)
 - entry icinde linklenen diger entryleri de al (ayar olarak ekle)
 - hata donduren entryleri atla ama not al. diger tum entryler bitince onlari tekrar dene
@@ -70,3 +68,6 @@
 - [X] entrynin icerik hashini al. aynisi varsa direkt ekleme kullanici onayi iste. (hash yerine id ve argument ustu gittim.)
 - [X] varolan bir entryi verip entry guncelleyebilsin. (--force. guncellemek yerine duplicate aliyor)
 - [X] kullanici favorilerini al
+- [X] random entry scripti yaz
+- [X] scriptte '…' karakterini uc nokta ile degistir html2textten sonra tekrar karaktere donustur (gerek kalmadi ascii olarak output ediyor artik)
+- [X] entry var mi diye kontrol etmesini db dosyasinda yap. forceu orada kullan. oteki turlu sacma
