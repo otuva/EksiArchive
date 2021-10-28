@@ -74,7 +74,7 @@ const getEntry = (entryID) => {
         console.time(`${timeStr} - entry '${entryID}'`);
         const matchError = /<h1 title="web5">büyük başarısızlıklar sözkonusu<\/h1>/;
         // const state = await dbOps.entryIdExists(id);
-        database.entryIdExists(entryID).then(state=>{
+        database.checkSingleEntryID(entryID).then(state=>{
             // entry does NOT exist or force option is used
             if (!state || config.entry.force) {
                 if (state) {
@@ -103,18 +103,17 @@ const getEntry = (entryID) => {
     });
 }
 
-// get single entry then add resolved entry object to database
+// call getEntry then add resolved entry object to database
 const archiveEntry = (entryID) => {
     getEntry(entryID).then((val)=>{
-        database.addEntry(val);
-        // console.table(val);
-        // console.log();
-        console.log('ok. entry arsivlendi');
+        database.addEntry(val).then(value => {
+            console.log(value);
+        }, error => {
+            console.error(error);
+        });
     }, (err)=> {
         console.error(err);
     });
 };
 
-module.exports.getEntry = getEntry;
-module.exports.requestEntry = requestEntry;
 module.exports.archiveEntry = archiveEntry;
