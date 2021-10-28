@@ -1,8 +1,10 @@
 const https = require('https');
 
-// const format = require("../format/format");
+const format = require("../format/format");
+const database = require("../db/db");
 
-const requestPage = (path) => {
+const requestEntryPage = (path) => {
+    console.time(path);
     return new Promise((resolve, reject) => {
         const options = {
             hostname: 'eksisozluk.com',
@@ -37,6 +39,7 @@ const requestPage = (path) => {
 
             // resolve on end
             res.on('end', () => {
+                console.timeEnd(path);
                 resolve(resBody);
             });
         });
@@ -50,26 +53,29 @@ const requestPage = (path) => {
     });
 };
 
-requestPage('/favori-entryleri?nick=divit&p=1').then(markup => {
-    // console.log(returnEntries(markup));
-    console.log(markup);
-});
+const getEntryPage = (path) => {
+    return new Promise(((resolve, reject) => {
+        requestEntryPage(path).then(html => {
+            resolve(format.returnEntryObjectArray(html));
+        }, err => {
+            reject(err);
+        });
+    }));
+};
 
+const archiveEntryPage = (path) => {
+    return new Promise(((resolve, reject) => {
+        getEntryPage(path).then(entries => {
+            database.addMultipleEntries(entries).then(value => {
+                console.log(value);
+                resolve('ok. sayfadaki tum entryler arsivlendi');
+            }, err => {
+                reject(err);
+            });
+        }, err => {
+            reject(err);
+        });
+    }));
+};
 
-
-// console.log(returnEntries(markup));
-
-// const topic_length = topic_items.length;
-// for (let i=0; i<topic_length; i++) {
-//     console.log(Object.keys(topic_items.children));
-// }
-// console.log(Object.keys(topic_items[0].next.next))
-// console.log(topic_items[0].next.next)
-// topic_items.each((num,tag)=> {
-//     console.log(Object.keys($(tag)));
-//     console.log($(tag));
-// });
-
-
-
-// console.log(Object.keys(topic_items))
+module.exports.archiveEntryPage = archiveEntryPage;
