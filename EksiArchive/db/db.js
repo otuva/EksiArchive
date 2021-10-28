@@ -56,53 +56,15 @@ const returnAppropriateQueryString = (entry) => {
     return query;
 };
 
-const addMultipleEntries = (arr) => {
-    const db = new sqlite3.Database(dbFile, (err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-    });
-
-    arr.forEach(entry => {
-        const query = returnAppropriateQueryString(entry);
-        db.get(query);
-    });
-
-    console.log(`toplam ${arr.length} entry arsive eklendi`);
-
-    db.close()
-};
-
-const addEntry = (entry) => {
-    const db = new sqlite3.Database(dbFile, (err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-    });
-
-    const query = returnAppropriateQueryString(entry);
-    db.get(query);
-
-    db.close()
-};
-
-const entryIdExists = (rawEntryID) => {
-    // '\x1b[33m%s\x1b[0m'
+// --------------------------------------------------
+// duplicate check
+// --------------------------------------------------
+const entryIdExists = (entryID, db) => {
+    // instead of handling db in this function
+    // expect db handle reference and manipulate that.
+    // that'll avoid continuous handle creation
     return new Promise((resolve, reject) => {
-        // console.time(`\x1b[33m entry id '${rawEntryID}' \x1b[0m`);
-
-        const entryID = parseInt(rawEntryID, 10);
-
-        // redundant conditional. possible fixes '>'
-        // typeof entryID === 'number' && !isNaN(entryID)
-        // > typeof rawEntryID === 'number' && !isNaN(entryID)  
-        // > !isNaN(entryID)
         if (!isNaN(entryID)) {
-            const db = new sqlite3.Database(dbFile, (err) => {
-                if (err) {
-                    reject(err.message);
-                }
-            });
             const query = `SELECT id FROM data WHERE entry_id=${entryID};`;
 
             db.all(query, [], (err, rows) => {
@@ -116,22 +78,95 @@ const entryIdExists = (rawEntryID) => {
                     resolve(false);
                 }
             });
-
-            db.close();
         }
         else {
             reject('entry id sayi olmali');
         }
-        // console.timeEnd(`\x1b[33m entry id '${rawEntryID}' \x1b[0m`);
     });
 };
-// entryIdExists('4215').then(value => {
-//     console.log(value);
-// }, err=> {
-//     console.error(err);
-// });
+
+const checkSingleEntryID = (entryID) => {
+    return new Promise((resolve, reject) => {
+        const db = new sqlite3.Database(dbFile, (err) => {
+            if (err) {
+                reject(err.message);
+            }
+        });
+
+        entryIdExists(entryID, db).then(state=>{
+            resolve(state);
+        }, err=> {
+            reject(err);
+        });
+
+        db.close();
+    });
+};
+
+const checkMultipleEntryIDs = (idArray, db) => {
+    return new Promise(async (resolve, reject) => {
+        const nonExistentEntryId = []
+        for (let id of idArray) {
+            await entryIdExists(id, db).then(state => {
+                if (!state || config.entry.force) {
+                    if (state) console.log(`'${id}' zaten arsivde ama "--force" secenegi kullanildi`);
+                    nonExistentEntryId.push(id);
+                }
+            });
+        }
+        resolve(nonExistentEntryId);
+    });
+};
+
+
+
+
+// --------------------------------------------------
+// addition
+// --------------------------------------------------
+const addMultipleEntries = (arr) => {
+    return new Promise((resolve, reject) => {
+        const db = new sqlite3.Database(dbFile, (err) => {
+            if (err) {
+                reject(err.message);
+            }
+        });
+
+        const entryIDArray = arr.map(entry => entry.id);
+
+        // const entryIDsWillBeAdded = checkMultipleEntryIDs(entryIDArray, db);
+        checkMultipleEntryIDs(entryIDArray, db).then(entryIDsWillBeAdded => {
+            arr.forEach(entry => {
+                if (entryIDsWillBeAdded.includes(entry.id)) {
+                    const query = returnAppropriateQueryString(entry);
+                    db.get(query);
+                }
+                else console.log(`'${entry.id}' zaten arsivde.`);
+            });
+            resolve(`toplam ${entryIDsWillBeAdded.length} entry arsive eklendi`);
+            db.close()
+        });
+    });
+};
+
+const addEntry = (entry) => {
+    return new Promise((resolve, reject)=> {
+        const db = new sqlite3.Database(dbFile, (err) => {
+            if (err) {
+                reject(err.message);
+            }
+        });
+
+        const query = returnAppropriateQueryString(entry);
+        db.get(query);
+
+        resolve('ok. entry arsivlendi')
+        db.close()
+    });
+};
+
 
 module.exports.init = init;
 module.exports.addEntry = addEntry;
 module.exports.addMultipleEntries = addMultipleEntries;
-module.exports.entryIdExists = entryIdExists;
+module.exports.checkSingleEntryID = checkSingleEntryID;
