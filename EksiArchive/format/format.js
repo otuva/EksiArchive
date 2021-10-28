@@ -170,7 +170,7 @@ const returnEntryObjectArray = (html) => {
         const content = entry.find('div').html().trim();
         const date = entry.find('a[class="entry-date permalink"]').text();
 
-        const entryObject = format.formatEntry(title, attributes, content, date);
+        const entryObject = formatEntry(title, attributes, content, date);
         entryArray.push(entryObject);
     });
 
