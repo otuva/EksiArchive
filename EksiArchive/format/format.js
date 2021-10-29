@@ -158,10 +158,13 @@ const formatEntry = (title, info, content, date) => {
 }
 
 // for page crawl
-const returnEntryObjectArray = (html) => {
+const returnEntryObjectArray = (html, initial=false) => {
+    // initial argument is used here to decide how many pages of entries there will be
+
     const entryArray = [];
     const $ = cheerio.load(html);
     const entries = $('div[class="topic-item"]');
+
     entries.each((num, tag)=> {
         const entry = $(tag);
 
@@ -174,6 +177,11 @@ const returnEntryObjectArray = (html) => {
         entryArray.push(entryObject);
     });
 
+    // for consecutive pages
+    if (initial) {
+        const numberOfPages=$('small').text().trim();
+        return [numberOfPages, entryArray];
+    }
     return entryArray;
 }
 
