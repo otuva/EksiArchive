@@ -1,6 +1,5 @@
 ---
 
-- requestleri fixle. eksisozluk kirik, son-entrylerden crawl etmek yerine entry veya favori sayfasindan crawl et
 - sleepi user.js'de implemente et
 - html parser. parse edilmis entryleri belki regexle formatla
 - scriptte parse edip formatla. hyperlinke donustur -> zor olabilir
@@ -73,3 +72,4 @@
 - [X] random entry scripti yaz
 - [X] scriptte '…' karakterini uc nokta ile degistir html2textten sonra tekrar karaktere donustur (gerek kalmadi ascii olarak output ediyor artik)
 - [X] entry var mi diye kontrol etmesini db dosyasinda yap. forceu orada kullan. oteki turlu sacma
+- [X] requestleri fixle. eksisozluk kirik, son-entrylerden crawl etmek yerine entry veya favori sayfasindan crawl et
