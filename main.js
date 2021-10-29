@@ -66,14 +66,12 @@ else {
 
                         if (values.length === 1) {
                             console.log(`arsivlenecek kullanici: ${user}`)
-                            // userOps.archiveConsecutivePages(`/basliklar/istatistik/${user}/son-entryleri`);
 
-                            console.log('coklu sayfa sonra implemente edilecek');
-                            // user.archiveEntryPage('/son-entryleri?nick=grimmhax&p=2').then(val => {
-                            //     console.log(val);
-                            // }, err => {
-                            //     console.error(err);
-                            // });
+                            userPage.archiveConsecutiveEntryPages(`/son-entryleri?nick=${user}`).then(val => {
+                                console.log(val);
+                            }, err => {
+                                console.error(err);
+                            });
 
                         }
                         else {
@@ -104,7 +102,12 @@ else {
 
                         if (values.length === 1) {
                             console.log(`favorileri arsivlenecek kullanici: ${user}`)
-                            // userOps.archiveConsecutivePages(`/basliklar/istatistik/${user}/favori-entryleri`);
+
+                            userPage.archiveConsecutiveEntryPages(`/favori-entryleri?nick=${user}`).then(val => {
+                                console.log(val);
+                            }, err => {
+                                console.error(err);
+                            });
                         }
                         else {
                             console.log(`kullanici: ${user} - arsivlenecek favori sayfa: ${values[1]}`);
