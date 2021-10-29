@@ -10,7 +10,7 @@ _____________           .__   _____                .__    .__
 `, 'font-family: monospace');
 };
 
-const tr = {
+tr = {
     success: {
         entry: {
             archived: "Entry arsivlendi."
@@ -23,5 +23,21 @@ const tr = {
 
     info: {
         usage: "Kullanim"
+    }
+}
+
+en = {
+    success: {
+        entry: {
+            archived: "Entry is archived."
+        }
+    },
+
+    error: {
+        emptyFlag: "Archive arguments can not be empty."
+    },
+
+    info: {
+        usage: "Usage"
     }
 }
