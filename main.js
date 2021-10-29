@@ -1,15 +1,17 @@
 const argv = require('minimist')(process.argv.slice(2));
 
-// const userOps = require("./EksiArchive/userOps");
 const entry = require("./EksiArchive/requests/entry");
 const userPage = require("./EksiArchive/requests/user");
 const inputValidate = require("./EksiArchive/utils/inputValidate");
+const outputMessages = require("./EksiArchive/utils/outputMessages");
 const manage = require("./EksiArchive/manage");
 const config = require("./config");
 
 // help diyince ayri bos calistirinca ayri text yazdir
 const arguments = `\n\t-e entry\n\t-u user`;
 const firstFlags = `\n\tinit\n\thelp\n\tversion`;
+
+outputMessages.banner('random')
 
 // if empty
 if (Object.keys(argv).length === 1 && argv._.length === 0) {
@@ -40,7 +42,6 @@ else {
     }
     else {
         try {
-            // console.log(argv);
             if (typeof argv.sleep === 'number') config.entry.sleep = argv.sleep;
             if (typeof argv.force === 'boolean') config.entry.force = argv.force;
 
@@ -111,7 +112,6 @@ else {
                         }
                         else {
                             console.log(`kullanici: ${user} - arsivlenecek favori sayfa: ${values[1]}`);
-                            // userOps.archiveEntriesInAPage(`/basliklar/istatistik/${user}/favori-entryleri?p=${values[1]}`);
                             userPage.archiveEntryPage(`/favori-entryleri?nick=${user}&p=${values[1]}`).then(val => {
                                 console.log(val);
                             }, err => {
