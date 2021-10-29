@@ -46,6 +46,11 @@ const colorfulOutput = (string, color) => {
             return `\x1b[35m${string}\x1b[0m`;
         case 'cyan':
             return `\x1b[36m${string}\x1b[0m`;
+        case 'random':
+            const val = Math.floor(Math.random() * (37 - 31) + 31);
+            return `\x1b[${val}m${string}\x1b[0m`;
+        default:
+            return string;
     }
 }
 
