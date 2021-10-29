@@ -1,7 +1,154 @@
-// const https = require('https');
+const https = require('https');
+
+const format = require("../format/format");
+const database = require("../db/db");
+const utils = require("../utils/generalHelpers");
+const config = require("../../config");
+
+const requestEntryPage = (path) => {
+    console.time(path);
+    return new Promise((resolve, reject) => {
+        const options = {
+            hostname: 'eksisozluk.com',
+            port: 443,
+            path,
+            method: 'GET',
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }
+
+        const req = https.request(options, async res => {
+            // reject bad status
+            if (res.statusCode < 200 || res.statusCode >= 300) {
+                // console.log(res.headers);
+                // if (res.statusCode === 429) {
+                //     console.error('istekler eksisozluk limitine takildi. eger bu hatayi sik aliyorsaniz "--sleep <ms>" secenegi ile arsivlemeyi deneyin');
+                //     console.error(`islem ${throttle*30/60} dakika sonra devam edecek`);
+                //     await webHelpers.sleep(throttle*30000);
+                //     throttle>=10 ? throttle=10 : throttle++;
+                // }
+                return reject(new Error(`statusCode=${res.statusCode}`));
+            }
+
+            let resBody = '';
+
+            // get data
+            res.on('data', d => {
+                resBody += d;
+            });
+
+            // resolve on end
+            res.on('end', () => {
+                console.timeEnd(path);
+                resolve(resBody);
+            });
+        });
+
+        req.on('error', (err) => {
+            // This is not a "Second reject", just a different sort of failure
+            reject(err);
+        });
+
+        req.end();
+    });
+};
+
+const getEntryPage = (path) => {
+    return new Promise(((resolve, reject) => {
+        requestEntryPage(path).then(html => {
+            resolve(format.returnEntryObjectArray(html));
+        }, err => {
+            reject(err);
+        });
+    }));
+};
+
+const archiveInitialPage = (path) => {
+    return new Promise((resolve, reject)=> {
+        requestEntryPage(path).then(rawHTML => {
+            const initialEntryObjectArray = format.returnEntryObjectArray(rawHTML, true);
+            const totalEntries = initialEntryObjectArray[0].replace(/[()]/g,'');
+            const entryObjectArray = initialEntryObjectArray[1];
+
+            database.addMultipleEntries(entryObjectArray).then(value => {
+                console.log(value);
+                resolve(totalEntries);
+            }, err => {
+                reject(err);
+            });
+        }, err => {
+            reject(err);
+        });
+    });
+};
+
+const archiveEntryPage = (path) => {
+    return new Promise(((resolve, reject) => {
+        getEntryPage(path).then(entries => {
+            database.addMultipleEntries(entries).then(value => {
+                console.log(value);
+                resolve('ok. sayfadaki tum entryler arsivlendi');
+            }, err => {
+                reject(err);
+            });
+        }, err => {
+            reject(err);
+        });
+    }));
+};
+
+const archiveConsecutiveEntryPages = (path) => {
+    // /son-entryleri?nick=${user}
+    return new Promise((resolve, reject) => {
+        console.time(utils.colorfulOutput(path, 'green'))
+        archiveInitialPage(`${path}&p=1`).then(async totalEntries => {
+            const maxPageNum = Math.ceil(totalEntries/10);
+            console.log(`'${path}' toplam entry sayfasi ${maxPageNum}`);
+
+            // [2,N] array
+            const pageArray = Array.from(Array(maxPageNum+1).keys());
+            pageArray.shift()
+            pageArray.shift()
+
+            // parallel pages. update this
+            const batchPage = utils.groupBy(pageArray, config.entry.maxParallelPages);
+
+            for (const key of Object.keys(batchPage)) {
+                const allPages = await Promise.all(batchPage[key].map(page => {
+                    return archiveEntryPage(`${path}&p=${page}`).then(val => {
+                        return val;
+                    }, rej => {
+                        console.error(`reddedildi: ${rej}`);
+                    });
+                }));
+
+                await utils.sleep(config.entry.sleep);
+
+                allPages.forEach(val => console.log(val));
+            }
+
+            console.timeEnd(utils.colorfulOutput(path, 'green'))
+            resolve(`'${path}' arsivlendi`);
+
+        }, err=> {
+            reject(err);
+        });
+    });
+};
+
+module.exports.archiveEntryPage = archiveEntryPage;
+module.exports.archiveConsecutiveEntryPages = archiveConsecutiveEntryPages;
 
 
+
+// --------------------------------
 // unused functions below this line
+// --------------------------------
+
+
+
 
 // call getEntriesInAPage then add all to database
 // const archiveEntriesInAPage = async (pagePath) => {
