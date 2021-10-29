@@ -28,4 +28,27 @@ const groupBy = (array, N) => {
     return object;
 }
 
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
+const colorfulOutput = (string, color) => {
+    switch (color) {
+        case 'red':
+            return `\x1b[31m${string}\x1b[0m`;
+        case 'green':
+            return `\x1b[32m${string}\x1b[0m`;
+        case 'yellow':
+            return `\x1b[33m${string}\x1b[0m`;
+        case 'blue':
+            return `\x1b[34m${string}\x1b[0m`;
+        case 'magenta':
+            return `\x1b[35m${string}\x1b[0m`;
+        case 'cyan':
+            return `\x1b[36m${string}\x1b[0m`;
+    }
+}
+
 module.exports.groupBy = groupBy;
+module.exports.sleep = sleep;
+module.exports.colorfulOutput = colorfulOutput;
