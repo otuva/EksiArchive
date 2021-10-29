@@ -6,6 +6,7 @@
 - scriptte parse edip formatla. hyperlinke donustur -> zor olabilir
 - baslik arsivleme (tamami ya da sayfa sayfa)
 - entry icinde linklenen diger entryleri de al (ayar olarak ekle)
+- banner ekle, belki birkac tane ekle ve her baslangicta random sec?
 - hata donduren entryleri atla ama not al. diger tum entryler bitince onlari tekrar dene
 - ayarlara max try ve maxtry flagi ekle. default 3
 - random user agent secenegi olsun
@@ -15,6 +16,7 @@
 - entrydeki gorselleri kaydet?
 - belki db'e eklenme tarihi koy?
 - readme ekle
+- output formatlari vermesi? csv. vs.
 - entryleri sunmak icin local server?
 - server belki gui olarak da islev gorebilir
 - get random entry to read 
