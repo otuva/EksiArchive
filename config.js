@@ -10,8 +10,10 @@ requestHeaders = {
 // default options for flags
 entry = {
     sleep: 0, // delay between requests ms
-    force: false
+    force: false,
+    maxParallelPages: 5 // how many concurrent requests
 }
+
 
 module.exports.databaseFilePath = databaseFilePath;
 module.exports.requestHeaders = requestHeaders;
