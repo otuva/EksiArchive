@@ -1,5 +1,7 @@
-const banner = () => {
-    console.log(`%c
+const utils = require("./generalHelpers")
+
+const banner = (color) => {
+    console.log(`%c ${utils.colorfulOutput(`
 _____________           .__   _____                .__    .__              
 \\_   _____/  | __  _____|__| /  _  \\_______   ____ |  |__ |__|__  __ ____  
  |    __)_|  |/ / /  ___/  |/  /_\\  \\_  __ \\_/ ___\\|  |  \\|  \\  \\/ // __ \\ 
@@ -7,7 +9,7 @@ _____________           .__   _____                .__    .__
 /_______  /__|_ \\/____  >__\\____|__  /__|    \\___  >___|  /__| \\_/  \\___  >
         \\/     \\/     \\/           \\/            \\/     \\/              \\/ 
 
-`, 'font-family: monospace');
+`, color)}`, 'font-family: monospace');
 };
 
 tr = {
@@ -41,3 +43,5 @@ en = {
         usage: "Usage"
     }
 }
+
+module.exports.banner = banner;
