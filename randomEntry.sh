@@ -1,9 +1,33 @@
 #!/bin/bash
 
-clear -x
-
 db=$1
 author=$2
+
+bs4_url_formatting() {
+	LINK_STRING='\u001b]8;;{href}\u001b\\{text}\u001b]8;;\u001b\\'
+	PYTHON_CODE=$(cat <<-EOF
+		from bs4 import BeautifulSoup
+
+		html = """${1}"""
+
+		soup = BeautifulSoup(html, 'html.parser')
+		links = soup.find_all('a', href=True)
+
+		for link in links:
+		    href = link.get('href')
+		    text = link.text
+
+		    if (href.startswith('/?q=') or href.startswith('/entry/')):
+		        href = "https://eksisozluk.com{}".format(href)
+
+		    link.replaceWith(f"${LINK_STRING}")
+
+		print(soup.prettify())
+	EOF
+	)
+
+	python3 -c "$PYTHON_CODE"
+}
 
 create_link() {
 	url=$1
@@ -13,18 +37,16 @@ create_link() {
 	# printf '\e]8;;'${url}'\e\\'${text}'\e]8;;\e\\\n'
 }
 
-
 format_output() {
 	string=$1
 
 	entry_id=$(echo ${string} | cut -d'|' -f1)
 	entry_id=$(create_link "https://eksisozluk.com/entry/${entry_id}" "Entry Link")
 
-	title=$(echo ${string} | cut -d'|' -f2)
-	title=$(echo "${title}" | html2text -ascii)
+	title=$(echo ${string} | cut -d'|' -f2 | html2text -ascii)
 
 	content=$(echo ${string} | cut -d'|' -f3)
-	content=$(echo "${content}" | html2text -ascii)
+	content=$(bs4_url_formatting "${content}" | html2text -width 120 -ascii)
 
 	favorite_count=$(echo ${string} | cut -d'|' -f4)
 	author=$(echo ${string} | cut -d'|' -f5)
@@ -34,6 +56,7 @@ format_output() {
 }
 
 main() {
+	clear -x
 	entry=$(sqlite3 ${db} <<- EOF
 		SELECT entry_id,title,content,favorite_count,author,date_created FROM data WHERE author='${author}' ORDER BY RANDOM() LIMIT 1;
 		.exit
@@ -51,9 +74,8 @@ if [[ -z ${db} || -z ${author} ]]; then
 	exit 1
 
 elif [[ -z "$(command -v html2text)" ]]; then
-	echo -e "html2text is not installed. \nType:\n\tsudo apt install\n"
+	echo -e "html2text is not installed. \nType:\n\tsudo apt install html2text\n"
 	exit 1
-
 else
 	main
 	exit 0
