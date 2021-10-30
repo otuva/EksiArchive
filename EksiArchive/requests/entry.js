@@ -86,14 +86,16 @@ const getEntry = (entryID) => {
 
 const archiveEntry = (entryID) => {
     // call getEntry then add resolved entry object to database
-    getEntry(entryID).then((val)=>{
-        database.addEntry(val).then(value => {
-            console.log(value);
-        }, error => {
-            console.error(error);
+    return new Promise((resolve,reject)=> {
+        getEntry(entryID).then((val)=>{
+            database.addEntry(val).then(value => {
+                resolve(value);
+            }, error => {
+                reject(error);
+            });
+        }, (err)=> {
+            reject(err);
         });
-    }, (err)=> {
-        console.error(err);
     });
 };
 
