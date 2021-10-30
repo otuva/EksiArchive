@@ -1,8 +1,7 @@
 ---
 
-- sleepi user.js'de implemente et
+- debeyi duzelt. 
 - html parser. parse edilmis entryleri belki regexle formatla
-- scriptte parse edip formatla. hyperlinke donustur -> zor olabilir
 - baslik arsivleme (tamami ya da sayfa sayfa)
 - entry icinde linklenen diger entryleri de al (ayar olarak ekle)
 - banner ekle, belki birkac tane ekle ve her baslangicta random sec?
@@ -15,7 +14,7 @@
 - entrydeki gorselleri kaydet?
 - belki db'e eklenme tarihi koy?
 - readme ekle
-- output formatlari vermesi? csv. vs.
+- output formatlari vermesi? csv. pdf vs.
 - entryleri sunmak icin local server?
 - server belki gui olarak da islev gorebilir
 - get random entry to read 
@@ -73,3 +72,5 @@
 - [X] scriptte '…' karakterini uc nokta ile degistir html2textten sonra tekrar karaktere donustur (gerek kalmadi ascii olarak output ediyor artik)
 - [X] entry var mi diye kontrol etmesini db dosyasinda yap. forceu orada kullan. oteki turlu sacma
 - [X] requestleri fixle. eksisozluk kirik, son-entrylerden crawl etmek yerine entry veya favori sayfasindan crawl et
+- [X] sleepi user.js'de implemente et
+- [X] scriptte parse edip formatla. hyperlinke donustur (bs4 kullanarak parse edip tum linkleri terminal linkine donusturuyor)
