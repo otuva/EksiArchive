@@ -49,12 +49,12 @@ const getEntry = (entryID) => {
     // sleep time & force are used here
     // db query gets made here
     // call requestEntry, return entry object
-    const timeElapsed = Date.now();
-    const today = new Date(timeElapsed);
-
-    const timeStr = `[${today.toUTCString()}]`;
-
     return new Promise(async (resolve, reject)=> {
+        const timeElapsed = Date.now();
+        const today = new Date(timeElapsed);
+
+        const timeStr = `[${today.toUTCString()}]`;
+
         console.time(`${timeStr} - entry '${entryID}'`);
         const matchError = /<h1 title="web5">büyük başarısızlıklar sözkonusu<\/h1>/;
         database.checkSingleEntryID(entryID).then(state=>{
