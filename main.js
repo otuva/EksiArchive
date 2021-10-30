@@ -2,6 +2,7 @@ const argv = require('minimist')(process.argv.slice(2));
 
 const entry = require("./EksiArchive/requests/entry");
 const userPage = require("./EksiArchive/requests/user");
+const debe = require("./EksiArchive/requests/debe");
 const inputValidate = require("./EksiArchive/utils/inputValidate");
 const outputMessages = require("./EksiArchive/utils/outputMessages");
 const manage = require("./EksiArchive/manage");
@@ -19,6 +20,10 @@ if (Object.keys(argv).length === 1 && argv._.length === 0) {
 }
 else {
     // if first flagless argument exists
+    if (typeof argv.sleep === 'number') config.entry.sleep = argv.sleep;
+    if (typeof argv.force === 'boolean') config.entry.force = argv.force;
+    if (typeof argv.threads === 'number') config.entry.threads = argv.threads;
+
     if (argv._[0]) {
         if (Object.keys(argv).length !==1) {
             console.error('\x1b[31m%s\x1b[0m', "You can't use other flags with first flags. Disregarding other flags.")
@@ -33,8 +38,11 @@ else {
             console.log("v0.1");
         }
         else if (argv._[0] === 'debe') {
-            // userOps.archiveEntriesInAPage('/debe');
-            console.log('debe sonra implemente edilecek');
+            debe.archiveDebeEntries().then(val => {
+                console.log(val);
+            }, err => {
+                console.error(err);
+            });
         }
         else {
             console.error("Yanlis kullanim. Dogrusu:"+firstFlags);
@@ -42,15 +50,17 @@ else {
     }
     else {
         try {
-            if (typeof argv.sleep === 'number') config.entry.sleep = argv.sleep;
-            if (typeof argv.force === 'boolean') config.entry.force = argv.force;
 
             if ((argv.e || argv.entry) && !(argv.e && argv.entry)) {
                 if (argv.entry) argv.e = argv.entry;
                 if (typeof argv.e === 'string' || typeof argv.e === 'number') {
                     const id = inputValidate.isInputEntryLink(argv.e.toString());
                     console.log(`arsivlenecek entry: ${id}`);
-                    entry.archiveEntry(id);
+                    entry.archiveEntry(id).then(val => {
+                        console.log(val);
+                    }, err => {
+                        console.error(err);
+                    });
                 }
                 else {
                     console.error('entry kismi bos olamaz.');
