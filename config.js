@@ -11,7 +11,7 @@ requestHeaders = {
 entry = {
     sleep: 0, // delay between requests ms
     force: false,
-    maxParallelPages: 5 // how many concurrent requests
+    threads: 5, // how many concurrent requests
 }
 
 
