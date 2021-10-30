@@ -5,7 +5,7 @@ const database = require("../db/db");
 const utils = require("../utils/generalHelpers");
 const config = require("../../config");
 
-const requestEntryPage = (path) => {
+const requestPage = (path) => {
     console.time(path);
     return new Promise((resolve, reject) => {
         const options = {
@@ -57,7 +57,7 @@ const requestEntryPage = (path) => {
 
 const getEntryPage = (path) => {
     return new Promise(((resolve, reject) => {
-        requestEntryPage(path).then(html => {
+        requestPage(path).then(html => {
             resolve(format.returnEntryObjectArray(html));
         }, err => {
             reject(err);
@@ -67,7 +67,7 @@ const getEntryPage = (path) => {
 
 const archiveInitialPage = (path) => {
     return new Promise((resolve, reject)=> {
-        requestEntryPage(path).then(rawHTML => {
+        requestPage(path).then(rawHTML => {
             const initialEntryObjectArray = format.returnEntryObjectArray(rawHTML, true);
             const totalEntries = initialEntryObjectArray[0].replace(/[()]/g,'');
             const entryObjectArray = initialEntryObjectArray[1];
@@ -113,7 +113,7 @@ const archiveConsecutiveEntryPages = (path) => {
             pageArray.shift()
 
             // parallel pages. update this
-            const batchPage = utils.groupBy(pageArray, config.entry.maxParallelPages);
+            const batchPage = utils.groupBy(pageArray, config.entry.threads);
 
             for (const key of Object.keys(batchPage)) {
                 const allPages = await Promise.all(batchPage[key].map(page => {
@@ -138,6 +138,7 @@ const archiveConsecutiveEntryPages = (path) => {
     });
 };
 
+module.exports.requestPage = requestPage;
 module.exports.archiveEntryPage = archiveEntryPage;
 module.exports.archiveConsecutiveEntryPages = archiveConsecutiveEntryPages;
 
