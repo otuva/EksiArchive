@@ -1,11 +1,11 @@
 const argv = require('minimist')(process.argv.slice(2));
 
-const entry = require("./EksiArchive/requests/entry");
-const userPage = require("./EksiArchive/requests/user");
-const debe = require("./EksiArchive/requests/debe");
-const inputValidate = require("./EksiArchive/utils/inputValidate");
-const outputMessages = require("./EksiArchive/utils/outputMessages");
-const manage = require("./EksiArchive/manage");
+const entry = require("./EksiArchive/src/entry/entry");
+const userPage = require("./EksiArchive/src/user/user");
+const debe = require("./EksiArchive/src/debe/debe");
+const inputValidate = require("./EksiArchive/src/utils/inputValidate");
+const outputMessages = require("./EksiArchive/src/utils/outputMessages");
+const manage = require("./EksiArchive/src/manage");
 const config = require("./config");
 
 // help diyince ayri bos calistirinca ayri text yazdir
