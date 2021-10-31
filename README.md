@@ -4,7 +4,9 @@
 
 Eksi sozluk entrylerinin local kopyasini alin.
 
-Kullanici entry sayfasi, kullanici veya entry arsivleyebilir. 
+Kullanici entry sayfasi, kullanici veya entry arsivleyebilir.
+
+Internet hizina bagli olarak dakikada +2500 entry arsivleyebilir. 
 
 
 #### Example Output - Ornek Cikti
