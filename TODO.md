@@ -1,6 +1,5 @@
 ---
 
-- debeyi duzelt. 
 - html parser. parse edilmis entryleri belki regexle formatla
 - baslik arsivleme (tamami ya da sayfa sayfa)
 - entry icinde linklenen diger entryleri de al (ayar olarak ekle)
@@ -74,3 +73,4 @@
 - [X] requestleri fixle. eksisozluk kirik, son-entrylerden crawl etmek yerine entry veya favori sayfasindan crawl et
 - [X] sleepi user.js'de implemente et
 - [X] scriptte parse edip formatla. hyperlinke donustur (bs4 kullanarak parse edip tum linkleri terminal linkine donusturuyor)
+- [X] debeyi duzelt. 
