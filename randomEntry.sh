@@ -7,22 +7,17 @@ bs4_url_formatting() {
 	LINK_STRING='\u001b]8;;{href}\u001b\\{text}\u001b]8;;\u001b\\'
 	PYTHON_CODE=$(cat <<-EOF
 		from bs4 import BeautifulSoup
-
-		html = """${1}"""
-
+		html = """ ${1} """.replace('<br/>', '\n').strip()
 		soup = BeautifulSoup(html, 'html.parser')
 		links = soup.find_all('a', href=True)
-
 		for link in links:
 		    href = link.get('href')
 		    text = link.text
-
 		    if (href.startswith('/?q=') or href.startswith('/entry/')):
 		        href = "https://eksisozluk.com{}".format(href)
-
 		    link.replaceWith(f"${LINK_STRING}")
 
-		print(soup.prettify())
+		print(soup)
 	EOF
 	)
 
@@ -46,7 +41,7 @@ format_output() {
 	title=$(echo ${string} | cut -d'|' -f2 | html2text -ascii)
 
 	content=$(echo ${string} | cut -d'|' -f3)
-	content=$(bs4_url_formatting "${content}" | html2text -width 120 -ascii)
+	content=$(bs4_url_formatting "${content}") #| html2text -width 120 -ascii)
 
 	favorite_count=$(echo ${string} | cut -d'|' -f4)
 	author=$(echo ${string} | cut -d'|' -f5)
@@ -57,6 +52,7 @@ format_output() {
 
 main() {
 	clear -x
+
 	entry=$(sqlite3 ${db} <<- EOF
 		SELECT entry_id,title,content,favorite_count,author,date_created FROM data WHERE author='${author}' ORDER BY RANDOM() LIMIT 1;
 		.exit
@@ -64,9 +60,6 @@ main() {
 	)
 
 	format_output "${entry}"
-	#formatted_output=$(format_output "${entry}")
-
-	#echo -e "${formatted_output}"
 }
 
 if [[ -z ${db} || -z ${author} ]]; then
