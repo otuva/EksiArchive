@@ -54,6 +54,11 @@ const colorfulOutput = (string, color) => {
     }
 }
 
+const apostropheEscape = (string) => {
+    return string.replace(/'/g, "''");
+};
+
 module.exports.groupBy = groupBy;
 module.exports.sleep = sleep;
 module.exports.colorfulOutput = colorfulOutput;
+module.exports.apostropheEscape = apostropheEscape;

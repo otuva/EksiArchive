@@ -1,8 +1,8 @@
-const requestPage = require("./user").requestPage;
-const archiveEntry = require("./entry").archiveEntry;
-const getEntryIDsFromDebe = require("../format/formatDebe").getEntryIDsFromDebe;
+const requestPage = require("../user/user").requestPage;
+const archiveEntry = require("../entry/entry").archiveEntry;
+const getEntryIDsFromDebe = require("./formatDebe").getEntryIDsFromDebe;
 const utils = require("../utils/generalHelpers");
-const config = require("../../config");
+const config = require("../../../config");
 
 const getDebe = () => {
     // resolve array with entry ids

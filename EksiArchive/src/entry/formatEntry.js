@@ -1,4 +1,4 @@
-const cheerio = require("cheerio");
+const utils = require("../utils/generalHelpers");
 
 const dateTimeFormatter = (string) => {
     const dateTime = string.split(' ~ ')
@@ -33,13 +33,38 @@ const dateTimeFormatter = (string) => {
     }
 };
 
-const apostropheEscape = (string) => {
-    return string.replace(/'/g, "''");
+const formatEntry = (title, info, content, date) => {
+    title = utils.apostropheEscape(title);
+
+    const id = info['data-id'];
+    const author = info['data-author'];
+
+    let inEksiSeyler;
+    info['data-seyler-slug'] ? inEksiSeyler=true : inEksiSeyler=false;
+
+    const favCount = info['data-favorite-count'];
+
+    const dateTime = dateTimeFormatter(date);
+
+    content = utils.apostropheEscape(content);
+
+    return {
+        id,
+        title,
+        author,
+        content,
+        inEksiSeyler,
+        favCount,
+        dateCreated: dateTime[0],
+        timeCreated: dateTime[1],
+        dateModified: dateTime[2],
+        timeModified: dateTime[3]
+    };
 };
 
 const contentFormatter = (string) => {
     string = string.trim()
-    string = apostropheEscape(string);
+    string = utils.apostropheEscape(string);
     return string;
 };
 
@@ -49,7 +74,7 @@ const html2entry = (rawHtml) => {
         try {
             // get title
             const matchTitle = /(?<=data-title=").*?(?="\s)/;
-            const title = apostropheEscape(rawHtml.match(matchTitle)[0]);
+            const title = utils.apostropheEscape(rawHtml.match(matchTitle)[0]);
 
             // get only user entry not (if exists) pinned message
             const matchEntrySection = /id="entry-item-list"/;
@@ -102,92 +127,7 @@ const html2entry = (rawHtml) => {
     }
 };
 
-// update this too
-const returnEntryIDsFromHTML = html => {
-    const matchEntryList = /class="(?:topic-list|topic-list partial)"/;
-    const matchFooter = /id="site-footer"/;
-    const matchEntryID = /(?<=\/entry\/)\d+/g;
-
-    const listBegin = html.match(matchEntryList);
-    const listEnd = html.match(matchFooter);
-
-    if (listBegin !== null && listEnd !== null) {
-        const entryListHTML = html.slice(listBegin.index, listEnd.index);
-        if (entryListHTML.match(matchEntryID) !== null) {
-            return entryListHTML.match(matchEntryID);
-        }
-        else {
-            throw new Error('verilen html\'den entry listesi bulunamadi');
-        }
-    }
-    else {
-        throw new Error('verilen html\'den entry listesi bulunamadi');
-    }
-};
-
-// newest to use
-const formatEntry = (title, info, content, date) => {
-    title = apostropheEscape(title);
-
-    const id = info['data-id'];
-    const author = info['data-author'];
-
-    let inEksiSeyler;
-    info['data-seyler-slug'] ? inEksiSeyler=true : inEksiSeyler=false;
-
-    const favCount = info['data-favorite-count'];
-
-    const dateTime = dateTimeFormatter(date);
-
-    content = apostropheEscape(content);
-
-    // console.log(info);
-
-    return {
-        id,
-        title,
-        author,
-        content,
-        inEksiSeyler,
-        favCount,
-        dateCreated: dateTime[0],
-        timeCreated: dateTime[1],
-        dateModified: dateTime[2],
-        timeModified: dateTime[3]
-    };
-}
-
-// for page crawl
-const returnEntryObjectArray = (html, initial=false) => {
-    // initial argument is used here to decide how many pages of entries there will be
-
-    const entryArray = [];
-    const $ = cheerio.load(html);
-    const entries = $('div[class="topic-item"]');
-
-    entries.each((num, tag)=> {
-        const entry = $(tag);
-
-        const title = entry.find('h1').text().trim();
-        const attributes = entry.find('li').attr();
-        const content = entry.find('div').html().trim();
-        const date = entry.find('a[class="entry-date permalink"]').text();
-
-        const entryObject = formatEntry(title, attributes, content, date);
-        entryArray.push(entryObject);
-    });
-
-    // for consecutive pages
-    if (initial) {
-        const numberOfPages=$('small').text().trim();
-        return [numberOfPages, entryArray];
-    }
-    return entryArray;
-}
-
+module.exports.formatEntry = formatEntry;
 module.exports.html2entry = html2entry;
 module.exports.contentFormatter = contentFormatter;
 module.exports.dateTimeFormatter = dateTimeFormatter;
-module.exports.returnEntryIDsFromHTML = returnEntryIDsFromHTML;
-module.exports.formatEntry = formatEntry;
-module.exports.returnEntryObjectArray = returnEntryObjectArray;

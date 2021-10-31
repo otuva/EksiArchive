@@ -1,8 +1,8 @@
 const https = require("https");
 
-const config = require("../../config");
-const database = require("../db/db");
-const format = require("../format/format");
+const config = require("../../../config");
+const database = require("../database");
+const format = require("./formatEntry");
 
 
 const requestEntry = (entryID) => {

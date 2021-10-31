@@ -1,9 +1,9 @@
 const https = require('https');
 
-const format = require("../format/format");
-const database = require("../db/db");
+const format = require("./formatUser");
+const database = require("../database");
 const utils = require("../utils/generalHelpers");
-const config = require("../../config");
+const config = require("../../../config");
 
 const requestPage = (path) => {
     console.time(path);
