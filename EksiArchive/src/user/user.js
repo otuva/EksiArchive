@@ -13,10 +13,7 @@ const requestPage = (path) => {
             port: 443,
             path,
             method: 'GET',
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36',
-                'X-Requested-With': 'XMLHttpRequest'
-            }
+            headers: config.requestHeaders
         }
 
         const req = https.request(options, async res => {
@@ -105,7 +102,7 @@ const archiveConsecutiveEntryPages = (path) => {
         console.time(utils.colorfulOutput(path, 'green'))
         archiveInitialPage(`${path}&p=1`).then(async totalEntries => {
             const maxPageNum = Math.ceil(totalEntries/10);
-            console.log(`'${path}' toplam entry sayfasi ${maxPageNum}`);
+            console.log(utils.colorfulOutput(`'${path}' toplam entry sayfasi ${maxPageNum}`, 'yellow'));
 
             // [2,N] array
             const pageArray = Array.from(Array(maxPageNum+1).keys());
