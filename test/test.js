@@ -5,12 +5,13 @@
 const assert = require('assert');
 const fs = require('fs');
 
-const userOps = require("../EksiArchive/requests/user");
+// const userOps = require("../EksiArchive/src/user/user");
 // const dbOps = require("../EksiArchive/dbOps");
-const formatOps = require("../EksiArchive/format/format");
+// const formatOps = require("../EksiArchive/src/");
+const entryFormatter = require("../EksiArchive/src/entry/formatEntry");
 const htmlStrings = require("./utils/htmlStrings");
-const inputValidate = require("../EksiArchive/utils/inputValidate");
-const groupBy = require("../EksiArchive/utils/generalHelpers").groupBy;
+const inputValidate = require("../EksiArchive/src/utils/inputValidate");
+const groupBy = require("../EksiArchive/src/utils/generalHelpers").groupBy;
 
 describe('Web Requests' , () => {
     // beforeEach(function() {
@@ -21,23 +22,23 @@ describe('Web Requests' , () => {
     //     http.request.restore();
     // });
 
-    it('tests for empty entry id', ()=> {
-        const emptyID = '';
-        const rejected = Promise.reject("statusCode=301");
+    // it('tests for empty entry id', ()=> {
+    //     const emptyID = '';
+    //     const rejected = Promise.reject("statusCode=301");
+    //
+    //     const emptyIdReq = entryFormatter.requestEntry(emptyID);
+    //
+    //     assert.deepStrictEqual(emptyIdReq, rejected);
+    // });
 
-        const emptyIdReq = userOps.requestEntry(emptyID);
-
-        assert.deepStrictEqual(emptyIdReq, rejected);
-    });
-
-    it('tests for non-existent entry', () => {
-        const nonExistentID = '54329523423532412';
-        const rejected = Promise.reject("statusCode=404");
-
-        const nonExistentReq = userOps.requestEntry(nonExistentID);
-
-        assert.deepStrictEqual(nonExistentReq, rejected);
-    });
+    // it('tests for non-existent entry', () => {
+    //     const nonExistentID = '54329523423532412';
+    //     const rejected = Promise.reject("statusCode=404");
+    //
+    //     const nonExistentReq = userOps.requestEntry(nonExistentID);
+    //
+    //     assert.deepStrictEqual(nonExistentReq, rejected);
+    // });
 
     // it('tests for a normal entry', async () => {
     //     const normalID = '1';
@@ -72,11 +73,11 @@ describe('SQL Operations', () => {
 describe('Entry Operations', () => {
    describe('String to Entry', () => {
        it('tests for empty string', () => {
-           assert.throws(() => formatOps.html2entry(""), Error, "html can't be empty");
+           assert.throws(() => entryFormatter.html2entry(""), Error, "html can't be empty");
        });
 
        it('tests for null object', () => {
-           assert.throws(() => {formatOps.html2entry(null)}, Error);
+           assert.throws(() => {entryFormatter.html2entry(null)}, Error);
        });
 
        it('tests for not modified entry', () => {
@@ -95,7 +96,7 @@ describe('Entry Operations', () => {
           }
 
 
-           const actualObj = formatOps.html2entry(html);
+           const actualObj = entryFormatter.html2entry(html);
 
           assert.deepStrictEqual(actualObj, expectedObj);
        });
@@ -115,7 +116,7 @@ describe('Entry Operations', () => {
                timeModified: '22:04'
            }
 
-           const actualObj = formatOps.html2entry(html);
+           const actualObj = entryFormatter.html2entry(html);
 
            assert.deepStrictEqual(actualObj, expectedObj);
        });
@@ -135,7 +136,7 @@ describe('Entry Operations', () => {
                timeModified: '13:43'
            }
 
-           const actualObj = formatOps.html2entry(html);
+           const actualObj = entryFormatter.html2entry(html);
 
            assert.deepStrictEqual(actualObj, expectedObj);
        });
@@ -144,7 +145,7 @@ describe('Entry Operations', () => {
            const html = htmlStrings.eksiSeylerEntry;
            const expectedSeyler = true;
 
-           const actualObj = formatOps.html2entry(html);
+           const actualObj = entryFormatter.html2entry(html);
 
            assert.deepStrictEqual(actualObj.inEksiSeyler, expectedSeyler);
        });
@@ -155,7 +156,7 @@ describe('Entry Operations', () => {
            const dateTime = '12.09.2016 10:32';
            const expectedArr = ['12.09.2016', '10:32', null, null];
 
-           const actualArr = formatOps.dateTimeFormatter(dateTime);
+           const actualArr = entryFormatter.dateTimeFormatter(dateTime);
 
            assert.deepStrictEqual(actualArr, expectedArr);
        });
@@ -164,7 +165,7 @@ describe('Entry Operations', () => {
            const dateTime = '13.10.2011 14:16 ~ 14:20';
            const expectedArr = ['13.10.2011', '14:16', null, '14:20'];
 
-           const actualArr = formatOps.dateTimeFormatter(dateTime);
+           const actualArr = entryFormatter.dateTimeFormatter(dateTime);
 
            assert.deepStrictEqual(actualArr, expectedArr);
        });
@@ -173,7 +174,7 @@ describe('Entry Operations', () => {
            const dateTime = '17.10.2016 12:44 ~ 21.12.2018 08:37';
            const expectedArr = ['17.10.2016', '12:44', '21.12.2018', '08:37'];
 
-           const actualArr = formatOps.dateTimeFormatter(dateTime);
+           const actualArr = entryFormatter.dateTimeFormatter(dateTime);
 
            assert.deepStrictEqual(actualArr, expectedArr);
        });
@@ -185,7 +186,7 @@ describe('Entry Operations', () => {
            const string = "he doesn't work for me";
            const expectedString = "he doesn''t work for me";
 
-           const actualString = formatOps.contentFormatter(string);
+           const actualString = entryFormatter.contentFormatter(string);
 
            assert.deepStrictEqual(actualString, expectedString);
        });
