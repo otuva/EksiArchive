@@ -3,6 +3,7 @@ const https = require("https");
 const config = require("../../../config");
 const database = require("../database");
 const format = require("./formatEntry");
+const {colorfulOutput} = require("../utils/generalHelpers");
 
 
 const requestEntry = (entryID) => {
@@ -19,7 +20,7 @@ const requestEntry = (entryID) => {
 
         const req = https.request(options, async res => {
             if (res.statusCode < 200 || res.statusCode >= 300) {
-                if (res.statusCode === 429) console.error('istekler eksisozluk limitine takildi. eger bu hatayi sik aliyorsaniz "--sleep <ms>" secenegi ile arsivlemeyi deneyin');
+                if (res.statusCode === 429) console.error(colorfulOutput('istek eksisozluk limitine takildi. biraz bekleyip tekrar deneyin.', 'red'));
                 return reject(new Error(`statusCode=${res.statusCode}`));
             }
 
