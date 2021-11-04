@@ -80,7 +80,7 @@ const getEntry = (entryID) => {
                 reject('entry zaten arsivde');
             }
         }, err=>{
-            console.error(`database hatasi ${err}`);
+            reject(`database hatasi ${err}`);
         });
     });
 }
