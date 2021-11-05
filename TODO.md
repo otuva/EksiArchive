@@ -1,8 +1,11 @@
 ---
 
+- readme ekle
 - entry formatte cheerio kullan.
 - baslik arsivleme (tamami ya da sayfa sayfa)
 - entry icinde linklenen diger entryleri de al (ayar olarak ekle)
+- kullanici sayfa rangei ekle. kullanici,n-m
+- entry idleri virgulle ayrilmis sekilde almayi ekle 
 - banner ekle, belki birkac tane ekle ve her baslangicta random sec?
 - hata donduren entryleri atla ama not al. diger tum entryler bitince onlari tekrar dene
 - ayarlara max try ve maxtry flagi ekle. default 3
@@ -12,7 +15,7 @@
 - console.log olanlari info vs. degistir
 - entrydeki gorselleri kaydet?
 - belki db'e eklenme tarihi koy?
-- readme ekle
+- bash scriptine kullanici vermezse rastgele entry versin. kullanci verirse sadece o kullanicinin rastgele entrysini versin
 - output formatlari vermesi? csv. pdf vs.
 - entryleri sunmak icin local server?
 - server belki gui olarak da islev gorebilir
