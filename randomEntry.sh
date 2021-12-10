@@ -1,7 +1,17 @@
 #!/bin/bash
 
-db=$1
-author=$2
+usage() {
+    echo -e "Usage: \n\tbash script.sh [-d <database>] [-a <author>]\n\nDB Default: 'database.db',\nAuthor Default: random"
+}
+
+while getopts “a:d:h” opt
+do
+  case $opt in
+    a) AUTHOR_OPT=$OPTARG ;;
+    d) DB_OPT=$OPTARG ;;
+    h) usage; exit 0 ;;
+  esac
+done
 
 bs4_url_formatting() {
 	LINK_STRING='\u001b]8;;{href}\u001b\\{text}\u001b]8;;\u001b\\'
@@ -51,22 +61,51 @@ format_output() {
 }
 
 main() {
+
+	if [[ -n ${DB_OPT} ]]
+	then
+		if ! [[ -e ${DB_OPT} ]]; then
+			echo "Db file '${DB_OPT}' does not exists"
+			exit 2
+		fi
+
+		if [[ -n ${AUTHOR_OPT} ]]
+		then
+			entry=$(sqlite3 ${DB_OPT} <<- EOF
+				SELECT entry_id,title,content,favorite_count,author,date_created FROM data WHERE author='${AUTHOR_OPT}' ORDER BY RANDOM() LIMIT 1;
+				.exit
+				EOF
+			)
+		else
+			entry=$(sqlite3 ${DB_OPT} <<- EOF
+				SELECT entry_id,title,content,favorite_count,author,date_created FROM data ORDER BY RANDOM() LIMIT 1;
+				.exit
+				EOF
+			)
+		fi
+	else
+		if [[ -n ${AUTHOR_OPT} ]]
+		then
+			entry=$(sqlite3 database.db <<- EOF
+				SELECT entry_id,title,content,favorite_count,author,date_created FROM data WHERE author='${AUTHOR_OPT}' ORDER BY RANDOM() LIMIT 1;
+				.exit
+				EOF
+			)
+		else
+			entry=$(sqlite3 database.db <<- EOF
+				SELECT entry_id,title,content,favorite_count,author,date_created FROM data ORDER BY RANDOM() LIMIT 1;
+				.exit
+				EOF
+			)
+		fi
+
+	fi
+
 	clear -x
-
-	entry=$(sqlite3 ${db} <<- EOF
-		SELECT entry_id,title,content,favorite_count,author,date_created FROM data WHERE author='${author}' ORDER BY RANDOM() LIMIT 1;
-		.exit
-		EOF
-	)
-
 	format_output "${entry}"
 }
 
-if [[ -z ${db} || -z ${author} ]]; then
-	echo -e "Argument(s) is missing.\nUsage: \n\tbash script.sh <database> <author>"
-	exit 1
-
-elif [[ -z "$(command -v html2text)" ]]; then
+if [[ -z "$(command -v html2text)" ]]; then
 	echo -e "html2text is not installed. \nType:\n\tsudo apt install html2text\n"
 	exit 1
 else
