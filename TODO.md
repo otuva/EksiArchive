@@ -1,7 +1,10 @@
 ---
 
+- flagleri duzelt
 - readme ekle
 - entry formatte cheerio kullan.
+- database'e eklenme yorumu koy (debe, fav: <kullanici>, veya arsiv flagleri verirken comment koyabilme imkani olsun)
+- script yazar ismi almazsa bulunan rastgele bir entry versin.
 - baslik arsivleme (tamami ya da sayfa sayfa)
 - entry icinde linklenen diger entryleri de al (ayar olarak ekle)
 - kullanici sayfa rangei ekle. kullanici,n-m
