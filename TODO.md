@@ -14,7 +14,6 @@
 - console.log olanlari info vs. degistir
 - entrydeki gorselleri kaydet?
 - belki db'e eklenme tarihi koy?
-- bash scriptine kullanici vermezse rastgele entry versin. kullanci verirse sadece o kullanicinin rastgele entrysini versin
 - output formatlari vermesi? csv. pdf vs.
 - entryleri sunmak icin local server?
 - server belki gui olarak da islev gorebilir
