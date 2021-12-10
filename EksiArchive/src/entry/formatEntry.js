@@ -1,3 +1,5 @@
+const cheerio = require("cheerio");
+
 const utils = require("../utils/generalHelpers");
 
 const dateTimeFormatter = (string) => {
@@ -68,63 +70,20 @@ const contentFormatter = (string) => {
     return string;
 };
 
-// update this
-const singleEntryFormat = (rawHtml) => {
-    if (typeof rawHtml === 'string' && rawHtml.length !== 0) {
-        try {
-            // get title
-            const matchTitle = /(?<=data-title=").*?(?="\s)/;
-            const title = utils.apostropheEscape(rawHtml.match(matchTitle)[0]);
+const singleEntryFormat = (html) => {
+    const $ = cheerio.load(html);
 
-            // get only user entry not (if exists) pinned message
-            const matchEntrySection = /id="entry-item-list"/;
-            const index = rawHtml.match(matchEntrySection).index;
-            const html = rawHtml.slice(index);
+    // instead of getting directly 'li' item
+    // first get 'entry list' then get 'li' tag
+    // by doing so you'd avoid getting pinned entry by eksisozluk if there is any
+    const entry = $('ul[id="entry-item-list"]').find('li');
 
-            // regex for entry data
-            const matchEntryID = /(?<=data-id=")\d+(?="\s)/;
-            const matchAuthor = /(?<=data-author=")[\w\s]+(?="\s)/;
-            // <div class="(?:content|content content-expanded)">\s.*\s+<\/div>
-            // (?<=<div class="(?:content|content content-expanded)">\s).*?(?=\s+<\/div>) -> use this
-            // (?<=<div class="(?:content|content content-expanded)">).*?(?=<\/div>)
-            const matchContent = /(?<=<div class="(?:content|content content-expanded)">\s+).*?(?=\s+<\/div>)/;
-            const matchEksiSeyler = /(?<=data-seyler-slug=")[\w-]+(?="\s)/;
-            const matchEntryDate = /(?<=<a class="entry-date permalink" href="\/entry\/\d+">).*?(?=<\/a>)/;
-            const matchFavCount = /(?<=data-favorite-count=")\d+(?="\s)/
+    const title = $('h1').text().trim();
+    const attrb = entry[0].attribs;
+    const content = entry.find('div').html().trim();
+    const date = entry.find('a[class="entry-date permalink"]').text();
 
-            //variables
-            const id = html.match(matchEntryID)[0];
-            const author = html.match(matchAuthor)[0];
-            const content = contentFormatter(html.match(matchContent)[0]);
-            const inEksiSeyler = (() => {
-                // regex match. if not found return false
-                const match = html.match(matchEksiSeyler);
-                return match != null;
-            })();
-            const dateTime = dateTimeFormatter(html.match(matchEntryDate)[0]);
-            const favCount = html.match(matchFavCount)[0];
-
-            // return entry object
-            return {
-                id,
-                title,
-                author,
-                content,
-                inEksiSeyler,
-                favCount,
-                dateCreated: dateTime[0],
-                timeCreated: dateTime[1],
-                dateModified: dateTime[2],
-                timeModified: dateTime[3]
-            };
-        }
-        catch (e) {
-            console.error(e);
-        }
-    }
-    else {
-        throw new Error("html can't be empty");
-    }
+    return formatEntry(title, attrb, content, date);
 };
 
 module.exports.formatEntry = formatEntry;
