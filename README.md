@@ -10,14 +10,19 @@ Internet hizina bagli olarak dakikada +2500 entry arsivleyebilir.
 
 - # Kullanim 
 
+  ```
+  -h, --help      Bu yardim sayfasini goruntule
+  ```
+
   - ## Arsiv Kullanimi:
 
     * [AA]= 'AA' degeri opsiyonel
 
     ```
-    -e, --entry        [https://eksisozluk.com/entry/]ENTRY_ID
-    -u, --user         KULLANICI_ADI[,SAYFA]
-    -f, --favorite     KULLANICI_ADI[,SAYFA]
+    -e, --entry        [https://eksisozluk.com/entry/]ENTRY_ID    Tek entry arsivle
+    -u, --user         KULLANICI_ADI[,SAYFA]                      Kullanici entrylerini arsivle
+    -f, --favorite     KULLANICI_ADI[,SAYFA]                      Kullanici favlarini arsivle
+    --debe             Debedeki tum entryleri arsivle
     ```
 
   - ## Ayar Kullanimi:
@@ -28,6 +33,13 @@ Internet hizina bagli olarak dakikada +2500 entry arsivleyebilir.
     --sleep            MILISANIYE            Istekler arasinda bekleme suresi.
     --force            Arsivde olan entry'i tekrar arsivle.
     --threads          SAYI                  Paralel gidecek maksimum istek sayisi. (Default 5)
+    ```
+  
+  - ## Diger
+
+    ```angular2html
+    -h, --help      Bu yardim sayfasini goruntule
+    --version       Uygulama versiyonunu goruntule
     ```
 
   - ## Ornekler 
