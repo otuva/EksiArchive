@@ -1,6 +1,5 @@
 ---
 
-- entry formatte cheerio kullan.
 - database'e eklenme yorumu koy (debe, fav: <kullanici>, veya arsiv flagleri verirken comment koyabilme imkani olsun)
 - script yazar ismi almazsa bulunan rastgele bir entry versin.
 - baslik arsivleme (tamami ya da sayfa sayfa)
@@ -82,3 +81,4 @@
 - [X] html parser. parse edilmis entryleri belki regexle formatla (yeni fonksiyonlar cheerio ile parselaniyor. regexe cogunlukla ihtiyac yok)
 - [X] flagleri duzelt
 - [X] readme ekle
+- [X] tek entry formatte cheerio kullan.
