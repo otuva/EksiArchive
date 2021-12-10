@@ -69,7 +69,7 @@ const contentFormatter = (string) => {
 };
 
 // update this
-const html2entry = (rawHtml) => {
+const singleEntryFormat = (rawHtml) => {
     if (typeof rawHtml === 'string' && rawHtml.length !== 0) {
         try {
             // get title
@@ -128,6 +128,6 @@ const html2entry = (rawHtml) => {
 };
 
 module.exports.formatEntry = formatEntry;
-module.exports.html2entry = html2entry;
+module.exports.html2entry = singleEntryFormat;
 module.exports.contentFormatter = contentFormatter;
 module.exports.dateTimeFormatter = dateTimeFormatter;
