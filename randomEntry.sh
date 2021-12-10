@@ -47,7 +47,7 @@ format_output() {
 	author=$(echo ${string} | cut -d'|' -f5)
 	date_created=$(echo ${string} | cut -d'|' -f6)
 
-	echo -e "${entry_id}\n==========\n${title}\n-----\n\n${content}\n\n-----\n\e[42m${favorite_count}\e[0m\t-\t${author}\t-\t${date_created}\n=========="
+	echo -e "${entry_id}\n==========\n${title}\n-----\n\n${content} \n\n-----\n\e[42m${favorite_count}\e[0m\t-\t${author}\t-\t${date_created}\n=========="
 }
 
 main() {
