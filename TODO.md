@@ -1,7 +1,6 @@
 ---
 
 - database'e eklenme yorumu koy (debe, fav: <kullanici>, veya arsiv flagleri verirken comment koyabilme imkani olsun)
-- script yazar ismi almazsa bulunan rastgele bir entry versin.
 - baslik arsivleme (tamami ya da sayfa sayfa)
 - entry icinde linklenen diger entryleri de al (ayar olarak ekle)
 - kullanici sayfa rangei ekle. kullanici,n-m
@@ -19,8 +18,6 @@
 - output formatlari vermesi? csv. pdf vs.
 - entryleri sunmak icin local server?
 - server belki gui olarak da islev gorebilir
-- get random entry to read 
-- get random entry to read user specific 
 - cli argument hatalarini yaz. multi lang olsun diye stringleri utilse koy.
 
 ---
@@ -79,6 +76,9 @@
 - [X] debeyi duzelt. (eski implemantation ile devam ediyor. daha iyi yolu api olsaydi apidan almak olurdu)
 - [X] projenin structureini duzelt (src direkt tum sourcelari icerecek. belki server planlari olabilir)
 - [X] html parser. parse edilmis entryleri belki regexle formatla (yeni fonksiyonlar cheerio ile parselaniyor. regexe cogunlukla ihtiyac yok)
-- [X] flagleri duzelt
+- [X] flagleri duzelt (maindeki initial flagler kaldirildi. hepsi dash ile cagiriliyor. daha duzenli olsun diye.)
 - [X] readme ekle
 - [X] tek entry formatte cheerio kullan.
+- [X] script yazar ismi almazsa bulunan rastgele bir entry versin. (parser ile cozuldu)
+- [X] get random entry to read (scriptle cozuldu)
+- [X] get random entry to read user specific (scriptle cozuldu)
