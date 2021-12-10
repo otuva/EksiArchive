@@ -1,7 +1,5 @@
 ---
 
-- flagleri duzelt
-- readme ekle
 - entry formatte cheerio kullan.
 - database'e eklenme yorumu koy (debe, fav: <kullanici>, veya arsiv flagleri verirken comment koyabilme imkani olsun)
 - script yazar ismi almazsa bulunan rastgele bir entry versin.
@@ -82,3 +80,5 @@
 - [X] debeyi duzelt. (eski implemantation ile devam ediyor. daha iyi yolu api olsaydi apidan almak olurdu)
 - [X] projenin structureini duzelt (src direkt tum sourcelari icerecek. belki server planlari olabilir)
 - [X] html parser. parse edilmis entryleri belki regexle formatla (yeni fonksiyonlar cheerio ile parselaniyor. regexe cogunlukla ihtiyac yok)
+- [X] flagleri duzelt
+- [X] readme ekle
