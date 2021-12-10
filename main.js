@@ -3,14 +3,16 @@ const argv = require('minimist')(process.argv.slice(2));
 const entry = require("./EksiArchive/src/entry/entry");
 const userPage = require("./EksiArchive/src/user/user");
 const debe = require("./EksiArchive/src/debe/debe");
+const database = require("./EksiArchive/src/database");
+
 const inputValidate = require("./EksiArchive/src/utils/inputValidate");
 const outputMessages = require("./EksiArchive/src/utils/outputMessages");
-const manage = require("./EksiArchive/src/manage");
+
 const config = require("./config");
 
 // help diyince ayri bos calistirinca ayri text yazdir
 const arguments = `\n\t-e entry\n\t-u user`;
-const firstFlags = `\n\tinit\n\thelp\n\tversion`;
+// const firstFlags = `\n\tinit\n\thelp\n\tversion`;
 
 outputMessages.banner('random')
 
@@ -24,125 +26,114 @@ else {
     if (typeof argv.force === 'boolean') config.entry.force = argv.force;
     if (typeof argv.threads === 'number') config.entry.threads = argv.threads;
 
-    if (argv._[0]) {
-        if (Object.keys(argv).length !==1) {
-            console.error('\x1b[31m%s\x1b[0m', "You can't use other flags with first flags. Disregarding other flags.")
+    try {
+        if ((argv.h || argv.help) && !(argv.h && argv.help)) {
+            console.log("yardim sayfasi");
         }
-        if (argv._[0] === 'init') {
-            manage.init();
+        else if (argv.version) console.log("v0.1");
+
+        else if ((argv.e || argv.entry) && !(argv.e && argv.entry)) {
+            if (argv.entry) argv.e = argv.entry;
+            if (typeof argv.e === 'string' || typeof argv.e === 'number') {
+                const id = inputValidate.isInputEntryLink(argv.e.toString());
+                console.log(`arsivlenecek entry: ${id}`);
+                entry.archiveEntry(id).then(val => {
+                    console.log(val);
+                }, err => {
+                    console.error(err);
+                });
+            }
+            else {
+                console.error('entry kismi bos olamaz.');
+            }
         }
-        else if (argv._[0] === 'help') {
-            console.log("yardim mod");
+        else if ((argv.u || argv.user) && !(argv.u && argv.user)) {
+            if (argv.user) argv.u = argv.user;
+
+            if (typeof argv.u === 'string') {
+                if (inputValidate.isUserPageValid(argv.u)) {
+
+                    const values = argv.u.split(",");
+                    const user = values[0].replace(/ /g, '-');
+
+                    if (values.length === 1) {
+                        console.log(`arsivlenecek kullanici: ${user}`)
+
+                        userPage.archiveConsecutiveEntryPages(`/son-entryleri?nick=${user}`).then(val => {
+                            console.log(val);
+                        }, err => {
+                            console.error(err);
+                        });
+
+                    }
+                    else {
+                        console.log(`kullanici: ${user} - arsivlenecek sayfa: ${values[1]}`);
+                        userPage.archiveEntryPage(`/son-entryleri?nick=${user}&p=${values[1]}`).then(val => {
+                            console.log(val);
+                        }, err => {
+                            console.error(err);
+                        });
+                    }
+                }
+                else {
+                    console.error('kullanici veya sayfa gecerli degil')
+                }
+            }
+            else {
+                console.error('kullanici bos olamaz');
+            }
         }
-        else if (argv._[0] === 'version') {
-            console.log("v0.1");
+        else if ((argv.f || argv.favorite) && !(argv.f && argv.favorite)) {
+            if (argv.favorite) argv.f = argv.favorite;
+
+            if (typeof argv.f === 'string') {
+                if (inputValidate.isUserPageValid(argv.f)) {
+
+                    const values = argv.f.split(",");
+                    const user = values[0].replace(/ /g, '-');
+
+                    if (values.length === 1) {
+                        console.log(`favorileri arsivlenecek kullanici: ${user}`)
+
+                        userPage.archiveConsecutiveEntryPages(`/favori-entryleri?nick=${user}`).then(val => {
+                            console.log(val);
+                        }, err => {
+                            console.error(err);
+                        });
+                    }
+                    else {
+                        console.log(`kullanici: ${user} - arsivlenecek favori sayfa: ${values[1]}`);
+                        userPage.archiveEntryPage(`/favori-entryleri?nick=${user}&p=${values[1]}`).then(val => {
+                            console.log(val);
+                        }, err => {
+                            console.error(err);
+                        });
+                    }
+                }
+                else {
+                    console.error('kullanici veya sayfa gecerli degil')
+                }
+            }
+            else {
+                console.log('insert favori hatasi here');
+            }
         }
-        else if (argv._[0] === 'debe') {
+
+        else if (argv.debe) {
             debe.archiveDebeEntries().then(val => {
                 console.log(val);
             }, err => {
                 console.error(err);
             });
         }
+
+        else if (argv.init) database.init();
+
         else {
-            console.error("Yanlis kullanim. Dogrusu:"+firstFlags);
+            console.log(`bilinmeyen veya hatali flag kullanimi. dogru kullanim:`+arguments);
         }
     }
-    else {
-        try {
-
-            if ((argv.e || argv.entry) && !(argv.e && argv.entry)) {
-                if (argv.entry) argv.e = argv.entry;
-                if (typeof argv.e === 'string' || typeof argv.e === 'number') {
-                    const id = inputValidate.isInputEntryLink(argv.e.toString());
-                    console.log(`arsivlenecek entry: ${id}`);
-                    entry.archiveEntry(id).then(val => {
-                        console.log(val);
-                    }, err => {
-                        console.error(err);
-                    });
-                }
-                else {
-                    console.error('entry kismi bos olamaz.');
-                }
-            }
-            else if ((argv.u || argv.user) && !(argv.u && argv.user)) {
-                if (argv.user) argv.u = argv.user;
-
-                if (typeof argv.u === 'string') {
-                    if (inputValidate.isUserPageValid(argv.u)) {
-
-                        const values = argv.u.split(",");
-                        const user = values[0].replace(/ /g, '-');
-
-                        if (values.length === 1) {
-                            console.log(`arsivlenecek kullanici: ${user}`)
-
-                            userPage.archiveConsecutiveEntryPages(`/son-entryleri?nick=${user}`).then(val => {
-                                console.log(val);
-                            }, err => {
-                                console.error(err);
-                            });
-
-                        }
-                        else {
-                            console.log(`kullanici: ${user} - arsivlenecek sayfa: ${values[1]}`);
-                            userPage.archiveEntryPage(`/son-entryleri?nick=${user}&p=${values[1]}`).then(val => {
-                                console.log(val);
-                            }, err => {
-                                console.error(err);
-                            });
-                        }
-                    }
-                    else {
-                        console.error('kullanici veya sayfa gecerli degil')
-                    }
-                }
-                else {
-                    console.error('kullanici bos olamaz');
-                }
-            }
-            else if ((argv.f || argv.favorite) && !(argv.f && argv.favorite)) {
-                if (argv.favorite) argv.f = argv.favorite;
-
-                if (typeof argv.f === 'string') {
-                    if (inputValidate.isUserPageValid(argv.f)) {
-
-                        const values = argv.f.split(",");
-                        const user = values[0].replace(/ /g, '-');
-
-                        if (values.length === 1) {
-                            console.log(`favorileri arsivlenecek kullanici: ${user}`)
-
-                            userPage.archiveConsecutiveEntryPages(`/favori-entryleri?nick=${user}`).then(val => {
-                                console.log(val);
-                            }, err => {
-                                console.error(err);
-                            });
-                        }
-                        else {
-                            console.log(`kullanici: ${user} - arsivlenecek favori sayfa: ${values[1]}`);
-                            userPage.archiveEntryPage(`/favori-entryleri?nick=${user}&p=${values[1]}`).then(val => {
-                                console.log(val);
-                            }, err => {
-                                console.error(err);
-                            });
-                        }
-                    }
-                    else {
-                        console.error('kullanici veya sayfa gecerli degil')
-                    }
-                }
-                else {
-                    console.log('insert favori hatasi here');
-                }
-            }
-            else {
-                console.log(`bilinmeyen veya hatali flag kullanimi. dogru kullanim:`+arguments);
-            }
-        }
-        catch (e) {
-            console.error(`bir seyler kirildi. ${e}`);
-        }
+    catch (e) {
+        console.error(`bir seyler kirildi. ${e}`);
     }
 }
