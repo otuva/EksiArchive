@@ -38,9 +38,14 @@ const banner = {
     color: "random" //red, green, yellow, blue, magenta, cyan, random, anything else = (colorless)
 }
 
+const EksiArchive = {
+    version: "v0.2"
+}
+
 module.exports.databaseFilePath = databaseFilePath;
 module.exports.requestHeaders = requestHeaders;
 module.exports.entry = entry;
 module.exports.user = user;
 module.exports.debe = debe;
 module.exports.banner = banner;
+module.exports.EksiArchive = EksiArchive;
