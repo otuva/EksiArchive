@@ -1,6 +1,8 @@
 ---
 
-- database'e eklenme yorumu koy (debe, fav: <kullanici>, veya arsiv flagleri verirken comment koyabilme imkani olsun)
+- database'e tek tek eklemek yerine sayfalari coklu ekleme yap. daha verimli olsun
+- kullanici latest flagi ekle. kullanicinin son birkac favori ve entry sayfasini alsin
+- login yapip unfav ozelligi
 - baslik arsivleme (tamami ya da sayfa sayfa)
 - entry icinde linklenen diger entryleri de al (ayar olarak ekle)
 - kullanici sayfa rangei ekle. kullanici,n-m
@@ -81,3 +83,9 @@
 - [X] script yazar ismi almazsa bulunan rastgele bir entry versin. (parser ile cozuldu)
 - [X] get random entry to read (scriptle cozuldu)
 - [X] get random entry to read user specific (scriptle cozuldu)
+- [X] database'e eklenme yorumu koy (debe, fav: <kullanici>, veya arsiv flagleri verirken comment koyabilme imkani olsun)
+  - [X] no comment flagi
+  - [X] comment flagi
+  - [X] dbde null olsun mu?
+  - [ ] direkt tum commenti kullaniciya birakmak yerine 'tag' ozelligi eklenebilir. ama ilk basta comment yeterli gibi
+- [X] banner kapatma ayari 
