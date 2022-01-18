@@ -35,7 +35,7 @@ else {
         if ((argv.h || argv.help) && !(argv.h && argv.help)) {
             console.log("yardim sayfasi");
         }
-        else if (argv.version) console.log("v0.1");
+        else if (argv.version) console.log(config.EksiArchive.version);
 
         else if ((argv.e || argv.entry) && !(argv.e && argv.entry)) {
             if (argv.entry) argv.e = argv.entry;
