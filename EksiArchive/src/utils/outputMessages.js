@@ -1,3 +1,5 @@
+"use strict";
+
 const utils = require("./generalHelpers")
 
 const banner = (color) => {
@@ -12,7 +14,7 @@ _____________           .__   _____                .__    .__
 `, color)}`, 'font-family: monospace');
 };
 
-tr = {
+const tr = {
     success: {
         entry: {
             archived: "Entry arsivlendi."
@@ -28,7 +30,7 @@ tr = {
     }
 }
 
-en = {
+const en = {
     success: {
         entry: {
             archived: "Entry is archived."
