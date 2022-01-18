@@ -1,3 +1,5 @@
+"use strict";
+
 const groupBy = (array, N) => {
     const arrLen = array.length;
     const maxObjectKeys = Math.ceil(arrLen/N)-1;
@@ -34,6 +36,7 @@ const sleep = (milliseconds) => {
 
 const colorfulOutput = (string, color) => {
     switch (color) {
+        //red, green, yellow, blue, magenta, cyan, random, anything else = (colorless)
         case 'red':
             return `\x1b[31m${string}\x1b[0m`;
         case 'green':
