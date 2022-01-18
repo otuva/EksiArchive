@@ -34,17 +34,16 @@ Internet hizina bagli olarak dakikada +2500 entry arsivleyebilir.
     --force            Arsivde olan entry'i tekrar arsivle.
     --threads          SAYI                  Paralel gidecek maksimum istek sayisi. (Default 5)
     --comment          Entryler icin kullanilacak eklenme yorumu
-    
-    --no-banner        Banner'i output etme
-    --banner-color     Banner farkli renkte output et
-    --list-colors      Kullanilabilecek banner renklerini listele
     ```
   
   - ## Diger
 
     ```
-    -h, --help      Bu yardim sayfasini goruntule
-    --version       Uygulama versiyonunu goruntule
+    -h, --help         Bu yardim sayfasini goruntule
+    --version          Uygulama versiyonunu goruntule
+    --no-banner        Banner'i output etme
+    --banner-color     Banner farkli renkte output et
+    --list-colors      Kullanilabilecek banner renklerini listele
     ```
 
   - ## Ornekler 
