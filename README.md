@@ -33,7 +33,8 @@ Internet hizina bagli olarak dakikada +2500 entry arsivleyebilir.
     --sleep            MILISANIYE            Istekler arasinda bekleme suresi.
     --force            Arsivde olan entry'i tekrar arsivle.
     --threads          SAYI                  Paralel gidecek maksimum istek sayisi. (Default 5)
-    --comment          Entryler icin kullanilacak eklenme yorumu
+    --comment          Entry(ler) icin kullanilacak eklenme yorumu
+    --no-comment       Eklenme yorumunu bos birak
     ```
   
   - ## Diger
