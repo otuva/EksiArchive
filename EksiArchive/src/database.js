@@ -1,3 +1,5 @@
+"use strict";
+
 const sqlite3 = require("sqlite3").verbose();
 const config = require("../../config");
 
@@ -27,7 +29,8 @@ const init = () => {
                    date_modified TEXT,
                    time_modified TEXT,
                    favorite_count INTEGER NOT NULL,
-                   in_eksi_seyler TEXT NOT NULL
+                   in_eksi_seyler TEXT NOT NULL,
+                   comment TEXT NOT NULL
                    );`;
 
     db.get(query);
@@ -35,23 +38,23 @@ const init = () => {
     db.close();
 };
 
-const returnAppropriateQueryString = (entry) => {
+const returnAppropriateQueryString = (entry, comment) => {
     let query;
     if (entry.dateModified != null && entry.timeModified == null) {
-        query = `INSERT INTO data (entry_id, title, author, content, date_created, time_created, date_modified, time_modified, favorite_count, in_eksi_seyler)
-                 VALUES(${entry.id},'${entry.title}','${entry.author}','${entry.content}','${entry.dateCreated}','${entry.timeCreated}','${entry.dateModified}',${entry.timeModified},${entry.favCount},'${entry.inEksiSeyler}');`
+        query = `INSERT INTO data (entry_id, title, author, content, date_created, time_created, date_modified, time_modified, favorite_count, in_eksi_seyler, comment)
+                 VALUES(${entry.id},'${entry.title}','${entry.author}','${entry.content}','${entry.dateCreated}','${entry.timeCreated}','${entry.dateModified}',${entry.timeModified},${entry.favCount},'${entry.inEksiSeyler}','${comment}');`
     }
     else if (entry.dateModified == null && entry.timeModified != null) {
-        query = `INSERT INTO data (entry_id, title, author, content, date_created, time_created, date_modified, time_modified, favorite_count, in_eksi_seyler)
-                 VALUES(${entry.id},'${entry.title}','${entry.author}','${entry.content}','${entry.dateCreated}','${entry.timeCreated}',${entry.dateModified},'${entry.timeModified}',${entry.favCount},'${entry.inEksiSeyler}');`
+        query = `INSERT INTO data (entry_id, title, author, content, date_created, time_created, date_modified, time_modified, favorite_count, in_eksi_seyler, comment)
+                 VALUES(${entry.id},'${entry.title}','${entry.author}','${entry.content}','${entry.dateCreated}','${entry.timeCreated}',${entry.dateModified},'${entry.timeModified}',${entry.favCount},'${entry.inEksiSeyler}','${comment}');`
     }
     else if (entry.dateModified == null && entry.timeModified == null) {
-        query = `INSERT INTO data (entry_id, title, author, content, date_created, time_created, date_modified, time_modified, favorite_count, in_eksi_seyler)
-                 VALUES(${entry.id},'${entry.title}','${entry.author}','${entry.content}','${entry.dateCreated}','${entry.timeCreated}',${entry.dateModified},${entry.timeModified},${entry.favCount},'${entry.inEksiSeyler}');`
+        query = `INSERT INTO data (entry_id, title, author, content, date_created, time_created, date_modified, time_modified, favorite_count, in_eksi_seyler, comment)
+                 VALUES(${entry.id},'${entry.title}','${entry.author}','${entry.content}','${entry.dateCreated}','${entry.timeCreated}',${entry.dateModified},${entry.timeModified},${entry.favCount},'${entry.inEksiSeyler}','${comment}');`
     }
     else if (entry.dateModified != null && entry.timeModified != null) {
-        query = `INSERT INTO data (entry_id, title, author, content, date_created, time_created, date_modified, time_modified, favorite_count, in_eksi_seyler)
-                 VALUES(${entry.id},'${entry.title}','${entry.author}','${entry.content}','${entry.dateCreated}','${entry.timeCreated}','${entry.dateModified}','${entry.timeModified}',${entry.favCount},'${entry.inEksiSeyler}');`
+        query = `INSERT INTO data (entry_id, title, author, content, date_created, time_created, date_modified, time_modified, favorite_count, in_eksi_seyler, comment)
+                 VALUES(${entry.id},'${entry.title}','${entry.author}','${entry.content}','${entry.dateCreated}','${entry.timeCreated}','${entry.dateModified}','${entry.timeModified}',${entry.favCount},'${entry.inEksiSeyler}','${comment}');`
     }
     return query;
 };
@@ -124,7 +127,7 @@ const checkMultipleEntryIDs = (idArray, db) => {
 // --------------------------------------------------
 // addition
 // --------------------------------------------------
-const addMultipleEntries = (arr) => {
+const addMultipleEntries = (arr, comment) => {
     return new Promise((resolve, reject) => {
         const timeElapsed = Date.now();
         const today = new Date(timeElapsed);
@@ -143,7 +146,7 @@ const addMultipleEntries = (arr) => {
         checkMultipleEntryIDs(entryIDArray, db).then(entryIDsWillBeAdded => {
             arr.forEach(entry => {
                 if (entryIDsWillBeAdded.includes(entry.id)) {
-                    const query = returnAppropriateQueryString(entry);
+                    const query = returnAppropriateQueryString(entry, comment);
                     db.get(query);
                     console.log(`${timeStr} - '${entry.id}' arsive eklendi.`);
                 }
@@ -155,7 +158,7 @@ const addMultipleEntries = (arr) => {
     });
 };
 
-const addEntry = (entry) => {
+const addEntry = (entry, comment) => {
     return new Promise((resolve, reject)=> {
         const db = new sqlite3.Database(dbFile, (err) => {
             if (err) {
@@ -163,7 +166,7 @@ const addEntry = (entry) => {
             }
         });
 
-        const query = returnAppropriateQueryString(entry);
+        const query = returnAppropriateQueryString(entry, comment);
         db.get(query);
 
         resolve('ok. entry arsivlendi')
