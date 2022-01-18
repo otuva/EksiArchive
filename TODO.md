@@ -88,4 +88,4 @@
   - [X] comment flagi
   - [X] dbde null olsun mu?
   - [ ] direkt tum commenti kullaniciya birakmak yerine 'tag' ozelligi eklenebilir. ama ilk basta comment yeterli gibi
-- [X] banner kapatma ayari 
+- [X] banner kapatma ayari, renk ayari
