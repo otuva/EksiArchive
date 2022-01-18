@@ -1,9 +1,11 @@
+"use strict";
+
 const https = require("https");
 
 const config = require("../../../config");
 const database = require("../database");
 const format = require("./formatEntry");
-const {colorfulOutput} = require("../utils/generalHelpers");
+const generalHelpers = require("../utils/generalHelpers");
 
 
 const requestEntry = (entryID) => {
@@ -20,7 +22,7 @@ const requestEntry = (entryID) => {
 
         const req = https.request(options, async res => {
             if (res.statusCode < 200 || res.statusCode >= 300) {
-                if (res.statusCode === 429) console.error(colorfulOutput('istek eksisozluk limitine takildi. biraz bekleyip tekrar deneyin.', 'red'));
+                if (res.statusCode === 429) console.error(generalHelpers.colorfulOutput('istek eksisozluk limitine takildi. biraz bekleyip tekrar deneyin.', 'red'));
                 return reject(new Error(`statusCode=${res.statusCode}`));
             }
 
@@ -85,11 +87,12 @@ const getEntry = (entryID) => {
     });
 }
 
-const archiveEntry = (entryID) => {
+const archiveEntry = (entryID, comment) => {
     // call getEntry then add resolved entry object to database
     return new Promise((resolve,reject)=> {
+        // comment = comment ? comment : "save single entry now";
         getEntry(entryID).then((val)=>{
-            database.addEntry(val).then(value => {
+            database.addEntry(val, generalHelpers.apostropheEscape(comment)).then(value => {
                 resolve(value);
             }, error => {
                 reject(error);
