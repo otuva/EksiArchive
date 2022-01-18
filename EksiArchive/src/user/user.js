@@ -1,9 +1,12 @@
+"use strict";
+
 const https = require('https');
 
 const format = require("./formatUser");
 const database = require("../database");
 const utils = require("../utils/generalHelpers");
 const config = require("../../../config");
+const generalHelpers = require("../utils/generalHelpers");
 
 const requestPage = (path) => {
     console.time(path);
@@ -62,14 +65,14 @@ const getEntryPage = (path) => {
     }));
 };
 
-const archiveInitialPage = (path) => {
+const archiveInitialPage = (path, comment) => {
     return new Promise((resolve, reject)=> {
         requestPage(path).then(rawHTML => {
             const initialEntryObjectArray = format.returnEntryObjectArray(rawHTML, true);
             const totalEntries = initialEntryObjectArray[0].replace(/[()]/g,'');
             const entryObjectArray = initialEntryObjectArray[1];
 
-            database.addMultipleEntries(entryObjectArray).then(value => {
+            database.addMultipleEntries(entryObjectArray, generalHelpers.apostropheEscape(comment)).then(value => {
                 console.log(value);
                 resolve(totalEntries);
             }, err => {
@@ -81,10 +84,10 @@ const archiveInitialPage = (path) => {
     });
 };
 
-const archiveEntryPage = (path) => {
+const archiveEntryPage = (path, comment) => {
     return new Promise(((resolve, reject) => {
         getEntryPage(path).then(entries => {
-            database.addMultipleEntries(entries).then(value => {
+            database.addMultipleEntries(entries, generalHelpers.apostropheEscape(comment)).then(value => {
                 console.log(value);
                 resolve('ok. sayfadaki tum entryler arsivlendi');
             }, err => {
@@ -96,11 +99,10 @@ const archiveEntryPage = (path) => {
     }));
 };
 
-const archiveConsecutiveEntryPages = (path) => {
-    // /son-entryleri?nick=${user}
+const archiveConsecutiveEntryPages = (path, comment) => {
     return new Promise((resolve, reject) => {
         console.time(utils.colorfulOutput(path, 'green'))
-        archiveInitialPage(`${path}&p=1`).then(async totalEntries => {
+        archiveInitialPage(`${path}&p=1`, comment).then(async totalEntries => {
             const maxPageNum = Math.ceil(totalEntries/10);
             console.log(utils.colorfulOutput(`'${path}' toplam entry sayfasi ${maxPageNum}`, 'yellow'));
 
@@ -109,12 +111,11 @@ const archiveConsecutiveEntryPages = (path) => {
             pageArray.shift()
             pageArray.shift()
 
-            // parallel pages. update this
             const batchPage = utils.groupBy(pageArray, config.entry.threads);
 
             for (const key of Object.keys(batchPage)) {
                 const allPages = await Promise.all(batchPage[key].map(page => {
-                    return archiveEntryPage(`${path}&p=${page}`).then(val => {
+                    return archiveEntryPage(`${path}&p=${page}`, comment).then(val => {
                         return val;
                     }, rej => {
                         console.error(`reddedildi: ${rej}`);
