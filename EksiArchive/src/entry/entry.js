@@ -71,7 +71,7 @@ const getEntry = (entryID) => {
                         }
                         else {
                             console.timeEnd(`${timeStr} - entry '${entryID}'`);
-                            resolve(format.html2entry(html));
+                            resolve(format.singleEntryFormat(html));
                         }
                     }, (err)=>{
                         return reject(new Error(`eksi sozluk hata dondurdu ${err}`));
