@@ -39,7 +39,8 @@ const banner = {
 }
 
 const EksiArchive = {
-    version: "v0.2"
+    version: "v0.2",
+    default_language: "tr" // tr / en
 }
 
 module.exports.databaseFilePath = databaseFilePath;
