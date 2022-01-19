@@ -45,6 +45,7 @@ Internet hizina bagli olarak dakikada +2500 entry arsivleyebilir.
     --no-banner        Banner'i output etme
     --banner-color     Banner farkli renkte output et
     --list-colors      Kullanilabilecek banner renklerini listele
+    --language         Kullanilacak dili degistir
     ```
 
   - ## Ornekler 
