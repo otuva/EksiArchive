@@ -12,17 +12,15 @@ const outputMessages = require("./EksiArchive/src/utils/outputMessages");
 
 const config = require("./config");
 
-// help diyince ayri bos calistirinca ayri text yazdir
-const arguments_output = `\n\t-e entry\n\t-u user`;
-// const firstFlags = `\n\tinit\n\thelp\n\tversion`;
-
 if (argv.banner === false) config.banner.enabled = false;
 if (config.banner.enabled) argv["banner-color"] ? outputMessages.banner(argv["banner-color"]) : outputMessages.banner(config.banner.color);
+
+const messages = argv.language ? outputMessages[argv.language] : outputMessages[config.EksiArchive.default_language];
 
 // if empty
 // console.log(argv) // debug
 if (Object.keys(argv).length === 1 && argv._.length === 0) {
-    console.log(`No arguments are provided.` + arguments_output);
+    console.log(messages.info.usage);
 }
 else {
     if (typeof argv.sleep === 'number') config.entry.sleep = argv.sleep;
@@ -33,7 +31,7 @@ else {
 
     try {
         if ((argv.h || argv.help) && !(argv.h && argv.help)) {
-            console.log("yardim sayfasi");
+            console.log(messages.info.usage);
         }
         else if (argv.version) console.log(config.EksiArchive.version);
 
