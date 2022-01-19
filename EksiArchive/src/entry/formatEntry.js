@@ -64,11 +64,11 @@ const formatEntry = (title, info, content, date) => {
     };
 };
 
-const contentFormatter = (string) => {
-    string = string.trim()
-    string = utils.apostropheEscape(string);
-    return string;
-};
+// const contentFormatter = (string) => {
+//     string = string.trim()
+//     string = utils.apostropheEscape(string);
+//     return string;
+// };
 
 const singleEntryFormat = (html) => {
     const $ = cheerio.load(html);
@@ -87,6 +87,6 @@ const singleEntryFormat = (html) => {
 };
 
 module.exports.formatEntry = formatEntry;
-module.exports.html2entry = singleEntryFormat;
-module.exports.contentFormatter = contentFormatter;
+module.exports.singleEntryFormat = singleEntryFormat;
+// module.exports.contentFormatter = contentFormatter;
 module.exports.dateTimeFormatter = dateTimeFormatter;
