@@ -1,5 +1,6 @@
 ---
 
+- debe range'i ekle 
 - database'e tek tek eklemek yerine sayfalari coklu ekleme yap. daha verimli olsun
 - kullanici latest flagi ekle. kullanicinin son birkac favori ve entry sayfasini alsin
 - login yapip unfav ozelligi
