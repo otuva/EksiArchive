@@ -1,4 +1,4 @@
-# EksiArchive
+# EksiArchive (Calismiyor olabilir)
 
 Eksi sozluk entrylerinin local kopyasini alin.
 
